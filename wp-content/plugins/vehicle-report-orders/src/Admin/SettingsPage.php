@@ -90,6 +90,7 @@ final class SettingsPage {
 			'social_image_id'     => isset( $_POST['social_image_id'] ) ? absint( wp_unslash( $_POST['social_image_id'] ) ) : 0,
 
 			'reviews'             => $this->posted_reviews(),
+			'trust_logos'         => $this->posted_trust_logos(),
 		);
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -132,6 +133,29 @@ final class SettingsPage {
 		}
 
 		return $chosen;
+	}
+
+	/**
+	 * The media ids entered for the logo strip.
+	 *
+	 * @return array<int, int>
+	 */
+	private function posted_trust_logos(): array {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- Verified by check_admin_referer() in render().
+		$raw = isset( $_POST['trust_logos'] ) ? sanitize_text_field( wp_unslash( $_POST['trust_logos'] ) ) : '';
+
+		$parts = preg_split( '/[^0-9]+/', $raw );
+		$ids   = array();
+
+		foreach ( is_array( $parts ) ? $parts : array() as $candidate ) {
+			$id = (int) $candidate;
+
+			if ( $id > 0 ) {
+				$ids[] = $id;
+			}
+		}
+
+		return array_values( array_unique( $ids ) );
 	}
 
 	/**

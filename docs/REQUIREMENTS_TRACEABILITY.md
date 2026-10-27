@@ -67,6 +67,7 @@ numbered sections are the gaps recorded in `REFERENCE_COMPARISON.md`.
 | CNT-01 | Every check published with what it cannot tell you | 3.4 | `Domain/VehicleCheck.php`, `templates/storefront/checks.php` | `VehicleCheckTest`, integration case 07 | done |
 | CNT-02 | Delivery record published from this site's own orders | 3.6 | `Storefront/Sections.php` | manual — hidden below ten deliveries | done — never a marketing figure |
 | CNT-03 | Customer reviews, merchant-entered, real only | 3.6 | `Domain/Settings::reviews()`, `templates/storefront/reviews.php` | integration case 07 | done — no reviews, no section |
+| CNT-04 | A logo strip the merchant fills from their own media library | 3.6 | `Domain/Settings::trust_logos()`, `Storefront/Sections.php` | integration case 07 | done — empty by default; an id that is not an image is dropped rather than printed as a gap |
 | SEO-01 | Description, Open Graph and Twitter tags on every page | 3.5 | `Seo/MetaTags.php` | verified in page source | done — stands aside for a dedicated SEO plugin |
 | SEO-02 | Organization and FAQ structured data | 3.5 | `Seo/StructuredData.php` | verified in page source | done — no ratings or awards are emitted |
 | SEO-03 | Site icon, so a tab and a shared link are not blank | 3.5 | `content/brand/site-icon.png`, `scripts/seed-content.php` | verified | done — a plain placeholder for the merchant to replace |

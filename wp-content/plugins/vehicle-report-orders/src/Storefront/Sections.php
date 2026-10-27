@@ -49,6 +49,7 @@ final class Sections {
 		add_shortcode( 'vehicle_report_checks', array( $this, 'checks' ) );
 		add_shortcode( 'vehicle_report_stats', array( $this, 'stats' ) );
 		add_shortcode( 'vehicle_report_reviews', array( $this, 'reviews' ) );
+		add_shortcode( 'vehicle_report_trust', array( $this, 'trust' ) );
 		add_shortcode( 'vehicle_report_contact_details', array( $this, 'contact_details' ) );
 
 		add_action( 'woocommerce_single_product_summary', array( $this, 'render_package_checks' ), 21 );
@@ -163,6 +164,34 @@ final class Sections {
 
 		ob_start();
 		include __DIR__ . '/../../templates/storefront/reviews.php';
+
+		return (string) ob_get_clean();
+	}
+
+	/**
+	 * The logos the merchant is entitled to display, or nothing.
+	 *
+	 * @param array<string, mixed>|string $attributes Shortcode attributes.
+	 *
+	 * @return string
+	 */
+	public function trust( $attributes = array() ): string {
+		$attributes = shortcode_atts(
+			array( 'heading' => '' ),
+			is_array( $attributes ) ? $attributes : array(),
+			'vehicle_report_trust'
+		);
+
+		$logos = Settings::trust_logos();
+
+		if ( array() === $logos ) {
+			return '';
+		}
+
+		$heading = (string) $attributes['heading'];
+
+		ob_start();
+		include __DIR__ . '/../../templates/storefront/trust.php';
 
 		return (string) ob_get_clean();
 	}

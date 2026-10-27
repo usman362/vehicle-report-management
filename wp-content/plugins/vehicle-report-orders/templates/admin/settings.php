@@ -278,6 +278,27 @@ $vr_ready   = array() === $missing;
 			</tr>
 		</table>
 
+		<h2 class="title"><?php esc_html_e( 'Logos', 'vehicle-report-orders' ); ?></h2>
+		<p class="description">
+			<?php esc_html_e( 'Only logos you are actually entitled to display: a licence you hold, a trade body you belong to, a payment provider you use. A publication\'s logo is not a licence to imply they endorsed you, and nothing here is supplied for you.', 'vehicle-report-orders' ); ?>
+		</p>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><label for="vr-trust-logos"><?php esc_html_e( 'Media library ids', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<input
+						name="trust_logos"
+						id="vr-trust-logos"
+						type="text"
+						class="regular-text"
+						value="<?php echo esc_attr( implode( ', ', \VehicleReportOrders\Domain\Settings::trust_logos() ) ); ?>"
+						placeholder="12, 34, 56"
+					>
+					<p class="description"><?php esc_html_e( 'Comma-separated. Upload each logo to the media library, set its alt text there, and paste the ids here. An id that is not an image, or one deleted later, is simply left out.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+		</table>
+
 		<h2 class="title"><?php esc_html_e( 'Customer reviews', 'vehicle-report-orders' ); ?></h2>
 		<p class="description">
 			<?php esc_html_e( 'Only reviews real customers actually gave you, in their words, with the name they agreed to be published under. Leave every quote empty and no reviews section appears anywhere, which is the honest state before anyone has bought a report.', 'vehicle-report-orders' ); ?>

@@ -141,7 +141,12 @@ Ordered by how much they affect a visitor's decision to buy.
 - **Delivery record**: reports delivered and the middle delivery time, counted
   from this site's own orders. Hidden below ten deliveries, because one fast or
   one slow order moves the figure enough to mislead.
-- **Press logos** are not built. See section 6.
+- **Logo strip**: the merchant pastes media-library ids on the settings screen
+  and those logos appear; nothing is shipped and nothing is suggested. The field
+  says plainly that it is for logos they are entitled to display — a licence
+  they hold, a body they belong to, a provider they use — not a publication's
+  logo standing in for an endorsement. Empty by default, which is where the
+  reference's Forbes and Reuters marks would have gone. See section 6.
 
 ---
 

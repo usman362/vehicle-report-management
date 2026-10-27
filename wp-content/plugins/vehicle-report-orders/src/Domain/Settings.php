@@ -198,6 +198,31 @@ final class Settings {
 	}
 
 	/**
+	 * The logos the merchant has said they may display.
+	 *
+	 * Ids only, resolved against the media library at render time, so an image
+	 * deleted from the library stops appearing rather than leaving a broken
+	 * logo on the front page. Nothing is shipped here: a logo the merchant is
+	 * not entitled to use is a claim this service has not earned.
+	 *
+	 * @return array<int, int>
+	 */
+	public static function trust_logos(): array {
+		$stored = self::get( 'trust_logos' );
+		$ids    = array();
+
+		foreach ( is_array( $stored ) ? $stored : array() as $id ) {
+			$id = (int) $id;
+
+			if ( $id > 0 && 'attachment' === get_post_type( $id ) ) {
+				$ids[] = $id;
+			}
+		}
+
+		return $ids;
+	}
+
+	/**
 	 * Promised delivery window in business hours, or null when unset.
 	 *
 	 * @return int|null

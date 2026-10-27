@@ -142,6 +142,18 @@ vr_it_ok( 'a real review is published as written', str_contains( do_shortcode( '
 
 Settings::update( array( 'reviews' => is_array( $vr_reviews_before ) ? $vr_reviews_before : array() ) );
 
+// Logos appear only when the merchant has said which ones they may display.
+$vr_logos_before = Settings::get( 'trust_logos' );
+Settings::update( array( 'trust_logos' => array() ) );
+vr_it_is( 'no logo strip before any logo is supplied', '', do_shortcode( '[vehicle_report_trust]' ) );
+
+// An id that is not an attachment is dropped rather than printed as a gap.
+Settings::update( array( 'trust_logos' => array( 999999, 0, -3 ) ) );
+vr_it_is( 'and an id that is not an image is left out', '', do_shortcode( '[vehicle_report_trust]' ) );
+vr_it_is( 'nothing survives the attachment check', '', implode( ',', Settings::trust_logos() ) );
+
+Settings::update( array( 'trust_logos' => is_array( $vr_logos_before ) ? $vr_logos_before : array() ) );
+
 // Support channels stay hidden until someone is answering them.
 $vr_whatsapp_before = Settings::get( 'whatsapp_number' );
 Settings::update( array( 'whatsapp_number' => '' ) );

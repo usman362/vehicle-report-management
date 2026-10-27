@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T21:59:39+00:00\n"
+"POT-Creation-Date: 2026-10-27T22:27:40+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vehicle-report-orders\n"
@@ -169,13 +169,13 @@ msgstr ""
 
 #. translators: 1: product name, 2: formatted price or a note that none is set.
 #. translators: 1: package name, 2: price.
-#: src/Admin/SettingsPage.php:206
+#: src/Admin/SettingsPage.php:230
 #: templates/storefront/order-form.php:132
 #, php-format
 msgid "%1$s — %2$s"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:208
+#: src/Admin/SettingsPage.php:232
 msgid "no price set"
 msgstr ""
 
@@ -338,48 +338,48 @@ msgstr ""
 msgid "Classic"
 msgstr ""
 
-#: src/Domain/Settings.php:268
+#: src/Domain/Settings.php:293
 msgid "Delivery window in business hours (SLA-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:272
+#: src/Domain/Settings.php:297
 msgid "The days of the week the team works (SLA-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:276
+#: src/Domain/Settings.php:301
 msgid "Customer support email address"
 msgstr ""
 
-#: src/Domain/Settings.php:280
+#: src/Domain/Settings.php:305
 msgid "Registered trading name (LEGAL-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:284
+#: src/Domain/Settings.php:309
 msgid "Published postal address, which a UK trader must give before a sale (LEGAL-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:288
+#: src/Domain/Settings.php:313
 msgid "Approved report data sources (REPORT-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:292
+#: src/Domain/Settings.php:317
 msgid "Terms version recorded against each order (LEGAL-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:296
+#: src/Domain/Settings.php:321
 msgid "Confirmation that the terms, privacy, cookie and refund pages have been reviewed (LEGAL-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:303
+#: src/Domain/Settings.php:328
 msgid "The WooCommerce product that represents the report"
 msgstr ""
 
-#: src/Domain/Settings.php:305
+#: src/Domain/Settings.php:330
 msgid "A real price on the report product (PRICE-01)"
 msgstr ""
 
 #. translators: %s: comma-separated package names.
-#: src/Domain/Settings.php:319
+#: src/Domain/Settings.php:344
 #, php-format
 msgid "A price on every published package: %s (PRICE-01)"
 msgstr ""
@@ -862,16 +862,16 @@ msgstr ""
 msgid "Report ordering is not available right now. Please contact us and we will help."
 msgstr ""
 
-#: src/Storefront/Sections.php:201
+#: src/Storefront/Sections.php:230
 msgid "What this package covers"
 msgstr ""
 
-#: src/Storefront/Sections.php:218
+#: src/Storefront/Sections.php:247
 msgid "Each check is run against the sources we are licensed to use. Where a check cannot be completed for your vehicle, the report says so and explains why."
 msgstr ""
 
 #. translators: %s: package name.
-#: src/Storefront/Sections.php:242
+#: src/Storefront/Sections.php:271
 #, php-format
 msgid "Order the %s package"
 msgstr ""
@@ -1408,44 +1408,60 @@ msgid "Media library id of the image shown when a link to this site is shared. L
 msgstr ""
 
 #: templates/admin/settings.php:281
-msgid "Customer reviews"
+msgid "Logos"
 msgstr ""
 
 #: templates/admin/settings.php:283
+msgid "Only logos you are actually entitled to display: a licence you hold, a trade body you belong to, a payment provider you use. A publication's logo is not a licence to imply they endorsed you, and nothing here is supplied for you."
+msgstr ""
+
+#: templates/admin/settings.php:287
+msgid "Media library ids"
+msgstr ""
+
+#: templates/admin/settings.php:297
+msgid "Comma-separated. Upload each logo to the media library, set its alt text there, and paste the ids here. An id that is not an image, or one deleted later, is simply left out."
+msgstr ""
+
+#: templates/admin/settings.php:302
+msgid "Customer reviews"
+msgstr ""
+
+#: templates/admin/settings.php:304
 msgid "Only reviews real customers actually gave you, in their words, with the name they agreed to be published under. Leave every quote empty and no reviews section appears anywhere, which is the honest state before anyone has bought a report."
 msgstr ""
 
 #. translators: %d: review number.
-#: templates/admin/settings.php:301
+#: templates/admin/settings.php:322
 #, php-format
 msgid "Review %d"
 msgstr ""
 
-#: templates/admin/settings.php:310
+#: templates/admin/settings.php:331
 msgid "Name"
 msgstr ""
 
-#: templates/admin/settings.php:311
+#: templates/admin/settings.php:332
 msgid "Date of experience"
 msgstr ""
 
-#: templates/admin/settings.php:318
+#: templates/admin/settings.php:339
 msgid "Go-live confirmation"
 msgstr ""
 
-#: templates/admin/settings.php:321
+#: templates/admin/settings.php:342
 msgid "Ready for real customers"
 msgstr ""
 
-#: templates/admin/settings.php:325
+#: templates/admin/settings.php:346
 msgid "Price, delivery window, data sources and policies are approved and deliverable."
 msgstr ""
 
-#: templates/admin/settings.php:328
+#: templates/admin/settings.php:349
 msgid "Cannot be confirmed while anything above is outstanding."
 msgstr ""
 
-#: templates/admin/settings.php:334
+#: templates/admin/settings.php:355
 msgid "Save settings"
 msgstr ""
 
