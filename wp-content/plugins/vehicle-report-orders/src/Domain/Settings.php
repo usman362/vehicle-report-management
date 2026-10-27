@@ -40,6 +40,8 @@ final class Settings {
 			'trader_name'         => '',
 			'terms_version'       => '',
 			'data_sources'        => '',     // One source per line, shown on the report-sources page.
+			'sample_report_url'   => '',     // Merchant-supplied example report, shown on the sample page.
+			'legal_copy_approved' => false,  // Terms, privacy, cookie and refund copy reviewed by the merchant's lawyer.
 			'report_product_id'   => 0,      // WooCommerce product that represents the report.
 			'download_ttl_hours'  => 72,     // Lifetime of a report download link.
 			'max_delivery_tries'  => 5,
@@ -169,6 +171,10 @@ final class Settings {
 
 		if ( '' === trim( (string) $settings['terms_version'] ) ) {
 			$missing['terms_version'] = __( 'Terms version recorded against each order (LEGAL-01)', 'vehicle-report-orders' );
+		}
+
+		if ( empty( $settings['legal_copy_approved'] ) ) {
+			$missing['legal_copy_approved'] = __( 'Confirmation that the terms, privacy, cookie and refund pages have been reviewed (LEGAL-01)', 'vehicle-report-orders' );
 		}
 
 		$product_id = (int) $settings['report_product_id'];

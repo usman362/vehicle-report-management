@@ -65,10 +65,15 @@ wp core install --url=https://… --title="…" --admin_user=… --admin_email=�
 wp plugin install woocommerce --activate
 wp plugin activate vehicle-report-orders
 wp theme activate vehicle-report-theme
+wp rewrite structure '/%postname%/' --hard
+wp eval-file scripts/seed-content.php
 ```
 
 Activation creates the three plugin tables, the three staff roles and the
-private storage directory.
+private storage directory. The last two commands set the permalink structure
+the page links rely on and create the storefront and legal pages from
+`content/pages/`, which is also how you roll a wording change forward: edit the
+file, commit it, run the seeder again.
 
 ## 3. wp-config.php additions
 
@@ -109,8 +114,27 @@ In **Vehicle Reports → Settings**, supply: delivery window and working days,
 support address, registered trading name, terms version, approved data sources,
 and the WooCommerce product with its real price.
 
+Also supply a link to a real example report you are permitted to publish, with
+the vehicle and the customer removed from it, and tick **Legal pages → Copy
+reviewed** once a UK legal adviser has settled the terms, privacy, cookie and
+refund wording. Until that box is ticked those pages carry a visible draft
+notice and the store cannot go live.
+
 The go-live checkbox cannot be ticked while any of those are missing, and the
 storefront refuses to start an order until they are supplied. That is deliberate.
+
+### Let customers in
+
+WooCommerce installs new stores in **coming-soon** mode, which serves the shop,
+cart and checkout only to signed-in administrators. Staff testing an order while
+signed in see a working checkout and never notice. Check it before launch and
+again after any WooCommerce onboarding step:
+
+```bash
+wp option get woocommerce_coming_soon      # expect: no
+```
+
+The plugin's own screens show a warning while the store is hidden.
 
 Separately confirm with the payment provider that manually fulfilled vehicle
 report services are an acceptable merchant category, and keep the gateway in

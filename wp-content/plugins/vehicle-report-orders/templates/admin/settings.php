@@ -139,6 +139,27 @@ $vr_ready   = array() === $missing;
 					<p class="description"><?php esc_html_e( 'One source per line, exactly as staff are licensed to use and cite. These are published on the data-sources page and attached to each report.', 'vehicle-report-orders' ); ?></p>
 				</td>
 			</tr>
+			<tr>
+				<th scope="row"><label for="vr-sample-url"><?php esc_html_e( 'Example report', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<input name="sample_report_url" id="vr-sample-url" type="url" class="regular-text" value="<?php echo esc_attr( (string) $settings['sample_report_url'] ); ?>">
+					<p class="description"><?php esc_html_e( 'Link to a real report you have permission to publish, with the vehicle and customer details removed. Until one is supplied the sample page says so instead of showing an invented report.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+		</table>
+
+		<h2 class="title"><?php esc_html_e( 'Legal pages', 'vehicle-report-orders' ); ?></h2>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Copy reviewed', 'vehicle-report-orders' ); ?></th>
+				<td>
+					<label for="vr-legal-approved">
+						<input name="legal_copy_approved" id="vr-legal-approved" type="checkbox" value="1" <?php checked( (bool) $settings['legal_copy_approved'] ); ?>>
+						<?php esc_html_e( 'The terms, privacy, cookie and refund pages have been reviewed and are the operator\'s own wording.', 'vehicle-report-orders' ); ?>
+					</label>
+					<p class="description"><?php esc_html_e( 'The pages shipped with this site are drafting aids. While this box is clear every legal page carries a visible draft notice and the store cannot go live.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
 		</table>
 
 		<h2 class="title"><?php esc_html_e( 'Delivery mechanics', 'vehicle-report-orders' ); ?></h2>

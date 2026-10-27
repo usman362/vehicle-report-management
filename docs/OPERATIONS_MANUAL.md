@@ -70,6 +70,18 @@ revocation, refused download and failed permission check. Entries cannot be
 edited or deleted, and sensitive values are redacted before they are stored.
 It is the first place to look when a customer disputes something.
 
+## Changing page wording
+
+The storefront and legal pages are files in `content/pages/`, not just rows in
+the database. Edit the file, commit it, and run `wp eval-file
+scripts/seed-content.php` on the server. Editing a page in the WordPress editor
+instead works until the next deployment overwrites it.
+
+The terms, privacy, cookie and refund pages ship as drafts and say so on the
+page. Clear that notice only by ticking **Vehicle Reports → Settings → Legal
+pages → Copy reviewed**, and only once a legal adviser has actually settled the
+wording. Untick it and the notice comes back everywhere at once.
+
 ## Changing the price or the delivery window
 
 Change them in **Vehicle Reports → Settings**. Orders already placed keep the

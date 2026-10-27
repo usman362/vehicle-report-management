@@ -33,6 +33,9 @@ final class Disclosures {
 		add_shortcode( 'vehicle_report_sources', array( $this, 'sources' ) );
 		add_shortcode( 'vehicle_report_trader', array( $this, 'trader' ) );
 		add_shortcode( 'vehicle_report_support_email', array( $this, 'support_email' ) );
+		add_shortcode( 'vehicle_report_hours', array( $this, 'hours' ) );
+		add_shortcode( 'vehicle_report_sample', array( $this, 'sample' ) );
+		add_shortcode( 'vehicle_report_legal_draft', array( $this, 'legal_draft' ) );
 	}
 
 	/**
@@ -133,6 +136,62 @@ final class Disclosures {
 		}
 
 		return sprintf( '<a href="mailto:%1$s">%1$s</a>', esc_attr( antispambot( $email ) ) );
+	}
+
+	/**
+	 * The days and times the team works.
+	 *
+	 * @return string
+	 */
+	public function hours(): string {
+		$label = Settings::business_hours_label();
+
+		return '' !== $label
+			? esc_html( $label )
+			: $this->pending( __( 'opening hours to be confirmed', 'vehicle-report-orders' ) );
+	}
+
+	/**
+	 * A link to the merchant's own example report, or a placeholder.
+	 *
+	 * No illustrative PDF is shipped with the plugin: a made-up report, even
+	 * one labelled as a sample, is a made-up vehicle record.
+	 *
+	 * @return string
+	 */
+	public function sample(): string {
+		$url = (string) Settings::get( 'sample_report_url' );
+
+		if ( '' === $url || ! wp_http_validate_url( $url ) ) {
+			return '<p>' . $this->pending( __( 'an example report has not been published yet', 'vehicle-report-orders' ) ) . '</p>';
+		}
+
+		return sprintf(
+			'<p><a class="vr-nav-cta" href="%1$s" rel="nofollow noopener">%2$s</a></p>',
+			esc_url( $url ),
+			esc_html__( 'Open the example report', 'vehicle-report-orders' )
+		);
+	}
+
+	/**
+	 * A banner on legal pages until the merchant has had the copy reviewed.
+	 *
+	 * The wording shipped here is a drafting aid, not legal advice, and the
+	 * reader is told so until the merchant confirms otherwise. Ordering stays
+	 * switched off while that confirmation is missing.
+	 *
+	 * @return string
+	 */
+	public function legal_draft(): string {
+		if ( ! empty( Settings::get( 'legal_copy_approved' ) ) ) {
+			return '';
+		}
+
+		return '<div class="vr-note vr-draft-notice"><p><strong>'
+			. esc_html__( 'Draft wording, not yet in force.', 'vehicle-report-orders' )
+			. '</strong> '
+			. esc_html__( 'This page is a starting point for the operator and their legal adviser. It has not been reviewed, it does not yet state the terms of any contract, and no orders can be placed while it stands unconfirmed.', 'vehicle-report-orders' )
+			. '</p></div>';
 	}
 
 	/**

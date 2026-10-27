@@ -13,6 +13,7 @@ use VehicleReportOrders\Admin\AuditLogPage;
 use VehicleReportOrders\Admin\FulfillmentQueuePage;
 use VehicleReportOrders\Admin\Menu;
 use VehicleReportOrders\Admin\SettingsPage;
+use VehicleReportOrders\Admin\StoreVisibility;
 use VehicleReportOrders\Checkout\OrderMetaSaver;
 use VehicleReportOrders\Checkout\RegistrationField;
 use VehicleReportOrders\Domain\OrderLifecycle;
@@ -111,6 +112,7 @@ final class Plugin {
 
 			( new OrderPanel( $reports ) )->register();
 			( new FulfillmentActions( $reports, $notifier ) )->register();
+			( new StoreVisibility() )->register();
 		}
 	}
 

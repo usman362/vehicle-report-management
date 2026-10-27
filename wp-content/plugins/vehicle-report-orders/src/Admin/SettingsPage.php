@@ -60,17 +60,19 @@ final class SettingsPage {
 		$confirmed = isset( $_POST['live_mode_confirmed'] );
 
 		$values = array(
-			'sla_hours'          => isset( $_POST['sla_hours'] ) ? absint( wp_unslash( $_POST['sla_hours'] ) ) : 0,
-			'business_days'      => isset( $_POST['business_days'] ) ? array_values( array_filter( array_map( 'absint', (array) wp_unslash( $_POST['business_days'] ) ), static fn( int $day ): bool => $day >= 1 && $day <= 7 ) ) : array(),
-			'business_open'      => isset( $_POST['business_open'] ) ? sanitize_text_field( wp_unslash( $_POST['business_open'] ) ) : '09:00',
-			'business_close'     => isset( $_POST['business_close'] ) ? sanitize_text_field( wp_unslash( $_POST['business_close'] ) ) : '17:00',
-			'support_email'      => isset( $_POST['support_email'] ) ? sanitize_email( wp_unslash( $_POST['support_email'] ) ) : '',
-			'trader_name'        => isset( $_POST['trader_name'] ) ? sanitize_text_field( wp_unslash( $_POST['trader_name'] ) ) : '',
-			'terms_version'      => isset( $_POST['terms_version'] ) ? sanitize_text_field( wp_unslash( $_POST['terms_version'] ) ) : '',
-			'data_sources'       => isset( $_POST['data_sources'] ) ? sanitize_textarea_field( wp_unslash( $_POST['data_sources'] ) ) : '',
-			'report_product_id'  => isset( $_POST['report_product_id'] ) ? absint( wp_unslash( $_POST['report_product_id'] ) ) : 0,
-			'download_ttl_hours' => isset( $_POST['download_ttl_hours'] ) ? max( 1, absint( wp_unslash( $_POST['download_ttl_hours'] ) ) ) : 72,
-			'max_delivery_tries' => isset( $_POST['max_delivery_tries'] ) ? max( 1, absint( wp_unslash( $_POST['max_delivery_tries'] ) ) ) : 5,
+			'sla_hours'           => isset( $_POST['sla_hours'] ) ? absint( wp_unslash( $_POST['sla_hours'] ) ) : 0,
+			'business_days'       => isset( $_POST['business_days'] ) ? array_values( array_filter( array_map( 'absint', (array) wp_unslash( $_POST['business_days'] ) ), static fn( int $day ): bool => $day >= 1 && $day <= 7 ) ) : array(),
+			'business_open'       => isset( $_POST['business_open'] ) ? sanitize_text_field( wp_unslash( $_POST['business_open'] ) ) : '09:00',
+			'business_close'      => isset( $_POST['business_close'] ) ? sanitize_text_field( wp_unslash( $_POST['business_close'] ) ) : '17:00',
+			'support_email'       => isset( $_POST['support_email'] ) ? sanitize_email( wp_unslash( $_POST['support_email'] ) ) : '',
+			'trader_name'         => isset( $_POST['trader_name'] ) ? sanitize_text_field( wp_unslash( $_POST['trader_name'] ) ) : '',
+			'terms_version'       => isset( $_POST['terms_version'] ) ? sanitize_text_field( wp_unslash( $_POST['terms_version'] ) ) : '',
+			'data_sources'        => isset( $_POST['data_sources'] ) ? sanitize_textarea_field( wp_unslash( $_POST['data_sources'] ) ) : '',
+			'sample_report_url'   => isset( $_POST['sample_report_url'] ) ? sanitize_url( wp_unslash( $_POST['sample_report_url'] ) ) : '',
+			'legal_copy_approved' => isset( $_POST['legal_copy_approved'] ),
+			'report_product_id'   => isset( $_POST['report_product_id'] ) ? absint( wp_unslash( $_POST['report_product_id'] ) ) : 0,
+			'download_ttl_hours'  => isset( $_POST['download_ttl_hours'] ) ? max( 1, absint( wp_unslash( $_POST['download_ttl_hours'] ) ) ) : 72,
+			'max_delivery_tries'  => isset( $_POST['max_delivery_tries'] ) ? max( 1, absint( wp_unslash( $_POST['max_delivery_tries'] ) ) ) : 5,
 		);
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 

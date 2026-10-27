@@ -57,10 +57,24 @@ wp option update woocommerce_default_country GB >/dev/null
 wp option update woocommerce_enable_guest_checkout yes >/dev/null
 wp option update timezone_string Europe/London >/dev/null
 
+# WooCommerce ships new stores in coming-soon mode, which hides the shop, cart
+# and checkout from everyone except signed-in administrators. A dev site that
+# only works when you are logged in hides real problems, so it is opened here.
+wp option update woocommerce_coming_soon no >/dev/null
+
 echo "⑤ Our plugin"
 wp plugin activate vehicle-report-orders >/dev/null
 
-echo "⑥ Development tooling"
+# Page URLs in the seeded content are written as /slug/, and the report
+# download route is matched before the query is parsed, so both need the
+# pretty permalink structure.
+wp rewrite structure '/%postname%/' --hard >/dev/null
+
+echo "⑥ Storefront pages"
+wp theme activate vehicle-report-theme >/dev/null
+wp eval-file scripts/seed-content.php
+
+echo "⑦ Development tooling"
 composer install --no-interaction --quiet
 
 echo

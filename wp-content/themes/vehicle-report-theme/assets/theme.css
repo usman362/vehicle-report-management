@@ -74,3 +74,22 @@
 }
 
 .vr-sources { margin: 0.5rem 0 1rem 1.25rem; }
+
+/* A legal page whose wording the operator has not yet confirmed. */
+.vr-draft-notice {
+	border-left: 4px solid var(--wp--preset--color--danger, #b3261e);
+	background: color-mix(in srgb, var(--wp--preset--color--danger, #b3261e) 6%, transparent);
+}
+
+.vr-draft-notice p {
+	margin: 0;
+}
+
+.vr-footer-nav {
+	margin: 1rem 0;
+	gap: 0.35rem 1.1rem;
+}
+
+.vr-footer-nav a {
+	color: var(--wp--preset--color--navy, inherit);
+}

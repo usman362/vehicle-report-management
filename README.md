@@ -26,7 +26,8 @@ or HPI, and it is **not** a CRM, lead system or messaging platform — see
 .                                   WordPress root (core files are gitignored)
 ├── CLAUDE.md                       agent instructions and scope lock
 ├── docs/                           specification and decisions
-├── scripts/                        setup-local.sh, serve.sh, check.sh
+├── content/pages/                  storefront and legal page copy, as files
+├── scripts/                        setup-local.sh, serve.sh, check.sh, seed-content.php
 ├── tests/                          PHPUnit unit tests (no WordPress needed)
 ├── phpcs.xml  phpunit.xml  composer.json
 └── wp-content/
@@ -86,6 +87,12 @@ A customer enters a registration, pays, and staff deliver a report:
   trail stay, because financial records must survive and an audit trail that
   can be deleted on request is not an audit trail.
 
+- **Pages** — storefront, about, sample-report and legal pages live in
+  `content/pages/` and are rebuilt by `scripts/seed-content.php`, so the wording
+  is reviewable in a diff and a fresh install comes up identical. The terms,
+  privacy, cookie and refund pages carry a draft notice, in code rather than in
+  prose, until the operator confirms a legal adviser has settled them.
+
 Honesty is enforced, not just documented: the price, delivery window, opening
 hours and data sources are read from settings at render time and shown as
 visible placeholders until the merchant supplies them, and ordering stays
@@ -104,3 +111,9 @@ Price, delivery window, report data licence, legal merchant identity and brand
 assets are outstanding — see the blockers in
 [`docs/DECISIONS.md`](docs/DECISIONS.md). Until they are supplied the storefront
 will not start an order, and the go-live confirmation cannot be ticked.
+
+Two traps worth naming, because both look like a working site from the inside:
+WooCommerce installs a store in coming-soon mode, where only signed-in
+administrators can reach the checkout — the plugin's screens warn while that is
+on — and the legal pages are drafting aids until someone qualified has read
+them.

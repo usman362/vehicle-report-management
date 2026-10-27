@@ -49,6 +49,15 @@ were exercised against the running local site and the evidence is noted.
 | T29 | A claim with no data source behind it | verified — the storefront prints a visible placeholder instead of an invented figure, and ordering is blocked until sources are configured | No unsupported promise rendered |
 | T30 | Staff role exports a customer list | code — export capability is not granted to fulfilment or support roles | Needs an integration test |
 
+## Pages and store visibility
+
+| Case | How it was checked | Result |
+|---|---|---|
+| Legal pages carry a draft notice until signed off | verified — the terms, privacy, cookie and refund pages each render the notice; ticking **Legal pages → Copy reviewed** on the settings screen removed it from all four at once, and clearing the box brought it back | Notice is driven by the setting, not by page copy |
+| Sample report page invents nothing | verified — with no example configured the page shows a visible placeholder; supplying a URL replaced it with a link | No fabricated report is shipped |
+| Pages are reproducible from the repository | verified — `wp eval-file scripts/seed-content.php` created or refreshed all 13 pages and set the front, privacy and terms page options | A fresh install comes up with the same site |
+| Customers can actually reach the store | verified — WooCommerce was found in coming-soon mode, which serves the shop, cart and checkout only to signed-in administrators; the plugin's screens now warn while it is on, and `setup-local.sh` opens the store | The trap is visible instead of silent |
+
 ## Still to do
 
 - Gateway sandbox cases (T08, T16, T28) once the merchant supplies Stripe test keys.
