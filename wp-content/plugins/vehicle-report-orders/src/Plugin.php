@@ -9,6 +9,12 @@ declare( strict_types=1 );
 
 namespace VehicleReportOrders;
 
+use VehicleReportOrders\Admin\AuditLogPage;
+use VehicleReportOrders\Admin\FulfillmentQueuePage;
+use VehicleReportOrders\Admin\Menu;
+use VehicleReportOrders\Admin\SettingsPage;
+use VehicleReportOrders\Domain\OrderRepository;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -59,7 +65,23 @@ final class Plugin {
 			return;
 		}
 
-		// Feature services are registered here as each milestone lands.
+		// WordPress 6.7 expects translations to load no earlier than `init`.
+		add_action(
+			'init',
+			static function (): void {
+				load_plugin_textdomain( 'vehicle-report-orders', false, dirname( plugin_basename( PLUGIN_FILE ) ) . '/languages' );
+			}
+		);
+
+		if ( Schema::needs_update() ) {
+			Schema::install();
+		}
+
+		if ( is_admin() ) {
+			$orders = new OrderRepository();
+			$menu   = new Menu( new FulfillmentQueuePage( $orders ), new SettingsPage(), new AuditLogPage() );
+			$menu->register();
+		}
 	}
 
 	/**
