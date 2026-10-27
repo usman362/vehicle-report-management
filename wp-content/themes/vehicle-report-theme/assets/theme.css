@@ -444,7 +444,7 @@
 
 /* --- Delivery record ------------------------------------------------------ */
 
-.vr-stats { margin: 2.5rem 0; }
+.vr-stats { padding-block: 2.5rem; }
 
 .vr-stat-grid {
 	display: grid;
@@ -482,7 +482,7 @@
 
 /* --- Logos ---------------------------------------------------------------- */
 
-.vr-trust { margin: 2.5rem 0; }
+.vr-trust { padding-block: 2.5rem; }
 
 .vr-trust-heading {
 	font-size: var(--wp--preset--font-size--small);
@@ -585,6 +585,14 @@
 }
 
 /* --- Assurance band ------------------------------------------------------- */
+
+/* --- Full-width section stack --------------------------------------------- */
+
+/* The front page is a stack of bands, each carrying its own vertical padding.
+   The theme's block gap put 20px of page background between them, which showed
+   as a pale seam wherever a coloured band met its neighbour. Only the front
+   page lays out this way (`is-layout-flow`); inner pages keep their rhythm. */
+.wp-block-post-content.is-layout-flow > * { margin-block: 0; }
 
 .vr-assurances {
 	background: var(--wp--preset--color--ink);
