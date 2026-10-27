@@ -23,6 +23,8 @@ use VehicleReportOrders\Notifications\EmailNotifier;
 use VehicleReportOrders\Reports\DownloadController;
 use VehicleReportOrders\Reports\ReportService;
 use VehicleReportOrders\Reports\ReportVersionRepository;
+use VehicleReportOrders\Storefront\Disclosures;
+use VehicleReportOrders\Storefront\OrderForm;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -93,6 +95,8 @@ final class Plugin {
 		( new OrderMetaSaver() )->register();
 		( new OrderLifecycle() )->register();
 		( new DownloadController( $reports ) )->register();
+		( new OrderForm() )->register();
+		( new Disclosures() )->register();
 		$notifier->register();
 
 		if ( is_admin() ) {

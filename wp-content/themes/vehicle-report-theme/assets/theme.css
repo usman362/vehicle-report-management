@@ -1,0 +1,76 @@
+/* Small additions on top of theme.json; the palette and spacing live there. */
+
+.vr-card {
+	background: var(--wp--preset--color--surface);
+	border: 1px solid var(--wp--preset--color--border);
+	border-radius: 14px;
+	padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+}
+
+.vr-steps { counter-reset: vr-step; }
+
+.vr-steps > .wp-block-column { position: relative; padding-top: 2.75rem; }
+
+.vr-steps > .wp-block-column::before {
+	counter-increment: vr-step;
+	content: counter(vr-step);
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 2rem;
+	height: 2rem;
+	border-radius: 50%;
+	display: grid;
+	place-items: center;
+	font-weight: 700;
+	color: var(--wp--preset--color--surface);
+	background: var(--wp--preset--color--accent);
+}
+
+.vr-note {
+	border-left: 4px solid var(--wp--preset--color--accent);
+	background: var(--wp--preset--color--surface);
+	padding: 1rem 1.25rem;
+	border-radius: 0 10px 10px 0;
+}
+
+.vr-registration-plate input[type="text"] {
+	font-size: 1.35rem;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	font-weight: 700;
+	padding: 0.9rem 1rem;
+	border: 2px solid var(--wp--preset--color--border);
+	border-radius: 10px;
+	width: 100%;
+	max-width: 22rem;
+	background: #fff;
+}
+
+.vr-registration-plate input[type="text"]:focus {
+	outline: 3px solid rgba( 23, 105, 170, .35 );
+	border-color: var(--wp--preset--color--accent);
+}
+
+.vr-error { color: var(--wp--preset--color--danger); font-weight: 600; }
+
+@media (max-width: 600px) {
+	.vr-steps > .wp-block-column { padding-top: 2.5rem; }
+}
+
+.vr-nav-cta a {
+	background: var(--wp--preset--color--accent);
+	color: var(--wp--preset--color--surface) !important;
+	padding: 0.5rem 1rem;
+	border-radius: 8px;
+	text-decoration: none !important;
+}
+
+.vr-pending {
+	background: #fff5d6;
+	border-bottom: 1px dashed #b98a38;
+	font-style: italic;
+	padding: 0 0.25rem;
+}
+
+.vr-sources { margin: 0.5rem 0 1rem 1.25rem; }
