@@ -72,3 +72,29 @@ add_filter(
 		return array_values( array_diff( $hooked_blocks, array( 'woocommerce/mini-cart' ) ) );
 	}
 );
+
+/**
+ * A report is a service, not a boxed product, so there is nothing to photograph.
+ *
+ * WooCommerce fills the gap with a grey placeholder image, which on a cart page
+ * reads as a broken picture rather than as "no picture". These pages drop the
+ * image entirely and let the name and price carry the row.
+ */
+add_action(
+	'init',
+	static function (): void {
+		if ( ! class_exists( 'WooCommerce' ) ) {
+			return;
+		}
+
+		// The empty gallery column on a package page.
+		remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
+
+		// Cross-sells and "related products", which only showed placeholders.
+		remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
+		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
+
+		add_filter( 'woocommerce_product_get_image', '__return_empty_string' );
+		add_filter( 'woocommerce_placeholder_img', '__return_empty_string' );
+	}
+);

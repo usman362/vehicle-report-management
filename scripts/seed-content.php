@@ -229,7 +229,37 @@ if ( class_exists( 'WC_Product_Simple' ) && class_exists( 'VehicleReportOrders\\
 		VehicleReportOrders\Domain\Settings::update( array( 'report_product_id' => (int) $vr_packages[0]['product_id'] ) );
 	}
 
+	// Anything in the catalogue that is not a current tier predates them —
+	// the original single-report product, for one. Orders still refer to it, so
+	// it is drafted rather than deleted, which also takes it out of the shop
+	// and the cart's suggestions.
+	$vr_live = wp_list_pluck( $vr_packages, 'product_id' );
+
+	foreach ( wc_get_products( array( 'limit' => -1, 'status' => 'publish', 'return' => 'ids' ) ) as $vr_other ) {
+		if ( in_array( (int) $vr_other, array_map( 'intval', $vr_live ), true ) ) {
+			continue;
+		}
+
+		wp_update_post( array( 'ID' => (int) $vr_other, 'post_status' => 'draft' ) );
+		WP_CLI::log( sprintf( '  %-20s %-9s #%d', 'retired product', 'drafted', (int) $vr_other ) );
+	}
+
 	flush_rewrite_rules( false );
+}
+
+// WooCommerce's own pages are not in content/pages, so they would otherwise
+// miss the page header every other page carries.
+foreach ( array(
+	'woocommerce_cart_page_id'       => 'page-cart',
+	'woocommerce_myaccount_page_id'  => 'page-my-account',
+	'woocommerce_checkout_page_id'   => 'page-checkout',
+) as $vr_option => $vr_template ) {
+	$vr_page_id = (int) get_option( $vr_option );
+
+	if ( $vr_page_id > 0 && $vr_template !== get_post_meta( $vr_page_id, '_wp_page_template', true ) ) {
+		update_post_meta( $vr_page_id, '_wp_page_template', $vr_template );
+		WP_CLI::log( sprintf( '  %-20s %-9s #%d', $vr_template, 'assigned', $vr_page_id ) );
+	}
 }
 
 // A site icon, so a tab, a bookmark and a shared link are not blank. The one

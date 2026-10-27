@@ -144,7 +144,7 @@ final class StructuredData {
 		}
 
 		$rendered = apply_filters( 'the_content', $post->post_content );
-		$matched  = preg_match_all( '#<h2[^>]*>(.+?)</h2>\s*<p[^>]*>(.+?)</p>#is', (string) $rendered, $pairs, PREG_SET_ORDER );
+		$matched  = preg_match_all( '#<summary[^>]*>(.+?)</summary>\s*<p[^>]*>(.+?)</p>#is', (string) $rendered, $pairs, PREG_SET_ORDER );
 
 		if ( ! $matched ) {
 			return null;

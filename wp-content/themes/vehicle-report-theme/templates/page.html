@@ -1,13 +1,18 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"layout":{"type":"default"}} -->
-<main class="wp-block-group" style="padding-top:3rem;padding-bottom:3rem">
-	<!-- wp:group {"layout":{"type":"constrained"}} -->
-	<div class="wp-block-group">
+<!-- wp:group {"tagName":"main","layout":{"type":"default"}} -->
+<main class="wp-block-group">
+	<!-- wp:group {"className":"vr-page-head","style":{"spacing":{"padding":{"top":"clamp(2.5rem,5vw,4rem)","bottom":"clamp(2.5rem,5vw,4rem)"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vr-page-head" style="padding-top:clamp(2.5rem,5vw,4rem);padding-bottom:clamp(2.5rem,5vw,4rem)">
 		<!-- wp:post-title {"level":1} /-->
 	</div>
 	<!-- /wp:group -->
-	<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+
+	<!-- wp:group {"className":"vr-page-body","style":{"spacing":{"padding":{"top":"clamp(2rem,4vw,3.5rem)","bottom":"clamp(2rem,4vw,3.5rem)"}}},"layout":{"type":"default"}} -->
+	<div class="wp-block-group vr-page-body" style="padding-top:clamp(2rem,4vw,3.5rem);padding-bottom:clamp(2rem,4vw,3.5rem)">
+		<!-- wp:post-content {"layout":{"type":"constrained"}} /-->
+	</div>
+	<!-- /wp:group -->
 </main>
 <!-- /wp:group -->
 
