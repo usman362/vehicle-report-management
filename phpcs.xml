@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<ruleset name="Vehicle Report Orders">
+    <description>WordPress coding standards for the custom plugin and theme only; WordPress core and third-party plugins are excluded.</description>
+
+    <!-- Production code only. The PHPUnit suite follows PHPUnit conventions
+         and is verified by `composer test`, not by the WordPress sniffs. -->
+    <file>wp-content/plugins/vehicle-report-orders</file>
+
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+    <exclude-pattern>*/node_modules/*</exclude-pattern>
+
+    <arg name="extensions" value="php"/>
+    <arg name="colors"/>
+    <arg value="sp"/>
+
+    <config name="minimum_wp_version" value="6.6"/>
+    <config name="testVersion" value="8.1-"/>
+
+    <rule ref="WordPress">
+        <!-- PSR-4 class files, so the WordPress file-naming rule does not apply. -->
+        <exclude name="WordPress.Files.FileName"/>
+    </rule>
+    <rule ref="PHPCompatibilityWP"/>
+
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="vehicle-report-orders"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
