@@ -1,0 +1,1124 @@
+# Copyright (C) 2026 Vehicle Report UK
+# This file is distributed under the GPL-2.0-or-later.
+msgid ""
+msgstr ""
+"Project-Id-Version: Vehicle Report Orders 0.1.0\n"
+"Report-Msgid-Bugs-To: https://github.com/usman362/vehicle-report-management/issues\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-10-27T19:38:12+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.12.0\n"
+"X-Domain: vehicle-report-orders\n"
+
+#. Plugin Name of the plugin
+#: vehicle-report-orders.php
+msgid "Vehicle Report Orders"
+msgstr ""
+
+#. Description of the plugin
+#: vehicle-report-orders.php
+msgid "Order capture, staff fulfilment queue and secure manual report delivery for the UK vehicle report service. No automatic vehicle-data lookup, CRM or outbound marketing."
+msgstr ""
+
+#. Author of the plugin
+#: vehicle-report-orders.php
+msgid "Vehicle Report UK"
+msgstr ""
+
+#: src/Admin/AuditLogPage.php:32
+msgid "You do not have permission to view the audit log."
+msgstr ""
+
+#: src/Admin/CapabilityManager.php:60
+msgid "Report fulfilment staff"
+msgstr ""
+
+#: src/Admin/CapabilityManager.php:64
+msgid "Report support agent"
+msgstr ""
+
+#: src/Admin/CapabilityManager.php:68
+msgid "Report store manager"
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:102
+msgid "That order no longer exists."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:114
+msgid "Unknown action."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:135
+msgid "Order assigned to you."
+msgstr ""
+
+#. translators: 1: current state, 2: requested state.
+#: src/Admin/FulfillmentActions.php:159
+#, php-format
+msgid "An order cannot go from \"%1$s\" to \"%2$s\"."
+msgstr ""
+
+#. translators: %s: new state.
+#: src/Admin/FulfillmentActions.php:173
+#, php-format
+msgid "Order moved to \"%s\"."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:190
+msgid "Say why the report cannot be produced; the customer is owed an explanation."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:228
+msgid "List the sources this report is based on. A report with no stated source cannot be sent."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:236
+msgid "Choose a PDF to upload."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:246
+msgid "Report stored. Nothing has been sent to the customer yet."
+msgstr ""
+
+#. translators: %s: coverage summary, for example "2 of 3 sources checked".
+#: src/Admin/FulfillmentActions.php:249
+#, php-format
+msgid "Report stored (%s). The customer will be told which checks were not possible. Nothing has been sent yet."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:275
+msgid "The report was released but the email could not be sent. A retry has been scheduled."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:279
+msgid "Report delivered and emailed to the customer."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:297
+msgid "This order has been refunded in full, so the report cannot be sent again."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:301
+msgid "Only a delivered report can be resent."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:307
+msgid "A fresh link has been emailed to the customer."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:308
+msgid "The email could not be sent. A retry has been scheduled."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:325
+msgid "Existing download links no longer work. Use resend to issue a new one."
+msgstr ""
+
+#: src/Admin/FulfillmentActions.php:339
+msgid "You do not have permission to do that."
+msgstr ""
+
+#: src/Admin/FulfillmentQueuePage.php:61
+msgid "You do not have permission to view the fulfilment queue."
+msgstr ""
+
+#: src/Admin/Menu.php:76
+#: src/Admin/Menu.php:86
+msgid "Vehicle Reports"
+msgstr ""
+
+#: src/Admin/Menu.php:97
+#: src/Admin/Menu.php:98
+#: templates/admin/queue.php:24
+msgid "Fulfilment queue"
+msgstr ""
+
+#: src/Admin/Menu.php:106
+#: templates/admin/settings.php:21
+msgid "Report settings"
+msgstr ""
+
+#: src/Admin/Menu.php:107
+msgid "Settings"
+msgstr ""
+
+#: src/Admin/Menu.php:115
+#: src/Admin/Menu.php:116
+#: templates/admin/audit-log.php:19
+msgid "Audit log"
+msgstr ""
+
+#: src/Admin/OrderPanel.php:130
+#: src/Notifications/OrderEmailAdditions.php:74
+#: src/Notifications/OrderEmailAdditions.php:86
+msgid "Vehicle report"
+msgstr ""
+
+#: src/Admin/OrderPanel.php:153
+msgid "You do not have permission to see report fulfilment."
+msgstr ""
+
+#: src/Admin/SettingsPage.php:36
+msgid "You do not have permission to manage report settings."
+msgstr ""
+
+#. translators: 1: product name, 2: formatted price or a note that none is set.
+#: src/Admin/SettingsPage.php:133
+#, php-format
+msgid "%1$s — %2$s"
+msgstr ""
+
+#: src/Admin/SettingsPage.php:135
+msgid "no price set"
+msgstr ""
+
+#: src/Admin/StoreVisibility.php:96
+msgid "WooCommerce is in coming-soon mode for store pages. Customers cannot reach the shop, cart or checkout, so no orders can arrive. You can still see them because you are signed in."
+msgstr ""
+
+#: src/Admin/StoreVisibility.php:97
+msgid "WooCommerce is in coming-soon mode for the whole site. Visitors see a placeholder instead of the storefront, so no orders can arrive. You can still see it because you are signed in."
+msgstr ""
+
+#: src/Admin/StoreVisibility.php:101
+msgid "The store is hidden from customers."
+msgstr ""
+
+#: src/Admin/StoreVisibility.php:106
+msgid "Change site visibility"
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:57
+#: src/Checkout/RegistrationField.php:58
+#: src/Checkout/RegistrationField.php:106
+#: src/Privacy/PersonalData.php:134
+#: templates/storefront/order-form.php:39
+msgid "Vehicle registration"
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:76
+#: src/Checkout/RegistrationField.php:135
+msgid "Enter the vehicle registration as it appears on the number plate."
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:107
+msgid "AB12 CDE"
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:108
+msgid "The registration of the vehicle this report is about. We check it by hand before the report is prepared."
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:129
+msgid "Please enter the vehicle registration so we know which vehicle to report on."
+msgstr ""
+
+#: src/Domain/CoverageOutcome.php:36
+msgid "Checked — a record was found"
+msgstr ""
+
+#: src/Domain/CoverageOutcome.php:37
+msgid "Checked — no record for this vehicle"
+msgstr ""
+
+#: src/Domain/CoverageOutcome.php:38
+msgid "Could not be checked"
+msgstr ""
+
+#: src/Domain/CoverageOutcome.php:49
+msgid "Checked — see the report"
+msgstr ""
+
+#: src/Domain/CoverageOutcome.php:50
+msgid "Checked — nothing recorded for this vehicle"
+msgstr ""
+
+#: src/Domain/CoverageOutcome.php:51
+msgid "Not checked — this information was not available to us"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:111
+msgid "Not ready"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:112
+msgid "Awaiting staff"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:113
+msgid "In progress"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:114
+#: templates/admin/order-panel.php:150
+msgid "Needs customer information"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:115
+msgid "Report uploaded"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:116
+msgid "Delivered"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:117
+msgid "Delivery failed"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:118
+msgid "Cannot fulfil"
+msgstr ""
+
+#: src/Domain/FulfillmentStatus.php:119
+msgid "Cancelled"
+msgstr ""
+
+#: src/Domain/Settings.php:165
+msgid "Delivery window in business hours (SLA-01)"
+msgstr ""
+
+#: src/Domain/Settings.php:169
+msgid "The days of the week the team works (SLA-01)"
+msgstr ""
+
+#: src/Domain/Settings.php:173
+msgid "Customer support email address"
+msgstr ""
+
+#: src/Domain/Settings.php:177
+msgid "Registered trading name (LEGAL-01)"
+msgstr ""
+
+#: src/Domain/Settings.php:181
+msgid "Approved report data sources (REPORT-01)"
+msgstr ""
+
+#: src/Domain/Settings.php:185
+msgid "Terms version recorded against each order (LEGAL-01)"
+msgstr ""
+
+#: src/Domain/Settings.php:189
+msgid "Confirmation that the terms, privacy, cookie and refund pages have been reviewed (LEGAL-01)"
+msgstr ""
+
+#: src/Domain/Settings.php:196
+msgid "The WooCommerce product that represents the report"
+msgstr ""
+
+#: src/Domain/Settings.php:198
+msgid "A real price on the report product (PRICE-01)"
+msgstr ""
+
+#: src/Notifications/EmailNotifier.php:69
+msgid "No report file to link to."
+msgstr ""
+
+#. translators: %s: order number.
+#: src/Notifications/EmailNotifier.php:79
+#, php-format
+msgid "Your vehicle report is ready (order %s)"
+msgstr ""
+
+#: src/Notifications/EmailNotifier.php:105
+msgid "wp_mail() returned false."
+msgstr ""
+
+#. translators: %s: order number.
+#: src/Notifications/EmailNotifier.php:128
+#, php-format
+msgid "Report delivery failed for order %s"
+msgstr ""
+
+#: src/Notifications/EmailNotifier.php:180
+msgid "Maximum delivery attempts reached."
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:58
+msgid "not supplied — we will ask you"
+msgstr ""
+
+#. translators: 1: business hours, 2: opening hours description.
+#: src/Notifications/OrderEmailAdditions.php:63
+#, php-format
+msgid "Your report is prepared by hand and emailed within %1$d business hours (%2$s)."
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:67
+msgid "Your report is prepared by hand and emailed as soon as it is ready."
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:69
+msgid "This message confirms your payment. The report itself arrives in a separate email with a private download link."
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:75
+#: src/Notifications/OrderEmailAdditions.php:87
+#: templates/admin/order-panel.php:42
+#: templates/admin/queue.php:69
+msgid "Registration"
+msgstr ""
+
+#: src/Plugin.php:131
+msgid "Vehicle Report Orders needs WooCommerce to be installed and active."
+msgstr ""
+
+#: src/Privacy/PersonalData.php:75
+msgid "Draft wording for review by the merchant and their legal adviser before publication."
+msgstr ""
+
+#: src/Privacy/PersonalData.php:76
+msgid "When you order a vehicle report we record the registration mark you entered, your order and billing details, the version of our terms you accepted, and the times at which your order was paid for and your report was delivered."
+msgstr ""
+
+#: src/Privacy/PersonalData.php:77
+msgid "The report itself is stored as a file outside the public part of this website and is reached only through a signed link that expires. Staff actions on your order are written to an audit record so we can show what was done and when."
+msgstr ""
+
+#: src/Privacy/PersonalData.php:78
+msgid "If you ask us to erase your data we delete the stored report file, the registration mark and the contact details held against the order, and any link already sent to you stops working. We keep the order itself, its totals and the audit record, because we are required to retain financial records and an audit record that can be deleted on request is not an audit record."
+msgstr ""
+
+#: src/Privacy/PersonalData.php:80
+#: src/Privacy/PersonalData.php:92
+#: src/Privacy/PersonalData.php:108
+#: src/Privacy/PersonalData.php:168
+msgid "Vehicle report orders"
+msgstr ""
+
+#: src/Privacy/PersonalData.php:130
+msgid "Order number"
+msgstr ""
+
+#: src/Privacy/PersonalData.php:138
+msgid "Report status"
+msgstr ""
+
+#: src/Privacy/PersonalData.php:142
+msgid "Delivery deadline"
+msgstr ""
+
+#: src/Privacy/PersonalData.php:146
+msgid "Delivered at"
+msgstr ""
+
+#: src/Privacy/PersonalData.php:150
+msgid "Terms version accepted"
+msgstr ""
+
+#. translators: %d: report version number.
+#: src/Privacy/PersonalData.php:159
+#, php-format
+msgid "Report file (version %d)"
+msgstr ""
+
+#. translators: %s: order number.
+#: src/Privacy/PersonalData.php:222
+#, php-format
+msgid "Order %s was kept as a financial record, without the registration, the stored report or the customer email snapshot. Its audit history is retained."
+msgstr ""
+
+#: src/Reports/Coverage.php:56
+msgid "No data sources are configured, so there is nothing to record against this report."
+msgstr ""
+
+#. translators: %s: the name of a data source.
+#: src/Reports/Coverage.php:71
+#, php-format
+msgid "Say what happened with \"%s\". Every source has to be answered before the report can be stored."
+msgstr ""
+
+#. translators: %s: the name of a data source.
+#: src/Reports/Coverage.php:84
+#, php-format
+msgid "Say why \"%s\" could not be checked. A check nobody can explain reads like a check that passed."
+msgstr ""
+
+#. translators: 1: number of sources checked, 2: total number of sources.
+#: src/Reports/Coverage.php:197
+#, php-format
+msgid "%1$d of %2$d sources checked"
+msgstr ""
+
+#: src/Reports/DownloadController.php:190
+msgid "This report link has expired. Please contact support and we will send a new one."
+msgstr ""
+
+#: src/Reports/DownloadController.php:191
+msgid "This report link is not valid."
+msgstr ""
+
+#: src/Reports/DownloadController.php:197
+msgid "Report unavailable"
+msgstr ""
+
+#: src/Reports/ReportService.php:61
+msgid "The private report directory is not writable."
+msgstr ""
+
+#: src/Reports/ReportService.php:69
+msgid "That file did not arrive through an upload."
+msgstr ""
+
+#: src/Reports/ReportService.php:87
+#: src/Reports/ReportService.php:95
+msgid "The report could not be stored."
+msgstr ""
+
+#: src/Reports/ReportService.php:116
+msgid "The report file was stored but could not be recorded."
+msgstr ""
+
+#: src/Reports/ReportService.php:211
+msgid "There is no uploaded report to deliver."
+msgstr ""
+
+#. translators: %s: current fulfilment state.
+#: src/Reports/ReportService.php:221
+#, php-format
+msgid "A report cannot be delivered from the state \"%s\"."
+msgstr ""
+
+#: src/Reports/UploadValidator.php:44
+#: src/Reports/UploadValidator.php:70
+msgid "The uploaded file could not be read."
+msgstr ""
+
+#: src/Reports/UploadValidator.php:48
+msgid "The uploaded file is empty."
+msgstr ""
+
+#. translators: %s: maximum size, already formatted.
+#: src/Reports/UploadValidator.php:56
+#, php-format
+msgid "Report files must be %s or smaller."
+msgstr ""
+
+#: src/Reports/UploadValidator.php:63
+msgid "Only PDF files can be delivered as reports."
+msgstr ""
+
+#: src/Reports/UploadValidator.php:77
+msgid "That file is not a PDF, whatever its name says."
+msgstr ""
+
+#: src/Reports/UploadValidator.php:81
+msgid "The file contains script markup and was rejected."
+msgstr ""
+
+#: src/Storefront/Disclosures.php:50
+msgid "price to be confirmed"
+msgstr ""
+
+#. translators: %s: formatted price.
+#: src/Storefront/Disclosures.php:58
+#, php-format
+msgid "%s including VAT"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:74
+msgid "delivery time to be confirmed"
+msgstr ""
+
+#. translators: 1: business hours promised, 2: opening hours.
+#: src/Storefront/Disclosures.php:80
+#, php-format
+msgid "within %1$d business hours (%2$s)"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:96
+msgid "the data sources for this service have not been published yet"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:123
+msgid "trading name to be confirmed"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:135
+msgid "support address to be confirmed"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:151
+msgid "opening hours to be confirmed"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:166
+msgid "an example report has not been published yet"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:172
+msgid "Open the example report"
+msgstr ""
+
+#: src/Storefront/Disclosures.php:191
+msgid "Draft wording, not yet in force."
+msgstr ""
+
+#: src/Storefront/Disclosures.php:193
+msgid "This page is a starting point for the operator and their legal adviser. It has not been reviewed, it does not yet state the terms of any contract, and no orders can be placed while it stands unconfirmed."
+msgstr ""
+
+#: src/Storefront/OrderForm.php:187
+msgid "Enter the registration as it appears on the number plate, for example AB12 CDE."
+msgstr ""
+
+#: src/Storefront/OrderForm.php:188
+msgid "Report ordering is not available right now. Please contact us and we will help."
+msgstr ""
+
+#: templates/admin/audit-log.php:21
+msgid "Append-only record of fulfilment actions. Entries are never edited or removed, and sensitive values are redacted before they are stored."
+msgstr ""
+
+#: templates/admin/audit-log.php:27
+msgid "When (UTC)"
+msgstr ""
+
+#: templates/admin/audit-log.php:28
+#: templates/admin/queue.php:68
+#: templates/emails/order-received.php:28
+msgid "Order"
+msgstr ""
+
+#: templates/admin/audit-log.php:29
+msgid "Who"
+msgstr ""
+
+#: templates/admin/audit-log.php:30
+msgid "Action"
+msgstr ""
+
+#: templates/admin/audit-log.php:31
+msgid "State change"
+msgstr ""
+
+#: templates/admin/audit-log.php:32
+msgid "Detail"
+msgstr ""
+
+#: templates/admin/audit-log.php:37
+msgid "Nothing recorded yet."
+msgstr ""
+
+#: templates/admin/audit-log.php:52
+msgid "System"
+msgstr ""
+
+#: templates/admin/order-panel.php:38
+msgid "Fulfilment state"
+msgstr ""
+
+#: templates/admin/order-panel.php:47
+msgid "Not supplied — ask the customer before preparing anything."
+msgstr ""
+
+#: templates/admin/order-panel.php:52
+#: templates/admin/queue.php:73
+msgid "Promise"
+msgstr ""
+
+#: templates/admin/order-panel.php:56
+msgid "No delivery window was agreed when this order was placed."
+msgstr ""
+
+#. translators: %s: hours.
+#: templates/admin/order-panel.php:63
+#, php-format
+msgid "Overdue by %s hours"
+msgstr ""
+
+#. translators: %s: hours.
+#: templates/admin/order-panel.php:72
+#, php-format
+msgid "%s hours remaining"
+msgstr ""
+
+#: templates/admin/order-panel.php:81
+msgid "Assigned to"
+msgstr ""
+
+#: templates/admin/order-panel.php:82
+msgid "Nobody"
+msgstr ""
+
+#: templates/admin/order-panel.php:88
+msgid "Report files"
+msgstr ""
+
+#: templates/admin/order-panel.php:92
+msgid "Version"
+msgstr ""
+
+#: templates/admin/order-panel.php:93
+msgid "Uploaded"
+msgstr ""
+
+#: templates/admin/order-panel.php:94
+msgid "File"
+msgstr ""
+
+#: templates/admin/order-panel.php:95
+msgid "SHA-256"
+msgstr ""
+
+#: templates/admin/order-panel.php:96
+msgid "Sources"
+msgstr ""
+
+#: templates/admin/order-panel.php:97
+msgid "State"
+msgstr ""
+
+#: templates/admin/order-panel.php:115
+#: templates/admin/order-panel.php:184
+msgid "What each source said"
+msgstr ""
+
+#: templates/admin/order-panel.php:142
+msgid "Assign to me"
+msgstr ""
+
+#: templates/admin/order-panel.php:146
+msgid "Mark in progress"
+msgstr ""
+
+#: templates/admin/order-panel.php:154
+msgid "Deliver to customer"
+msgstr ""
+
+#: templates/admin/order-panel.php:158
+msgid "Resend link"
+msgstr ""
+
+#: templates/admin/order-panel.php:160
+msgid "Links already sent will stop working. Continue?"
+msgstr ""
+
+#: templates/admin/order-panel.php:160
+msgid "Revoke links"
+msgstr ""
+
+#: templates/admin/order-panel.php:167
+msgid "Upload a report"
+msgstr ""
+
+#: templates/admin/order-panel.php:169
+msgid "PDF only. Uploading stores the file privately; the customer is told nothing until you choose to deliver it."
+msgstr ""
+
+#: templates/admin/order-panel.php:172
+msgid "Report file"
+msgstr ""
+
+#: templates/admin/order-panel.php:176
+msgid "Sources used"
+msgstr ""
+
+#: templates/admin/order-panel.php:177
+msgid "e.g. DVSA MOT history (checked 27 Oct 2026), DVLA vehicle enquiry"
+msgstr ""
+
+#: templates/admin/order-panel.php:180
+msgid "Anything else the customer should know"
+msgstr ""
+
+#: templates/admin/order-panel.php:181
+msgid "e.g. the plate has changed owner twice since the last MOT"
+msgstr ""
+
+#: templates/admin/order-panel.php:187
+msgid "No data sources are configured yet, so a report cannot be stored. Add them under Vehicle Reports → Settings."
+msgstr ""
+
+#: templates/admin/order-panel.php:191
+msgid "Answer every source. \"Checked — no record\" and \"could not be checked\" mean different things to the customer, and the report says which happened."
+msgstr ""
+
+#: templates/admin/order-panel.php:210
+msgid "If it could not be checked, why — the customer is told this"
+msgstr ""
+
+#: templates/admin/order-panel.php:218
+msgid "Store report"
+msgstr ""
+
+#: templates/admin/order-panel.php:224
+msgid "Cannot produce this report"
+msgstr ""
+
+#: templates/admin/order-panel.php:225
+msgid "Why, in words the customer can be told"
+msgstr ""
+
+#: templates/admin/order-panel.php:227
+msgid "Mark as cannot fulfil"
+msgstr ""
+
+#. translators: %s: number of matching orders.
+#: templates/admin/queue.php:29
+#, php-format
+msgid "%s matching paid orders"
+msgstr ""
+
+#: templates/admin/queue.php:38
+msgid "Outstanding work"
+msgstr ""
+
+#: templates/admin/queue.php:39
+msgid "All report orders"
+msgstr ""
+
+#: templates/admin/queue.php:48
+msgid "Anyone"
+msgstr ""
+
+#: templates/admin/queue.php:58
+msgid "Overdue only"
+msgstr ""
+
+#: templates/admin/queue.php:61
+msgid "Order number, registration or email"
+msgstr ""
+
+#: templates/admin/queue.php:62
+msgid "Filter"
+msgstr ""
+
+#: templates/admin/queue.php:70
+msgid "Customer"
+msgstr ""
+
+#: templates/admin/queue.php:71
+#: templates/emails/order-received.php:32
+msgid "Paid"
+msgstr ""
+
+#: templates/admin/queue.php:72
+msgid "Fulfilment"
+msgstr ""
+
+#: templates/admin/queue.php:74
+msgid "Assigned"
+msgstr ""
+
+#: templates/admin/queue.php:81
+msgid "No report orders match. Paid orders appear here automatically once the gateway confirms payment."
+msgstr ""
+
+#: templates/admin/queue.php:101
+msgid "missing"
+msgstr ""
+
+#: templates/admin/queue.php:110
+msgid "No window agreed"
+msgstr ""
+
+#. translators: %s: number of hours.
+#: templates/admin/queue.php:117
+#, php-format
+msgid "%s h overdue"
+msgstr ""
+
+#. translators: %s: number of hours.
+#: templates/admin/queue.php:126
+#, php-format
+msgid "%s h left"
+msgstr ""
+
+#: templates/admin/queue.php:133
+msgid "Unassigned"
+msgstr ""
+
+#: templates/admin/settings.php:24
+msgid "Settings saved."
+msgstr ""
+
+#: templates/admin/settings.php:30
+msgid "Everything a paid order needs is configured."
+msgstr ""
+
+#: templates/admin/settings.php:31
+msgid "Payments still run in whatever mode the gateway itself is set to; check that separately before launch."
+msgstr ""
+
+#: templates/admin/settings.php:36
+msgid "This site is not ready to take a real payment."
+msgstr ""
+
+#: templates/admin/settings.php:37
+msgid "The merchant must supply the following before the storefront may promise anything:"
+msgstr ""
+
+#: templates/admin/settings.php:49
+msgid "Delivery promise"
+msgstr ""
+
+#: templates/admin/settings.php:51
+msgid "Shown to the customer before payment and used to flag overdue orders. Promise only what the team can actually meet."
+msgstr ""
+
+#: templates/admin/settings.php:55
+msgid "Delivery window (business hours)"
+msgstr ""
+
+#: templates/admin/settings.php:58
+msgid "Zero means no window has been agreed yet; the storefront will not state a delivery time."
+msgstr ""
+
+#: templates/admin/settings.php:62
+#: templates/admin/settings.php:65
+msgid "Working days"
+msgstr ""
+
+#: templates/admin/settings.php:73
+msgid "The delivery window is counted only during these days and hours, so a Friday evening order is not promised for Saturday."
+msgstr ""
+
+#: templates/admin/settings.php:77
+msgid "Opening hours"
+msgstr ""
+
+#: templates/admin/settings.php:87
+msgid "No working days selected yet."
+msgstr ""
+
+#. translators: %s: human description of the opening hours.
+#: templates/admin/settings.php:90
+#, php-format
+msgid "Customers will be told: %s"
+msgstr ""
+
+#: templates/admin/settings.php:100
+msgid "Trader and support"
+msgstr ""
+
+#: templates/admin/settings.php:103
+msgid "Registered trading name"
+msgstr ""
+
+#: templates/admin/settings.php:107
+msgid "Support email address"
+msgstr ""
+
+#: templates/admin/settings.php:111
+msgid "Terms version"
+msgstr ""
+
+#: templates/admin/settings.php:113
+msgid "2026-10-27"
+msgstr ""
+
+#: templates/admin/settings.php:114
+msgid "Recorded against every order, so a later change to the terms never rewrites what a past customer agreed to."
+msgstr ""
+
+#: templates/admin/settings.php:119
+msgid "Report product and sources"
+msgstr ""
+
+#: templates/admin/settings.php:122
+msgid "Report product"
+msgstr ""
+
+#: templates/admin/settings.php:125
+msgid "— not selected —"
+msgstr ""
+
+#: templates/admin/settings.php:132
+msgid "The price lives on the WooCommerce product, so tax settings and receipts stay consistent."
+msgstr ""
+
+#: templates/admin/settings.php:136
+msgid "Approved data sources"
+msgstr ""
+
+#: templates/admin/settings.php:139
+msgid "One source per line, exactly as staff are licensed to use and cite. These are published on the data-sources page and attached to each report."
+msgstr ""
+
+#: templates/admin/settings.php:143
+msgid "Example report"
+msgstr ""
+
+#: templates/admin/settings.php:146
+msgid "Link to a real report you have permission to publish, with the vehicle and customer details removed. Until one is supplied the sample page says so instead of showing an invented report."
+msgstr ""
+
+#: templates/admin/settings.php:151
+msgid "Legal pages"
+msgstr ""
+
+#: templates/admin/settings.php:154
+msgid "Copy reviewed"
+msgstr ""
+
+#: templates/admin/settings.php:158
+msgid "The terms, privacy, cookie and refund pages have been reviewed and are the operator's own wording."
+msgstr ""
+
+#: templates/admin/settings.php:160
+msgid "The pages shipped with this site are drafting aids. While this box is clear every legal page carries a visible draft notice and the store cannot go live."
+msgstr ""
+
+#: templates/admin/settings.php:165
+msgid "Delivery mechanics"
+msgstr ""
+
+#: templates/admin/settings.php:168
+msgid "Download link lifetime (hours)"
+msgstr ""
+
+#: templates/admin/settings.php:172
+msgid "Maximum delivery attempts"
+msgstr ""
+
+#: templates/admin/settings.php:176
+msgid "Report file storage"
+msgstr ""
+
+#: templates/admin/settings.php:181
+msgid "Outside the web root: the server cannot serve these files directly."
+msgstr ""
+
+#: templates/admin/settings.php:183
+msgid "Inside the web root. Protection depends on the web server honouring .htaccess, which nginx does not. Set VR_PRIVATE_STORAGE_DIR to a path outside the document root."
+msgstr ""
+
+#: templates/admin/settings.php:190
+msgid "Go-live confirmation"
+msgstr ""
+
+#: templates/admin/settings.php:193
+msgid "Ready for real customers"
+msgstr ""
+
+#: templates/admin/settings.php:197
+msgid "Price, delivery window, data sources and policies are approved and deliverable."
+msgstr ""
+
+#: templates/admin/settings.php:200
+msgid "Cannot be confirmed while anything above is outstanding."
+msgstr ""
+
+#: templates/admin/settings.php:206
+msgid "Save settings"
+msgstr ""
+
+#: templates/emails/delivery-failed.php:17
+msgid "A report could not be delivered"
+msgstr ""
+
+#. translators: %s: order number.
+#: templates/emails/delivery-failed.php:25
+#, php-format
+msgid "Order %s has an uploaded report that could not be emailed to the customer."
+msgstr ""
+
+#: templates/emails/delivery-failed.php:31
+msgid "Reason:"
+msgstr ""
+
+#: templates/emails/delivery-failed.php:34
+msgid "Open the order"
+msgstr ""
+
+#: templates/emails/delivery-failed.php:38
+msgid "The customer has not been told the report is ready. The file is still stored against the order."
+msgstr ""
+
+#: templates/emails/order-received.php:21
+msgid "We have your report request"
+msgstr ""
+
+#: templates/emails/order-received.php:25
+msgid "Thank you — your payment has been confirmed and your request is with our team."
+msgstr ""
+
+#: templates/emails/order-received.php:30
+msgid "Vehicle"
+msgstr ""
+
+#. translators: 1: number of business hours, 2: business hours description.
+#: templates/emails/order-received.php:40
+#, php-format
+msgid "A member of staff prepares each report by hand. Yours will be emailed within %1$d business hours (%2$s)."
+msgstr ""
+
+#: templates/emails/order-received.php:47
+msgid "A member of staff prepares each report by hand and will email yours as soon as it is ready."
+msgstr ""
+
+#: templates/emails/order-received.php:51
+msgid "This message confirms your payment only. We will send a separate email when the report itself is ready."
+msgstr ""
+
+#: templates/emails/report-ready.php:20
+msgid "Your vehicle report is ready"
+msgstr ""
+
+#. translators: %s: vehicle registration.
+#: templates/emails/report-ready.php:29
+#, php-format
+msgid "The report for %s is ready to download."
+msgstr ""
+
+#: templates/emails/report-ready.php:33
+msgid "Your report is ready to download."
+msgstr ""
+
+#: templates/emails/report-ready.php:40
+msgid "Download your report (PDF)"
+msgstr ""
+
+#. translators: %d: number of hours the link lasts.
+#: templates/emails/report-ready.php:48
+#, php-format
+msgid "The link works for %d hours and only for this order. Please do not forward it — anyone who opens it can read your report."
+msgstr ""
+
+#: templates/emails/report-ready.php:55
+msgid "What we were able to check"
+msgstr ""
+
+#: templates/emails/report-ready.php:74
+msgid "Where a check was not available, that is what it means: the information could not be reached for this vehicle. It is not a sign that there is nothing to find."
+msgstr ""
+
+#: templates/emails/report-ready.php:80
+msgid "If the link has expired, reply to this email and we will send a new one."
+msgstr ""
+
+#. translators: %s: support email address.
+#: templates/emails/_shell.php:43
+#, php-format
+msgid "Questions about this order? Reply to this email or write to %s."
+msgstr ""
+
+#: templates/storefront/order-form.php:56
+msgid "We check the registration by hand before preparing your report. Entering it here does not look anything up yet."
+msgstr ""
+
+#: templates/storefront/order-form.php:61
+msgid "Continue to report order"
+msgstr ""
+
+#. translators: %s: price, already formatted.
+#: templates/storefront/order-form.php:72
+#, php-format
+msgid "Price: %s."
+msgstr ""
+
+#. translators: 1: business hours, 2: opening hours description.
+#: templates/storefront/order-form.php:82
+#, php-format
+msgid "Emailed within %1$d business hours (%2$s)."
+msgstr ""
+
+#: templates/storefront/order-form.php:93
+msgid "Ordering is switched off until the price, delivery window and report sources are confirmed."
+msgstr ""

@@ -162,6 +162,14 @@ Refund through WooCommerce so this runs. A refund made only in the payment
 provider's dashboard does not reach the site, and the customer keeps their
 link.
 
+## 6c. Checkout style
+
+The site is built and tested on WooCommerce's block checkout, which is what the
+checkout page contains. The classic shortcode checkout is a tested fallback: if
+the block checkout ever has to be abandoned, replacing the checkout page's
+content with `[woocommerce_checkout]` keeps the registration field, the terms
+checkbox and the order metadata working. Nothing else needs changing.
+
 ## 7. Backups and restore
 
 Report files live outside both the database and the repository, so a backup

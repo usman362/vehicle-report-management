@@ -93,6 +93,25 @@ After a full refund the resend button refuses, with a reason, and the refusal
 is written to the audit log. A partial refund leaves everything reachable,
 which is the point of a partial refund.
 
+## Removing the plugin
+
+Deleting the plugin removes its settings, its three staff roles and the
+capabilities it granted, and cancels any scheduled delivery retries. It leaves
+the orders, the stored reports, the report history and the audit trail: those
+are the business's records, and a customer who paid last month should not lose
+their report because someone tidied the plugins screen.
+
+If the site really is being wound up and everything must go, add this to
+`wp-config.php` before deleting the plugin:
+
+```php
+define( 'VR_REMOVE_ALL_DATA', true );
+```
+
+That drops the plugin's tables, deletes the stored report files and removes the
+registration and delivery metadata from orders. It cannot be undone except from
+a backup.
+
 ## Backups
 
 `scripts/backup.sh` saves the database, the uploads and the private report

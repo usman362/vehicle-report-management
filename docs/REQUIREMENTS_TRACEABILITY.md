@@ -41,6 +41,8 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 | FUL-04 | Delivery email with retries and attempt log | §11 | `Notifications/EmailNotifier.php` | T14, T15 | done |
 | FUL-05 | Replacing a report keeps the previous version | §11 | `Reports/ReportVersionRepository.php` | T27 | done |
 | REPORT-02 | A report states, source by source, what was checked and what was not | §6, §17 | `Domain/CoverageOutcome.php`, `Reports/Coverage.php`, `Admin/FulfillmentActions.php`, `templates/emails/report-ready.php` | `CoverageTest`, `tests/integration/cases/05-coverage.php` | done — staff cannot store a report with a source unanswered, and "could not be checked" must say why |
+| I18N-01 | Every string translatable, with a template shipped | §9 | `languages/vehicle-report-orders.pot` (256 strings), `languages/vehicle-report-theme.pot` | `wp i18n make-pot` reports no wrong-domain strings | done |
+| LIFE-01 | Removing the plugin leaves the business records | §17 | `uninstall.php` | verified on a throwaway install, both paths | done — full removal is opt-in via `VR_REMOVE_ALL_DATA` |
 | AUD-01 | Audit trail for every upload, delivery, resend, status change and refund | §12 | `Audit/AuditLogger.php`, `Admin/AuditLogPage.php` | `AuditRedactionTest`, verified | done |
 | CAP-01 | Capability checks server-side for every admin action | §4, §9 | `Admin/CapabilityManager.php`, `Admin/FulfillmentActions.php` | T11, T30 | done |
 | QA-02 | Integration tests against a real WordPress and WooCommerce | §20, §26 | `tests/integration/` | T11, T14, T26, T30 | done — 55 assertions, run by `scripts/check.sh` |

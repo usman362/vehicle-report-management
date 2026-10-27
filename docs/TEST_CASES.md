@@ -58,6 +58,20 @@ were exercised against the running local site and the evidence is noted.
 | Pages are reproducible from the repository | verified — `wp eval-file scripts/seed-content.php` created or refreshed all 13 pages and set the front, privacy and terms page options | A fresh install comes up with the same site |
 | Customers can actually reach the store | verified — WooCommerce was found in coming-soon mode, which serves the shop, cart and checkout only to signed-in administrators; the plugin's screens now warn while it is on, and `setup-local.sh` opens the store | The trap is visible instead of silent |
 
+## Removing the plugin
+
+| Case | How it was checked | Result |
+|---|---|---|
+| Deleting the plugin leaves the business records | verified on a throwaway install: the three staff roles, the capabilities granted to core roles, the scheduled retries and the plugin's options were removed; orders, report files, report versions and the audit trail were all still there | Furniture gone, records kept |
+| A site that wants everything gone can say so | verified: with `define( 'VR_REMOVE_ALL_DATA', true )` the three tables are dropped, the stored reports deleted and every `_vr_*` order meta removed. WooCommerce's own orders stay, because they are WooCommerce's record, not this plugin's | Removed on request only |
+
+## Checkout styles
+
+| Case | How it was checked | Result |
+|---|---|---|
+| Block checkout (the installed default) | verified — orders 71 and 104, including on a 375 px viewport | Registration, deadline and terms version captured |
+| Classic checkout (the documented fallback, TEST-01) | verified — the checkout page switched to `[woocommerce_checkout]` and order 207 placed through it: the registration field renders prefilled, the terms checkbox appears, the development gateway offers its outcomes, and the order carries the registration, deadline and terms version | Fallback works |
+
 ## Source-by-source coverage
 
 | Case | How it was checked | Result |
