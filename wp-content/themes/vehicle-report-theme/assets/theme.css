@@ -905,6 +905,14 @@
 
 /* --- Inner page header ---------------------------------------------------- */
 
+/* No block gap under the sticky header: the page background showed through it
+   as a pale line above every masthead. */
+.wp-site-blocks > main { margin-block-start: 0; }
+
+.wp-site-blocks > main > .vr-page-head:first-child { margin-block-start: 0; }
+
+.wp-block-post-content > *:first-child { margin-block-start: 0; }
+
 .vr-page-head {
 	position: relative;
 	background: linear-gradient(135deg, #071321 0%, #122c47 55%, #1b4a78 115%);
@@ -941,6 +949,30 @@
 /* --- Reading column ------------------------------------------------------- */
 
 .vr-page-body { background: var(--wp--preset--color--background); }
+
+/* The page now has one left edge at 1200px, so prose is capped rather than
+   centred in a narrower column — otherwise the title and the sections below it
+   start at two different places. */
+.vr-page-body .entry-content > p,
+.vr-page-body .entry-content > h2,
+.vr-page-body .entry-content > h3,
+.vr-page-body .entry-content > h4,
+.vr-page-body .entry-content > ul,
+.vr-page-body .entry-content > ol,
+.vr-page-body .entry-content > figure,
+.vr-page-body .entry-content > .vr-note,
+.vr-page-body .entry-content > .vr-faq,
+.vr-page-body .entry-content > .vr-cta-band,
+.vr-page-head .wp-block-post-title,
+.vr-page-head h1 {
+	max-width: 48rem;
+	/* Capped, and pinned to the same left edge the wide sections start at, so
+	   the page has one edge rather than two. `max()` keeps it flush once the
+	   viewport is narrower than the wide container. The constrained layout's
+	   own auto margins are printed after this stylesheet, hence !important. */
+	margin-inline-start: max(0px, calc((100% - var(--wp--style--global--wide-size, 1200px)) / 2)) !important;
+	margin-inline-end: auto !important;
+}
 
 /* The opening paragraph carries the page, so it is set larger than the rest. */
 .vr-page-body .entry-content > p:first-child {
@@ -1099,15 +1131,19 @@
 /* --- Package page --------------------------------------------------------- */
 
 /* The product has no photograph, so the summary takes the whole column
-   instead of sitting beside an empty frame. */
-.vr-product-body .woocommerce div.product div.summary,
-.vr-product-body .woocommerce div.product .entry-summary {
-	float: none;
-	width: 100%;
-	margin: 0;
+   instead of floating beside an empty frame. (Removing WooCommerce's own
+   content wrapper also removed the `.woocommerce` class these used to hang
+   off, so they are matched on the product itself.) */
+.vr-product-body div.product div.summary,
+.vr-product-body div.product .entry-summary {
+	float: none !important;
+	width: 100% !important;
+	margin: 0 !important;
 }
 
-.vr-product-body .woocommerce div.product { display: block; }
+.vr-product-body div.product { display: block; }
+
+.vr-product-body div.product::after { content: ""; display: table; clear: both; }
 
 .vr-product-body .product_title { display: none; }
 
