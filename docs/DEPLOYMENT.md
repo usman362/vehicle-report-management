@@ -142,16 +142,37 @@ test mode until the merchant account is genuinely approved.
 
 ## 7. Backups and restore
 
-Back up the database **and the private report directory** — report files are
-not in the database and not in the repository.
+Report files live outside both the database and the repository, so a backup
+that covers only the database restores a site with every order and nothing to
+deliver. `scripts/backup.sh` takes the three parts together — database, uploads
+and the private report directory — and writes a manifest and checksums beside
+them:
 
 ```bash
-wp db export backup-$(date +%F).sql
-tar czf reports-$(date +%F).tar.gz /var/www/vehicle-reports-private
+BACKUP_DIR=/var/backups/vehicle-reports ./scripts/backup.sh
 ```
 
-Test a restore on staging before launch, and confirm afterwards that a report
-delivered before the backup can still be downloaded.
+```cron
+30 2 * * * cd /path/to/site && BACKUP_DIR=/var/backups/vehicle-reports ./scripts/backup.sh >> /var/log/vr-backup.log 2>&1
+```
+
+Keep the copies off this machine as well: a backup on the server that just
+burned down is not a backup. The directory contains customers' reports, so give
+it the same protection as the live one — mode 700, outside the web root, and
+encrypted at rest if your provider offers it.
+
+Restoring asks for confirmation and then replaces all three parts:
+
+```bash
+./scripts/restore.sh /var/backups/vehicle-reports/20261027T120000Z
+```
+
+Rehearse it, on staging, before launch and after any change to where reports
+are stored. The rehearsal that matters is not "did the import run" but: delete
+the report files, drop the plugin's tables, restore, and then open a download
+link a customer was sent **before** the backup. If that link returns the PDF,
+the backup is real. Doing exactly that is what caught a dump this project could
+not import back — see `docs/TEST_CASES.md`.
 
 ## 8. Caching
 

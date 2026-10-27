@@ -27,7 +27,7 @@ or HPI, and it is **not** a CRM, lead system or messaging platform — see
 ├── CLAUDE.md                       agent instructions and scope lock
 ├── docs/                           specification and decisions
 ├── content/pages/                  storefront and legal page copy, as files
-├── scripts/                        setup-local.sh, serve.sh, check.sh, seed-content.php
+├── scripts/                        setup, serve, check, seed-content, backup, restore
 ├── tests/Unit/                     PHPUnit unit tests (no WordPress needed)
 ├── tests/integration/              cases that run inside real WordPress
 ├── phpcs.xml  phpunit.xml  composer.json
@@ -121,6 +121,11 @@ Price, delivery window, report data licence, legal merchant identity and brand
 assets are outstanding — see the blockers in
 [`docs/DECISIONS.md`](docs/DECISIONS.md). Until they are supplied the storefront
 will not start an order, and the go-live confirmation cannot be ticked.
+
+Backups are `scripts/backup.sh` (database, uploads and the private report
+directory together) and `scripts/restore.sh`. The restore has been rehearsed by
+deleting every report file and dropping the plugin's tables: a download link
+issued before the backup returns the report afterwards.
 
 Two traps worth naming, because both look like a working site from the inside:
 WooCommerce installs a store in coming-soon mode, where only signed-in

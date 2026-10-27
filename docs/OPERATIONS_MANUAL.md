@@ -70,6 +70,18 @@ revocation, refused download and failed permission check. Entries cannot be
 edited or deleted, and sensitive values are redacted before they are stored.
 It is the first place to look when a customer disputes something.
 
+## Backups
+
+`scripts/backup.sh` saves the database, the uploads and the private report
+directory in one go; `scripts/restore.sh` puts all three back and asks before
+it does. Both are described in `docs/DEPLOYMENT.md`.
+
+Check once a month that the backups are still being written and are the size
+you expect, and rehearse a restore on staging at least twice a year. A restore
+counts as proven only when a download link issued before the backup returns the
+report afterwards — that single check covers the database, the files and the
+signing secret in one go.
+
 ## After a WordPress, WooCommerce or plugin update
 
 Run `./scripts/check.sh` on a copy of the site. Step ④ exercises the parts that

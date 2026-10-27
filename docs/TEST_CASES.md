@@ -38,7 +38,7 @@ were exercised against the running local site and the evidence is noted.
 | T18 | Mobile checkout | verified — a complete order placed at 375 px: registration entered, block checkout filled, order 71 paid, with the registration, deadline and terms version captured. No horizontal overflow on any page, and the registration field no longer escapes its card | Orderable on a phone |
 | T19 | Keyboard and screen reader | verified — axe-core 4.10 run against all 13 pages plus cart, checkout and the confirmation page: no violations in this site's own markup. Three landmark faults and a missing checkout `h1` were found and fixed | Clean |
 | T20 | Search engine visits a private URL | verified — `noindex` and `no-store` sent on report routes | No report content served |
-| T21 | Backup restore | not yet run | Open: must include the private report directory |
+| T21 | Backup restore | verified — `scripts/backup.sh`, then every report file deleted, all three plugin tables dropped and an order removed; `scripts/restore.sh` brought back 7 orders, 3 report files, 193 rows across the plugin tables, and the download link a customer already held returned the PDF again. The rehearsal also found that the dump carried a `GTID_PURGED` statement the same server refuses on import, so the backup was unrestorable until that was fixed | Restored and proven |
 | T22 | Search for CRM, seller lists, messaging or lead scraping | automated — `grep` over the plugin finds none; no such dependency, table, route or screen exists | Nothing found |
 | T23 | Checkout and fulfilment without matchmaking | verified — orders 29 and 31 | No buyer introduction, CRM or promotional message anywhere |
 | T24 | Order placed before a price or policy change | verified — price, delivery window and terms version are snapshotted on the order | Snapshot unchanged |
@@ -87,4 +87,3 @@ skeleton that is replaced as soon as payment methods load.
 ## Still to do
 
 - Gateway sandbox cases (T08, T16, T28) once the merchant supplies Stripe test keys.
-- A restore rehearsal that includes the private report directory (T21).
