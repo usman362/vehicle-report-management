@@ -47,6 +47,8 @@ final class Sections {
 	public function register(): void {
 		add_shortcode( 'vehicle_report_packages', array( $this, 'packages' ) );
 		add_shortcode( 'vehicle_report_checks', array( $this, 'checks' ) );
+		add_shortcode( 'vehicle_report_check_rows', array( $this, 'check_rows' ) );
+		add_shortcode( 'vehicle_report_assurances', array( $this, 'assurances' ) );
 		add_shortcode( 'vehicle_report_stats', array( $this, 'stats' ) );
 		add_shortcode( 'vehicle_report_reviews', array( $this, 'reviews' ) );
 		add_shortcode( 'vehicle_report_trust', array( $this, 'trust' ) );
@@ -117,6 +119,95 @@ final class Sections {
 		include __DIR__ . '/../../templates/storefront/checks.php';
 
 		return (string) ob_get_clean();
+	}
+
+	/**
+	 * The same checks at full width, one alternating row each.
+	 *
+	 * A grid of equal cards gives every check the same half-sentence. A row
+	 * has space to say what the check answers, what it cannot answer, and how
+	 * the report puts it — which is the part worth reading before buying.
+	 *
+	 * @param array<string, mixed>|string $attributes Shortcode attributes.
+	 *
+	 * @return string
+	 */
+	public function check_rows( $attributes = array() ): string {
+		$attributes = shortcode_atts(
+			array(
+				'heading' => '',
+				'intro'   => '',
+				'only'    => '',
+			),
+			is_array( $attributes ) ? $attributes : array(),
+			'vehicle_report_check_rows'
+		);
+
+		$only = array_filter( array_map( 'trim', explode( ',', (string) $attributes['only'] ) ) );
+		$keys = array() !== $only ? VehicleCheck::filter( $only ) : VehicleCheck::keys();
+
+		if ( array() === $keys ) {
+			return '';
+		}
+
+		$heading   = (string) $attributes['heading'];
+		$intro     = (string) $attributes['intro'];
+		$order_url = $this->order_url();
+
+		ob_start();
+		include __DIR__ . '/../../templates/storefront/check-rows.php';
+
+		return (string) ob_get_clean();
+	}
+
+	/**
+	 * What the service undertakes to do, as a band under the hero.
+	 *
+	 * The reference site puts counted claims here — searches run, sources
+	 * held. This site has no such figures, so it publishes undertakings it can
+	 * actually be held to instead.
+	 *
+	 * @return string
+	 */
+	public function assurances(): string {
+		$rows = array(
+			array(
+				'label' => __( 'Written by a person', 'vehicle-report-orders' ),
+				'value' => __( 'Never an automatic lookup', 'vehicle-report-orders' ),
+			),
+			array(
+				'label' => __( 'Every source answered', 'vehicle-report-orders' ),
+				'value' => __( 'Including the ones with nothing to report', 'vehicle-report-orders' ),
+			),
+			array(
+				'label' => __( 'Private download link', 'vehicle-report-orders' ),
+				'value' => __( 'Yours alone, and it expires', 'vehicle-report-orders' ),
+			),
+			array(
+				'label' => __( 'Late or undeliverable', 'vehicle-report-orders' ),
+				'value' => __( 'We refund you', 'vehicle-report-orders' ),
+			),
+		);
+
+		ob_start();
+		include __DIR__ . '/../../templates/storefront/assurances.php';
+
+		return (string) ob_get_clean();
+	}
+
+	/**
+	 * Where a call to action on the storefront should send someone.
+	 *
+	 * @return string
+	 */
+	private function order_url(): string {
+		$page = get_page_by_path( 'order-report' );
+
+		if ( $page instanceof \WP_Post ) {
+			return (string) get_permalink( $page );
+		}
+
+		return (string) home_url( '/' );
 	}
 
 	/**

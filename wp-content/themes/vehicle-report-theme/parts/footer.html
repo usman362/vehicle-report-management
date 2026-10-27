@@ -1,23 +1,50 @@
-<!-- wp:group {"style":{"spacing":{"padding":{"top":"2.5rem","bottom":"2.5rem"},"margin":{"top":"4rem"}},"border":{"top":{"color":"var:preset|color|border","width":"1px"}}},"backgroundColor":"surface","layout":{"type":"constrained","wideSize":"1160px"}} -->
-<div class="wp-block-group has-surface-background-color has-background" style="border-top-color:var(--wp--preset--color--border);border-top-width:1px;margin-top:4rem;padding-top:2.5rem;padding-bottom:2.5rem">
-	<!-- wp:paragraph {"fontSize":"small","textColor":"muted"} -->
-	<p class="has-muted-color has-text-color has-small-font-size">Reports are prepared by hand from named sources. We are not affiliated with the DVLA, the DVSA or any government body, and we do not claim access to checks we cannot supply.</p>
-	<!-- /wp:paragraph -->
+<!-- wp:group {"className":"vr-site-footer","style":{"spacing":{"padding":{"top":"3.5rem","bottom":"2.5rem"},"margin":{"top":"4rem"}}},"layout":{"type":"constrained","wideSize":"1200px"}} -->
+<div class="wp-block-group vr-site-footer" style="margin-top:4rem;padding-top:3.5rem;padding-bottom:2.5rem">
+	<!-- wp:columns {"align":"wide"} -->
+	<div class="wp-block-columns alignwide">
+		<!-- wp:column {"width":"38%"} -->
+		<div class="wp-block-column" style="flex-basis:38%">
+			<!-- wp:heading {"level":2,"fontSize":"large"} -->
+			<h2 class="wp-block-heading has-large-font-size">[vehicle_report_trader]</h2>
+			<!-- /wp:heading -->
+			<!-- wp:paragraph {"fontSize":"small"} -->
+			<p class="has-small-font-size">Reports are prepared by hand from named sources. We are not affiliated with the DVLA, the DVSA or any government body, and we do not claim access to checks we cannot supply.</p>
+			<!-- /wp:paragraph -->
+			<!-- wp:paragraph {"fontSize":"small"} -->
+			<p class="has-small-font-size"><strong>Working hours</strong><br>[vehicle_report_hours]</p>
+			<!-- /wp:paragraph -->
+		</div>
+		<!-- /wp:column -->
 
-	<!-- wp:navigation {"overlayMenu":"never","className":"vr-footer-nav","style":{"typography":{"fontSize":"0.9rem"}},"layout":{"type":"flex","flexWrap":"wrap"}} -->
-		<!-- wp:navigation-link {"label":"About us","url":"/about/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"What a report looks like","url":"/sample-report/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"Report data sources","url":"/report-data-sources/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"FAQ","url":"/faq/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"Terms and conditions","url":"/terms/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"Privacy policy","url":"/privacy-policy/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"Cookies","url":"/cookies/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"Refunds","url":"/refunds/","kind":"custom"} /-->
-		<!-- wp:navigation-link {"label":"Contact","url":"/contact/","kind":"custom"} /-->
-	<!-- /wp:navigation -->
+		<!-- wp:column {"width":"30%"} -->
+		<div class="wp-block-column" style="flex-basis:30%">
+			<!-- wp:heading {"level":2,"fontSize":"medium"} -->
+			<h2 class="wp-block-heading has-medium-font-size">More</h2>
+			<!-- /wp:heading -->
+			<!-- wp:navigation {"overlayMenu":"never","className":"vr-footer-nav vr-footer-nav-stacked","style":{"typography":{"fontSize":"0.9rem"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+				<!-- wp:navigation-link {"label":"About us","url":"/about/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"What a report looks like","url":"/sample-report/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Report data sources","url":"/report-data-sources/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"FAQ","url":"/faq/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Terms and conditions","url":"/terms/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Privacy policy","url":"/privacy-policy/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Cookies","url":"/cookies/","kind":"custom"} /-->
+				<!-- wp:navigation-link {"label":"Refunds","url":"/refunds/","kind":"custom"} /-->
+			<!-- /wp:navigation -->
+		</div>
+		<!-- /wp:column -->
 
-	<!-- wp:paragraph {"fontSize":"small","textColor":"muted"} -->
-	<p class="has-muted-color has-text-color has-small-font-size">[vehicle_report_trader] · [vehicle_report_support_email] · Working hours [vehicle_report_hours]</p>
-	<!-- /wp:paragraph -->
+		<!-- wp:column {"width":"32%"} -->
+		<div class="wp-block-column" style="flex-basis:32%">
+			<!-- wp:heading {"level":2,"fontSize":"medium"} -->
+			<h2 class="wp-block-heading has-medium-font-size">Contact</h2>
+			<!-- /wp:heading -->
+			<!-- wp:shortcode -->
+			[vehicle_report_contact_details]
+			<!-- /wp:shortcode -->
+		</div>
+		<!-- /wp:column -->
+	</div>
+	<!-- /wp:columns -->
 </div>
 <!-- /wp:group -->
