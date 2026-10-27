@@ -42,7 +42,7 @@ were exercised against the running local site and the evidence is noted.
 | T22 | Search for CRM, seller lists, messaging or lead scraping | automated — `grep` over the plugin finds none; no such dependency, table, route or screen exists | Nothing found |
 | T23 | Checkout and fulfilment without matchmaking | verified — orders 29 and 31 | No buyer introduction, CRM or promotional message anywhere |
 | T24 | Order placed before a price or policy change | verified — price, delivery window and terms version are snapshotted on the order | Snapshot unchanged |
-| T25 | Customer data export or deletion request | not yet implemented — WordPress privacy exporter and eraser still to be registered | Open |
+| T25 | Customer data export or deletion request | verified — export returned the registration, status, deadline and report hash for order 29; erasure on a test order deleted the stored file, cleared the registration and contact snapshot, marked the report row erased, left the order and its audit history in place, and turned a link already issued into a 403 | Export complete, erasure complete, financial record retained |
 | T26 | Two customers order the same registration | code — orders are separate records with separate tokens and secrets | Needs an integration test |
 | T27 | Report file replaced | verified — a second upload supersedes the first, both rows kept | History retained |
 | T28 | Gateway unavailable | not yet run | Open |
@@ -53,6 +53,5 @@ were exercised against the running local site and the evidence is noted.
 
 - Gateway sandbox cases (T08, T16, T28) once the merchant supplies Stripe test keys.
 - WordPress integration tests for the capability and delivery paths (T11, T14, T26, T30).
-- Privacy exporter and eraser (T25).
 - Full accessibility and mobile checkout pass (T18, T19).
 - A restore rehearsal that includes the private report directory (T21).

@@ -23,6 +23,7 @@ use VehicleReportOrders\Notifications\EmailNotifier;
 use VehicleReportOrders\Notifications\OrderEmailAdditions;
 use VehicleReportOrders\Reports\DownloadController;
 use VehicleReportOrders\Reports\ReportService;
+use VehicleReportOrders\Privacy\PersonalData;
 use VehicleReportOrders\Reports\ReportVersionRepository;
 use VehicleReportOrders\Storefront\Disclosures;
 use VehicleReportOrders\Storefront\OrderForm;
@@ -89,7 +90,8 @@ final class Plugin {
 			Schema::install();
 		}
 
-		$reports  = new ReportService( new ReportVersionRepository() );
+		$versions = new ReportVersionRepository();
+		$reports  = new ReportService( $versions );
 		$notifier = new EmailNotifier( $reports );
 
 		( new RegistrationField() )->register();
@@ -97,6 +99,7 @@ final class Plugin {
 		( new OrderLifecycle() )->register();
 		( new DownloadController( $reports ) )->register();
 		( new OrderEmailAdditions() )->register();
+		( new PersonalData( $versions ) )->register();
 		( new OrderForm() )->register();
 		( new Disclosures() )->register();
 		$notifier->register();

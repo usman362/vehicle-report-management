@@ -80,6 +80,11 @@ A customer enters a registration, pays, and staff deliver a report:
   revokes every link already sent.
 - **Record** — an append-only audit trail with redaction, covering uploads,
   deliveries, resends, refusals and failed permission checks.
+- **Data requests** — WordPress's own export and erasure tools answer for this
+  plugin. Erasure deletes the stored report, the registration and the contact
+  snapshot and kills links already sent; the order, its totals and the audit
+  trail stay, because financial records must survive and an audit trail that
+  can be deleted on request is not an audit trail.
 
 Honesty is enforced, not just documented: the price, delivery window, opening
 hours and data sources are read from settings at render time and shown as

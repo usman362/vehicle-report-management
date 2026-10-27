@@ -38,6 +38,7 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 | AUD-01 | Audit trail for every upload, delivery, resend, status change and refund | §12 | `Audit/AuditLogger.php`, `Admin/AuditLogPage.php` | `AuditRedactionTest`, verified | done |
 | CAP-01 | Capability checks server-side for every admin action | §4, §9 | `Admin/CapabilityManager.php`, `Admin/FulfillmentActions.php` | T11, T30 | done — integration test outstanding |
 | MAIL-01 | One confirmation email, carrying the registration and the promise | §11 | `Notifications/OrderEmailAdditions.php` | verified — captured message | done |
+| PRIV-01 | Personal-data export and erasure, and suggested privacy-policy wording | §8, §17 | `Privacy/PersonalData.php` | T25 | done — erasure removes the report file, registration and contact snapshot; the order, its totals and the audit trail are retained |
 
 ## Scope exclusions (verified, not built)
 
@@ -52,7 +53,6 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 
 | ID | Requirement | Spec | Status |
 |---|---|---|---|
-| PRIV-01 | Personal-data export and erasure handlers | §8, §17 | not started (T25) |
 | PAGE-02 | Sample report, about and legal pages | §5, §6.6, §6.7 | not started — copy needs the merchant and a UK legal review |
 | QA-02 | WordPress integration tests for capability, delivery and tenancy paths | §20 | not started |
 | PAY-03 | Gateway sandbox cases: decline, refund, outage | §10 | blocked on merchant Stripe test keys (PAY-01 decision) |
