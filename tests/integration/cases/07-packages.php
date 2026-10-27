@@ -129,8 +129,16 @@ vr_it_ok(
 
 // Checks are described with their limits wherever they are published.
 $vr_checks = do_shortcode( '[vehicle_report_checks only="stolen"]' );
-vr_it_ok( 'a check is published with its limits', str_contains( $vr_checks, 'What it does not tell you' ) );
+$vr_stolen = VehicleCheck::get( 'stolen' );
+
+// The limit is the point: a check published without it reads as a guarantee.
+vr_it_ok( 'a check is published with its limits', str_contains( $vr_checks, esc_html( $vr_stolen['limit'] ) ) );
 vr_it_ok( 'and a stolen check does not claim to be a police check', str_contains( $vr_checks, 'not a police check' ) );
+
+// The three outcomes are stated once, in full, rather than beside every check.
+$vr_outcomes = do_shortcode( '[vehicle_report_outcomes]' );
+vr_it_ok( 'the three outcomes are published together', str_contains( $vr_outcomes, 'Found' ) && str_contains( $vr_outcomes, 'Nothing recorded' ) && str_contains( $vr_outcomes, 'Not checked' ) );
+vr_it_ok( 'and a gap is not left to read as a pass', str_contains( $vr_outcomes, 'never left for you to read as a pass' ) );
 
 // Reviews are the merchant's real ones or nothing at all.
 $vr_reviews_before = Settings::get( 'reviews' );

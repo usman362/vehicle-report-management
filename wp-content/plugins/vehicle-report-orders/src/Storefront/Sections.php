@@ -47,7 +47,7 @@ final class Sections {
 	public function register(): void {
 		add_shortcode( 'vehicle_report_packages', array( $this, 'packages' ) );
 		add_shortcode( 'vehicle_report_checks', array( $this, 'checks' ) );
-		add_shortcode( 'vehicle_report_check_rows', array( $this, 'check_rows' ) );
+		add_shortcode( 'vehicle_report_outcomes', array( $this, 'outcomes' ) );
 		add_shortcode( 'vehicle_report_assurances', array( $this, 'assurances' ) );
 		add_shortcode( 'vehicle_report_stats', array( $this, 'stats' ) );
 		add_shortcode( 'vehicle_report_reviews', array( $this, 'reviews' ) );
@@ -122,40 +122,49 @@ final class Sections {
 	}
 
 	/**
-	 * The same checks at full width, one alternating row each.
+	 * The three answers a check can come back with — said once, not eleven times.
 	 *
-	 * A grid of equal cards gives every check the same half-sentence. A row
-	 * has space to say what the check answers, what it cannot answer, and how
-	 * the report puts it — which is the part worth reading before buying.
+	 * Every check on the page resolves to one of these, so repeating them
+	 * beside each one turned the page into the same card eleven times over.
+	 * Said once, with room, it is the thing that distinguishes this service.
 	 *
 	 * @param array<string, mixed>|string $attributes Shortcode attributes.
 	 *
 	 * @return string
 	 */
-	public function check_rows( $attributes = array() ): string {
+	public function outcomes( $attributes = array() ): string {
 		$attributes = shortcode_atts(
 			array(
 				'heading' => '',
 				'intro'   => '',
-				'only'    => '',
 			),
 			is_array( $attributes ) ? $attributes : array(),
-			'vehicle_report_check_rows'
+			'vehicle_report_outcomes'
 		);
 
-		$only = array_filter( array_map( 'trim', explode( ',', (string) $attributes['only'] ) ) );
-		$keys = array() !== $only ? VehicleCheck::filter( $only ) : VehicleCheck::keys();
+		$heading = (string) $attributes['heading'];
+		$intro   = (string) $attributes['intro'];
 
-		if ( array() === $keys ) {
-			return '';
-		}
-
-		$heading   = (string) $attributes['heading'];
-		$intro     = (string) $attributes['intro'];
-		$order_url = $this->order_url();
+		$rows = array(
+			array(
+				'chip'  => __( 'Found', 'vehicle-report-orders' ),
+				'class' => 'vr-chip-found',
+				'text'  => __( 'A record exists. The report sets out what it says, and which source said it.', 'vehicle-report-orders' ),
+			),
+			array(
+				'chip'  => __( 'Nothing recorded', 'vehicle-report-orders' ),
+				'class' => 'vr-chip-none',
+				'text'  => __( 'The source was searched and held nothing for your vehicle. That is not the same as the vehicle being clear, and the report says so.', 'vehicle-report-orders' ),
+			),
+			array(
+				'chip'  => __( 'Not checked', 'vehicle-report-orders' ),
+				'class' => 'vr-chip-unavailable',
+				'text'  => __( 'We could not run it — the source was unavailable, or it does not cover your vehicle. The reason is written next to it, never left blank.', 'vehicle-report-orders' ),
+			),
+		);
 
 		ob_start();
-		include __DIR__ . '/../../templates/storefront/check-rows.php';
+		include __DIR__ . '/../../templates/storefront/outcomes.php';
 
 		return (string) ob_get_clean();
 	}

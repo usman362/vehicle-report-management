@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T23:05:21+00:00\n"
+"POT-Creation-Date: 2026-10-27T23:21:22+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vehicle-report-orders\n"
@@ -862,48 +862,72 @@ msgstr ""
 msgid "Report ordering is not available right now. Please contact us and we will help."
 msgstr ""
 
-#: src/Storefront/Sections.php:175
-msgid "Written by a person"
+#: src/Storefront/Sections.php:150
+msgid "Found"
 msgstr ""
 
-#: src/Storefront/Sections.php:176
-msgid "Never an automatic lookup"
+#: src/Storefront/Sections.php:152
+msgid "A record exists. The report sets out what it says, and which source said it."
 msgstr ""
 
-#: src/Storefront/Sections.php:179
-msgid "Every source answered"
+#: src/Storefront/Sections.php:155
+msgid "Nothing recorded"
 msgstr ""
 
-#: src/Storefront/Sections.php:180
-msgid "Including the ones with nothing to report"
+#: src/Storefront/Sections.php:157
+msgid "The source was searched and held nothing for your vehicle. That is not the same as the vehicle being clear, and the report says so."
 msgstr ""
 
-#: src/Storefront/Sections.php:183
-msgid "Private download link"
+#: src/Storefront/Sections.php:160
+msgid "Not checked"
+msgstr ""
+
+#: src/Storefront/Sections.php:162
+msgid "We could not run it — the source was unavailable, or it does not cover your vehicle. The reason is written next to it, never left blank."
 msgstr ""
 
 #: src/Storefront/Sections.php:184
-msgid "Yours alone, and it expires"
+msgid "Written by a person"
 msgstr ""
 
-#: src/Storefront/Sections.php:187
-msgid "Late or undeliverable"
+#: src/Storefront/Sections.php:185
+msgid "Never an automatic lookup"
 msgstr ""
 
 #: src/Storefront/Sections.php:188
+msgid "Every source answered"
+msgstr ""
+
+#: src/Storefront/Sections.php:189
+msgid "Including the ones with nothing to report"
+msgstr ""
+
+#: src/Storefront/Sections.php:192
+msgid "Private download link"
+msgstr ""
+
+#: src/Storefront/Sections.php:193
+msgid "Yours alone, and it expires"
+msgstr ""
+
+#: src/Storefront/Sections.php:196
+msgid "Late or undeliverable"
+msgstr ""
+
+#: src/Storefront/Sections.php:197
 msgid "We refund you"
 msgstr ""
 
-#: src/Storefront/Sections.php:321
+#: src/Storefront/Sections.php:330
 msgid "What this package covers"
 msgstr ""
 
-#: src/Storefront/Sections.php:338
+#: src/Storefront/Sections.php:347
 msgid "Each check is run against the sources we are licensed to use. Where a check cannot be completed for your vehicle, the report says so and explains why."
 msgstr ""
 
 #. translators: %s: package name.
-#: src/Storefront/Sections.php:362
+#: src/Storefront/Sections.php:371
 #, php-format
 msgid "Order the %s package"
 msgstr ""
@@ -1583,41 +1607,6 @@ msgstr ""
 msgid "Questions about this order? Reply to this email or write to %s."
 msgstr ""
 
-#: templates/storefront/check-rows.php:41
-#: templates/storefront/checks.php:35
-msgid "What it does not tell you:"
-msgstr ""
-
-#: templates/storefront/check-rows.php:46
-msgid "Order a report"
-msgstr ""
-
-#: templates/storefront/check-rows.php:64
-msgid "Found"
-msgstr ""
-
-#. translators: %s: the name of the check, lower-cased.
-#: templates/storefront/check-rows.php:69
-#, php-format
-msgid "a %s record exists, and the report sets it out"
-msgstr ""
-
-#: templates/storefront/check-rows.php:76
-msgid "Nothing recorded"
-msgstr ""
-
-#: templates/storefront/check-rows.php:77
-msgid "the source was searched and held nothing for your vehicle"
-msgstr ""
-
-#: templates/storefront/check-rows.php:80
-msgid "Not checked"
-msgstr ""
-
-#: templates/storefront/check-rows.php:81
-msgid "we could not run it, and the reason is written next to it"
-msgstr ""
-
 #: templates/storefront/contact-details.php:20
 msgid "Email"
 msgstr ""
@@ -1720,6 +1709,10 @@ msgstr ""
 
 #: templates/storefront/order-form.php:189
 msgid "Ordering is switched off until the price, delivery window and report sources are confirmed."
+msgstr ""
+
+#: templates/storefront/outcomes.php:35
+msgid "Every source we publish gets one of these three, in writing, on every report. A gap is never left for you to read as a pass."
 msgstr ""
 
 #: templates/storefront/packages.php:30

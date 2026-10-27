@@ -226,8 +226,6 @@
 
 .vr-draft-notice p { margin: 0; }
 
-.vr-sources { margin: .5rem 0 1rem 1.25rem; }
-
 /* --- Order form ----------------------------------------------------------- */
 
 .vr-order-form h2 { margin-top: 0; }
@@ -609,6 +607,179 @@
 
 .vr-assurance dd { margin: .2rem 0 0; color: #a9bdd1; font-size: var(--wp--preset--font-size--small); }
 
+/* --- Checks grid --------------------------------------------------------- */
+
+.vr-checks { margin: 3rem auto; }
+
+.vr-section-intro {
+	color: var(--wp--preset--color--muted);
+	max-width: 46rem;
+	font-size: var(--wp--preset--font-size--large);
+}
+
+.vr-check-grid {
+	list-style: none;
+	padding: 0;
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+	margin: 1.75rem 0 0;
+}
+
+.vr-check-card {
+	transition: transform .22s var(--vr-ease), box-shadow .22s var(--vr-ease);
+	padding: 1.5rem;
+}
+
+.vr-check-card:hover { transform: translateY(-3px); box-shadow: var(--vr-shadow-md); }
+
+.vr-check-card h3 { margin: 0 0 .45rem; font-size: 1.05rem; }
+
+.vr-check-card p { margin: 0 0 .6rem; font-size: var(--wp--preset--font-size--small); }
+
+.vr-check-card .vr-check-limit {
+	margin: 0;
+	padding-top: .6rem;
+	border-top: 1px solid var(--wp--preset--color--border);
+	color: var(--wp--preset--color--muted);
+	font-size: .82rem;
+}
+
+.vr-check-icon {
+	width: 2.25rem;
+	height: 2.25rem;
+	display: grid;
+	place-items: center;
+	border-radius: 10px;
+	background: #e9f2fa;
+	color: var(--wp--preset--color--accent);
+	margin-bottom: .85rem;
+}
+
+.vr-check-icon svg { width: 1.2rem; height: 1.2rem; }
+
+/* --- The three outcomes --------------------------------------------------- */
+
+.vr-outcomes {
+	margin: 3.5rem auto;
+	background: var(--wp--preset--color--ink);
+	color: #dce8f4;
+	border-radius: var(--vr-radius);
+	padding: clamp(1.75rem, 1.25rem + 2vw, 3rem);
+}
+
+.vr-outcomes h2 { color: #fff; margin-top: 0; }
+
+.vr-outcomes .vr-section-intro { color: #a9bdd1; }
+
+.vr-outcome-grid {
+	list-style: none;
+	padding: 0;
+	counter-reset: vr-outcome;
+	display: grid;
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+	margin: 1.75rem 0 0;
+}
+
+.vr-outcome {
+	background: rgba(255, 255, 255, .06);
+	border: 1px solid rgba(255, 255, 255, .14);
+	box-shadow: none;
+	padding: 1.4rem;
+}
+
+.vr-outcome p { margin: .9rem 0 0; color: #c6d6e6; font-size: var(--wp--preset--font-size--small); }
+
+.vr-outcome-foot {
+	margin: 1.75rem 0 0;
+	padding-top: 1.25rem;
+	border-top: 1px solid rgba(255, 255, 255, .14);
+	color: #a9bdd1;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.vr-chip {
+	display: inline-block;
+	border-radius: 999px;
+	padding: .3rem .85rem;
+	font-size: .78rem;
+	font-weight: 700;
+	letter-spacing: .04em;
+	white-space: nowrap;
+}
+
+.vr-chip-found { background: #dff0e6; color: #0f5d3b; }
+
+.vr-chip-none { background: #e7edf4; color: #35485c; }
+
+.vr-chip-unavailable { background: #fdeede; color: #8a4f12; }
+
+.vr-package-checks ul { list-style: none; margin: .5rem 0; padding: 0; }
+
+.vr-package-checks li { padding: .55rem 0; border-bottom: 1px solid var(--wp--preset--color--border); }
+
+/* --- Footer --------------------------------------------------------------- */
+
+.vr-footer-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; list-style: none; padding: 0; }
+
+.vr-footer-nav a { color: inherit; }
+
+/* --- Support channels ----------------------------------------------------- */
+
+.vr-support { margin: 0; }
+
+.vr-whatsapp {
+	position: fixed;
+	right: 1.25rem;
+	bottom: 1.25rem;
+	z-index: 90;
+	display: inline-flex;
+	align-items: center;
+	gap: .55rem;
+	background: var(--wp--preset--color--navy);
+	color: #fff;
+	text-decoration: none;
+	padding: .8rem 1.15rem;
+	border-radius: 999px;
+	box-shadow: var(--vr-shadow-md);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	transition: transform .18s var(--vr-ease);
+}
+
+.vr-whatsapp:hover { transform: translateY(-2px); }
+
+.vr-whatsapp:focus-visible { outline: 3px solid var(--wp--preset--color--highlight); outline-offset: 3px; }
+
+@media (max-width: 600px) {
+	.vr-whatsapp-label { position: absolute; left: -9999px; }
+	.vr-whatsapp { padding: .95rem; }
+}
+
+/* --- Assurance band ------------------------------------------------------- */
+
+.vr-assurances {
+	background: var(--wp--preset--color--ink);
+	color: #e7eef6;
+	padding-block: 1.75rem;
+	padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.vr-assurance-grid {
+	display: grid;
+	gap: 1.25rem 2.5rem;
+	grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
+	margin: 0 auto;
+	max-width: var(--wp--style--global--wide-size, 1200px);
+}
+
+.vr-assurance { border-left: 2px solid rgba(227, 178, 60, .7); padding-left: 1rem; }
+
+.vr-assurance dt { font-weight: 700; }
+
+.vr-assurance dd { margin: .2rem 0 0; color: #a9bdd1; font-size: var(--wp--preset--font-size--small); }
+
 /* --- Full-width check rows ------------------------------------------------ */
 
 .vr-check-rows { margin: 3rem auto; }
@@ -773,21 +944,26 @@
 .vr-page-body .entry-content > h2:first-child,
 .vr-page-body .entry-content > h3:first-child { margin-top: 0; }
 
-.vr-page-body .entry-content > ul,
-.vr-page-body .entry-content > ol {
+/* Every prose list on the site, wherever it sits — page body, home page
+   section, or the data-source list the plugin prints. */
+.entry-content ul.wp-block-list,
+.entry-content ol.wp-block-list,
+.vr-sources {
 	padding-left: 0;
 	list-style: none;
 	margin-block: 1.25rem;
 }
 
-.vr-page-body .entry-content > ul > li,
-.vr-page-body .entry-content > ol > li {
+.entry-content ul.wp-block-list > li,
+.entry-content ol.wp-block-list > li,
+.vr-sources > li {
 	position: relative;
 	padding-left: 1.9rem;
 	margin-bottom: .7rem;
 }
 
-.vr-page-body .entry-content > ul > li::before {
+.entry-content ul.wp-block-list > li::before,
+.vr-sources > li::before {
 	content: "";
 	position: absolute;
 	left: .35rem;
@@ -798,9 +974,9 @@
 	background: var(--wp--preset--color--highlight);
 }
 
-.vr-page-body .entry-content > ol { counter-reset: vr-li; }
+.entry-content ol.wp-block-list { counter-reset: vr-li; }
 
-.vr-page-body .entry-content > ol > li::before {
+.entry-content ol.wp-block-list > li::before {
 	counter-increment: vr-li;
 	content: counter(vr-li);
 	position: absolute;
