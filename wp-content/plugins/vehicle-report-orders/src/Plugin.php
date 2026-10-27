@@ -97,7 +97,7 @@ final class Plugin {
 
 		( new RegistrationField() )->register();
 		( new OrderMetaSaver() )->register();
-		( new OrderLifecycle() )->register();
+		( new OrderLifecycle( $reports ) )->register();
 		( new DownloadController( $reports ) )->register();
 		( new OrderEmailAdditions() )->register();
 		( new PersonalData( $versions ) )->register();

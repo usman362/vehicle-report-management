@@ -11,6 +11,7 @@ namespace VehicleReportOrders\Domain;
 
 use DateTimeImmutable;
 use VehicleReportOrders\Audit\AuditLogger;
+use VehicleReportOrders\Reports\ReportService;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -23,6 +24,22 @@ defined( 'ABSPATH' ) || exit;
  * order twice or restart its delivery clock.
  */
 final class OrderLifecycle {
+
+	/**
+	 * Report storage and delivery.
+	 *
+	 * @var ReportService
+	 */
+	private ReportService $reports;
+
+	/**
+	 * Constructor.
+	 *
+	 * @param ReportService $reports Report storage and delivery.
+	 */
+	public function __construct( ReportService $reports ) {
+		$this->reports = $reports;
+	}
 
 	/**
 	 * Hook the payment events.
@@ -138,14 +155,28 @@ final class OrderLifecycle {
 			return;
 		}
 
+		$fully = OrderRepository::is_fully_refunded( $order );
+
 		AuditLogger::log(
 			$order->get_id(),
 			'order.refunded',
 			array(
 				'status'         => OrderRepository::status_of( $order )->value,
 				'refunded_total' => $order->get_total_refunded(),
+				'full_refund'    => $fully,
 			)
 		);
+
+		if ( ! $fully ) {
+			return;
+		}
+
+		// Money back means access back. The fulfilment state is left alone: a
+		// report that was delivered was delivered, and rewriting that would be
+		// rewriting history. What changes is that the links stop working.
+		$this->reports->revoke_links( $order );
+
+		AuditLogger::log( $order->get_id(), 'report.access_revoked', array( 'reason' => 'full_refund' ) );
 	}
 
 	/**

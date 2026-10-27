@@ -274,6 +274,12 @@ final class FulfillmentActions {
 			return $this->denied( $order, 'resend' );
 		}
 
+		if ( OrderRepository::is_fully_refunded( $order ) ) {
+			AuditLogger::log( $order->get_id(), 'report.resend_refused', array( 'reason' => 'full_refund' ) );
+
+			return new WP_Error( 'vr_refunded', __( 'This order has been refunded in full, so the report cannot be sent again.', 'vehicle-report-orders' ) );
+		}
+
 		if ( ! OrderRepository::status_of( $order )->grants_customer_access() ) {
 			return new WP_Error( 'vr_not_delivered', __( 'Only a delivered report can be resent.', 'vehicle-report-orders' ) );
 		}

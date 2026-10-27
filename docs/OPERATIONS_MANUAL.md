@@ -70,6 +70,17 @@ revocation, refused download and failed permission check. Entries cannot be
 edited or deleted, and sensitive values are redacted before they are stored.
 It is the first place to look when a customer disputes something.
 
+## Refunding an order
+
+Refund in WooCommerce, not only in the payment provider's dashboard. A full
+refund through WooCommerce revokes the customer's download links at the same
+time; a refund made elsewhere does not reach the site and leaves their link
+working.
+
+After a full refund the resend button refuses, with a reason, and the refusal
+is written to the audit log. A partial refund leaves everything reachable,
+which is the point of a partial refund.
+
 ## Backups
 
 `scripts/backup.sh` saves the database, the uploads and the private report

@@ -15,7 +15,7 @@ were exercised against the running local site and the evidence is noted.
 | T05 | Verified gateway callback | verified — order 29 | Paid once, queued once, deadline set |
 | T06 | Fake thank-you URL | verified — a visit to the confirmation page without payment leaves the order pending | No fulfilment state change |
 | T07 | Duplicate webhook | verified — order 12 | Second notification logged as `payment.duplicate_notification`, nothing re-queued |
-| T08 | Card declined or cancelled | not yet run — needs a real gateway sandbox | Open: do it with the merchant's Stripe test keys |
+| T08 | Card declined or cancelled | verified — declined through the block checkout with the development gateway: the customer is told plainly, the order is left `failed` and unpaid, no deadline is set and nothing reaches the fulfilment queue. A payment notification arriving for that unpaid order is ignored. Automated in `tests/integration/cases/04-payment-outcomes.php` | Nothing ordered, nothing promised |
 
 ## Report handling
 
@@ -28,7 +28,7 @@ were exercised against the running local site and the evidence is noted.
 | T13 | Another order's link, or an expired one | verified + automated — `DownloadTokenTest` | Tampered 403, expired 410, revoked 403, undelivered 403 |
 | T14 | Mail outage after upload | automated — `tests/integration/cases/02-delivery-retry.php`: the mailer is made to reject everything; each attempt is logged, a retry is really queued, the service gives up exactly once at the maximum, flags the order, ignores a late retry, and sends when the mailer recovers | Retried, escalated, recovered |
 | T15 | Manual resend | verified — resend issues a fresh link and logs it | Same order, same report |
-| T16 | Refund | code — recorded in the audit log, fulfilment history untouched | Needs a gateway sandbox |
+| T16 | Refund | verified — a partial refund leaves the report reachable; a full refund revokes the links, so the one the customer already had stops working, a resend is refused, and the delivery itself stays in the history. Automated in `tests/integration/cases/04-payment-outcomes.php` | Money back, access back |
 | T17 | Staff cannot fulfil | verified — requires a written reason before the state changes | No fabricated report possible |
 
 ## Privacy, scope and the storefront
@@ -45,7 +45,7 @@ were exercised against the running local site and the evidence is noted.
 | T25 | Customer data export or deletion request | verified — export returned the registration, status, deadline and report hash for order 29; erasure on a test order deleted the stored file, cleared the registration and contact snapshot, marked the report row erased, left the order and its audit history in place, and turned a link already issued into a 403 | Export complete, erasure complete, financial record retained |
 | T26 | Two customers order the same registration | automated — `tests/integration/cases/03-order-isolation.php`: separate secrets, links and files; neither token verifies against the other order, and revoking one leaves the other working | Fully isolated |
 | T27 | Report file replaced | verified — a second upload supersedes the first, both rows kept | History retained |
-| T28 | Gateway unavailable | not yet run | Open |
+| T28 | Gateway unavailable | verified — the development gateway throws as an unreachable provider would: the customer is told nothing has been charged and asked to try again, the order is left `failed`, and the same order was then paid for successfully on a later attempt, so a failure does not poison it | Fails safe and recovers |
 | T29 | A claim with no data source behind it | verified — the storefront prints a visible placeholder instead of an invented figure, and ordering is blocked until sources are configured | No unsupported promise rendered |
 | T30 | Staff role exports a customer list | automated — `tests/integration/cases/01-capabilities.php`: none of the three staff roles holds `export`, `list_users`, `edit_users`, `manage_woocommerce`, `manage_options` or either personal-data capability | No route to a customer list |
 
@@ -57,6 +57,17 @@ were exercised against the running local site and the evidence is noted.
 | Sample report page invents nothing | verified — with no example configured the page shows a visible placeholder; supplying a URL replaced it with a link | No fabricated report is shipped |
 | Pages are reproducible from the repository | verified — `wp eval-file scripts/seed-content.php` created or refreshed all 13 pages and set the front, privacy and terms page options | A fresh install comes up with the same site |
 | Customers can actually reach the store | verified — WooCommerce was found in coming-soon mode, which serves the shop, cart and checkout only to signed-in administrators; the plugin's screens now warn while it is on, and `setup-local.sh` opens the store | The trap is visible instead of silent |
+
+## The development gateway
+
+`wp-content/mu-plugins/vr-dev-gateway.php` is a payment method whose outcome is
+chosen rather than earned: approve, decline, or pretend the provider cannot be
+reached. It refuses to load outside a local or development environment, and it
+moves no money and contacts no provider.
+
+It exists because the failure paths are the ones that matter and the merchant
+account does not exist yet. A test can force an outcome through the
+`vr_dev_gateway_outcome` filter; a person can pick one at the checkout.
 
 ## Accessibility
 
@@ -86,4 +97,7 @@ skeleton that is replaced as soon as payment methods load.
 
 ## Still to do
 
-- Gateway sandbox cases (T08, T16, T28) once the merchant supplies Stripe test keys.
+- The same three cases against the merchant's real Stripe sandbox, once the
+  keys exist. What is proven here is this site's own behaviour on a decline, an
+  outage and a refund; what is not yet proven is Stripe's particular wording,
+  webhook timing and 3-D Secure step.

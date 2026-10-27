@@ -33,6 +33,7 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 | ORD-01 | Order metadata persisted through WooCommerce CRUD | §8 | `Checkout/OrderMetaSaver.php` | T01, T24 | done |
 | PAY-01 | Verified gateway outcome only; no paid state from a thank-you visit | §7, §10 | `Domain/OrderLifecycle.php` | T05, T06 | done |
 | PAY-02 | Duplicate webhook or refresh is idempotent | §7 | `Domain/OrderLifecycle.php` | T07 | done |
+| PAY-04 | Decline, outage and refund handled correctly | §7, §10 | `Domain/OrderLifecycle.php`, `Domain/OrderRepository::is_fully_refunded()`, `Reports/DownloadController.php`, `wp-content/mu-plugins/vr-dev-gateway.php` | T08, T16, T28 | done — a full refund revokes the customer's links and a resend is refused; a partial refund does not |
 | SLA-02 | Delivery deadline counted in the merchant's own working hours | §12 | `Domain/BusinessHours.php` | `BusinessHoursTest` (10 cases) | done |
 | FUL-01 | Staff fulfilment queue with filters and SLA age | §12 | `Admin/FulfillmentQueuePage.php`, `Domain/OrderRepository.php` | verified on the running site | done |
 | FUL-02 | Private report storage, no public PDF URL | §11, §17 | `Reports/PrivateStorage.php`, `Reports/UploadValidator.php` | T09, T10 | done — files live above the web root |
@@ -58,7 +59,7 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 
 | ID | Requirement | Spec | Status |
 |---|---|---|---|
-| PAY-03 | Gateway sandbox cases: decline, refund, outage | §10 | blocked on merchant Stripe test keys (PAY-01 decision) |
+| PAY-03 | The same three cases against the merchant's real Stripe sandbox | §10 | blocked on merchant Stripe test keys (PAY-01 decision). This site's own behaviour on a decline, an outage and a refund is done and tested — see PAY-04 |
 
 `T…` identifiers refer to the acceptance matrix in `PROJECT_MASTER_SPEC.md` §20
 and are listed with their results in `TEST_CASES.md`.

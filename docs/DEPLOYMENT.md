@@ -140,6 +140,28 @@ Separately confirm with the payment provider that manually fulfilled vehicle
 report services are an acceptable merchant category, and keep the gateway in
 test mode until the merchant account is genuinely approved.
 
+The development gateway in `wp-content/mu-plugins/vr-dev-gateway.php` refuses
+to load unless `WP_ENVIRONMENT_TYPE` is `local` or `development`, so a
+production server never offers it. Check anyway after the first deployment:
+
+```bash
+wp eval 'echo implode( ", ", array_keys( WC()->payment_gateways()->get_available_payment_gateways() ) );'
+```
+
+The only method listed should be the real one.
+
+## 6b. Refunds
+
+A **full** refund revokes the customer's download links, so a link already
+emailed stops working and a resend is refused. A **partial** refund does not:
+a goodwill reduction is not a reason to take the report away. Either way the
+fulfilment history is left as it happened — a delivered report stays delivered
+in the record.
+
+Refund through WooCommerce so this runs. A refund made only in the payment
+provider's dashboard does not reach the site, and the customer keeps their
+link.
+
 ## 7. Backups and restore
 
 Report files live outside both the database and the repository, so a backup

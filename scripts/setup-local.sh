@@ -62,6 +62,14 @@ wp option update timezone_string Europe/London >/dev/null
 # only works when you are logged in hides real problems, so it is opened here.
 wp option update woocommerce_coming_soon no >/dev/null
 
+# Payments: the development gateway in wp-content/mu-plugins can approve,
+# decline or pretend the provider is unreachable, so the failure paths are
+# testable before a merchant account exists. It never loads outside a
+# development environment. WooCommerce's own offline methods stay off.
+wp option patch update woocommerce_cod_settings enabled no >/dev/null 2>&1 || true
+wp option patch update woocommerce_bacs_settings enabled no >/dev/null 2>&1 || true
+wp option patch update woocommerce_cheque_settings enabled no >/dev/null 2>&1 || true
+
 echo "⑤ Our plugin"
 wp plugin activate vehicle-report-orders >/dev/null
 

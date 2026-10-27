@@ -105,6 +105,12 @@ final class DownloadController {
 			$this->refuse( 403, 'not_delivered', $order->get_id() );
 		}
 
+		// Belt and braces alongside revoking the links on refund: a link issued
+		// by mistake after the money went back still does not open the report.
+		if ( OrderRepository::is_fully_refunded( $order ) ) {
+			$this->refuse( 403, 'refunded', $order->get_id() );
+		}
+
 		$version = $this->reports->versions()->find_for_order( $claim['version_id'], $order->get_id() );
 
 		if ( null === $version ) {

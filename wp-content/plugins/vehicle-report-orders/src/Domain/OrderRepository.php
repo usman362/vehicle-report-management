@@ -132,6 +132,26 @@ final class OrderRepository {
 	}
 
 	/**
+	 * Whether the customer has had all of their money back.
+	 *
+	 * A partial refund is left alone on purpose: a goodwill reduction does not
+	 * mean the report should be taken away. Only a full refund undoes the sale.
+	 *
+	 * @param \WC_Order $order Order.
+	 *
+	 * @return bool
+	 */
+	public static function is_fully_refunded( \WC_Order $order ): bool {
+		$total = (float) $order->get_total();
+
+		if ( $total <= 0.0 ) {
+			return false;
+		}
+
+		return (float) $order->get_total_refunded() >= $total;
+	}
+
+	/**
 	 * Current fulfilment status of an order.
 	 *
 	 * @param \WC_Order $order Order.

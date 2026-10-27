@@ -89,6 +89,10 @@ A customer enters a registration, pays, and staff deliver a report:
   with unguessable names, and versioned so a replacement keeps its predecessor.
 - **Delivery** — signed, expiring, per-order links. Rotating an order's secret
   revokes every link already sent.
+- **Payment failures** — a decline or an unreachable provider tells the customer
+  plainly, charges nothing and queues no work, and the same order can still be
+  paid for afterwards. A full refund revokes the customer's links; a partial one
+  does not.
 - **Record** — an append-only audit trail with redaction, covering uploads,
   deliveries, resends, refusals and failed permission checks.
 - **Data requests** — WordPress's own export and erasure tools answer for this
