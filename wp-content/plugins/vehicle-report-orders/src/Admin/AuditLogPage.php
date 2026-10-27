@@ -42,19 +42,19 @@ final class AuditLogPage {
 		$table  = AuditLogger::table();
 		$offset = ( $paged - 1 ) * self::PER_PAGE;
 
-		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared -- Dedicated plugin table; the name comes from $wpdb->prefix and values are prepared.
+		// phpcs:disable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching -- Dedicated plugin table.
 		if ( $order_id > 0 ) {
 			$events = $wpdb->get_results(
-				$wpdb->prepare( "SELECT * FROM {$table} WHERE order_id = %d ORDER BY id DESC LIMIT %d OFFSET %d", $order_id, self::PER_PAGE, $offset )
+				$wpdb->prepare( 'SELECT * FROM %i WHERE order_id = %d ORDER BY id DESC LIMIT %d OFFSET %d', $table, $order_id, self::PER_PAGE, $offset )
 			);
-			$total  = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM {$table} WHERE order_id = %d", $order_id ) );
+			$total  = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i WHERE order_id = %d', $table, $order_id ) );
 		} else {
 			$events = $wpdb->get_results(
-				$wpdb->prepare( "SELECT * FROM {$table} ORDER BY id DESC LIMIT %d OFFSET %d", self::PER_PAGE, $offset )
+				$wpdb->prepare( 'SELECT * FROM %i ORDER BY id DESC LIMIT %d OFFSET %d', $table, self::PER_PAGE, $offset )
 			);
-			$total  = (int) $wpdb->get_var( "SELECT COUNT(*) FROM {$table}" );
+			$total  = (int) $wpdb->get_var( $wpdb->prepare( 'SELECT COUNT(*) FROM %i', $table ) );
 		}
-		// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching, WordPress.DB.PreparedSQL.InterpolatedNotPrepared
+		// phpcs:enable WordPress.DB.DirectDatabaseQuery.DirectQuery, WordPress.DB.DirectDatabaseQuery.NoCaching
 
 		$pages = (int) ceil( $total / self::PER_PAGE );
 

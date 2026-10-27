@@ -16,7 +16,13 @@ use VehicleReportOrders\Admin\SettingsPage;
 use VehicleReportOrders\Checkout\OrderMetaSaver;
 use VehicleReportOrders\Checkout\RegistrationField;
 use VehicleReportOrders\Domain\OrderLifecycle;
+use VehicleReportOrders\Admin\FulfillmentActions;
+use VehicleReportOrders\Admin\OrderPanel;
 use VehicleReportOrders\Domain\OrderRepository;
+use VehicleReportOrders\Notifications\EmailNotifier;
+use VehicleReportOrders\Reports\DownloadController;
+use VehicleReportOrders\Reports\ReportService;
+use VehicleReportOrders\Reports\ReportVersionRepository;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -80,14 +86,22 @@ final class Plugin {
 			Schema::install();
 		}
 
+		$reports  = new ReportService( new ReportVersionRepository() );
+		$notifier = new EmailNotifier( $reports );
+
 		( new RegistrationField() )->register();
 		( new OrderMetaSaver() )->register();
 		( new OrderLifecycle() )->register();
+		( new DownloadController( $reports ) )->register();
+		$notifier->register();
 
 		if ( is_admin() ) {
 			$orders = new OrderRepository();
 			$menu   = new Menu( new FulfillmentQueuePage( $orders ), new SettingsPage(), new AuditLogPage() );
 			$menu->register();
+
+			( new OrderPanel( $reports ) )->register();
+			( new FulfillmentActions( $reports, $notifier ) )->register();
 		}
 	}
 

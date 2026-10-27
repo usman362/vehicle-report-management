@@ -47,4 +47,17 @@ if ( ! function_exists( 'esc_html__' ) ) {
 	}
 }
 
+if ( ! function_exists( 'size_format' ) ) {
+	/**
+	 * Minimal stand-in for the WordPress helper.
+	 *
+	 * @param int $bytes Size in bytes.
+	 *
+	 * @return string
+	 */
+	function size_format( int $bytes ): string { // phpcs:ignore
+		return sprintf( '%d MB', (int) round( $bytes / ( 1024 * 1024 ) ) );
+	}
+}
+
 require_once __DIR__ . '/../vendor/autoload.php';
