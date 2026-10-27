@@ -1,0 +1,68 @@
+Date: 2026-10-27T21:46:11+00:00
+To: integration@example.test
+Subject: Your vehicle report is ready (order 251)
+Content-Type: text/html; charset=UTF-8
+Reply-To: Example Vehicle Reports Ltd (placeholder) <support@example.test>
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta charset="utf-8"><title>Your vehicle report is ready</title></head>
+<body style="margin:0;padding:24px;background:#f7f9fb;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#142638;">
+	<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #dce3ea;border-radius:12px;">
+		<tr>
+			<td style="padding:24px 28px;border-bottom:3px solid #1769aa;">
+				<strong style="font-size:16px;">Example Vehicle Reports Ltd (placeholder)</strong>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:28px;">
+				<h1 style="margin:0 0 16px;font-size:20px;">Your vehicle report is ready</h1>
+				<p>
+	The report for <strong>VR20 COV</strong> is ready to download.</p>
+
+<p style="margin:24px 0">
+	<a href="http://localhost:8080/?vr-report=251-101-1793396771.94cb2f00c9f87f29988964aeae4ddd0428311afbe2fd68b1f8ab4a4f79702ade" style="display:inline-block;background:#1769aa;color:#ffffff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:600">
+		Download your report (PDF)	</a>
+</p>
+
+<p style="font-size:13px;color:#5b6b7b">
+	The link works for 72 hours and only for this order. Please do not forward it — anyone who opens it can read your report.</p>
+
+	<h2 style="font-size:16px;margin:28px 0 8px">What we were able to check</h2>
+	<table role="presentation" style="width:100%;border-collapse:collapse;font-size:14px">
+					<tr>
+				<td style="padding:6px 10px 6px 0;border-bottom:1px solid #e3e8ee;vertical-align:top;width:45%">
+					DVSA MOT history				</td>
+				<td style="padding:6px 0;border-bottom:1px solid #e3e8ee;vertical-align:top">
+					Checked — see the report									</td>
+			</tr>
+					<tr>
+				<td style="padding:6px 10px 6px 0;border-bottom:1px solid #e3e8ee;vertical-align:top;width:45%">
+					DVLA vehicle enquiry				</td>
+				<td style="padding:6px 0;border-bottom:1px solid #e3e8ee;vertical-align:top">
+					Checked — nothing recorded for this vehicle									</td>
+			</tr>
+					<tr>
+				<td style="padding:6px 10px 6px 0;border-bottom:1px solid #e3e8ee;vertical-align:top;width:45%">
+					Outstanding finance				</td>
+				<td style="padding:6px 0;border-bottom:1px solid #e3e8ee;vertical-align:top;color:#8a5a00">
+					Not checked — this information was not available to us											<br><span style="color:#5b6b7b">The finance register was unreachable all afternoon</span>
+									</td>
+			</tr>
+			</table>
+
+			<p style="font-size:13px;color:#5b6b7b">
+			Where a check was not available, that is what it means: the information could not be reached for this vehicle. It is not a sign that there is nothing to find.		</p>
+	
+<p style="font-size:13px;color:#5b6b7b">
+	If the link has expired, reply to this email and we will send a new one.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:18px 28px;border-top:1px solid #dce3ea;font-size:12px;color:#5b6b7b;">
+									Questions about this order? Reply to this email or write to support@example.test.							</td>
+		</tr>
+	</table>
+</body>
+</html>
+

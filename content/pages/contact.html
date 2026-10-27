@@ -1,4 +1,39 @@
-<!-- wp:paragraph --><p>Email [vehicle_report_support_email] and we will reply during our working hours.</p><!-- /wp:paragraph -->
-<!-- wp:paragraph --><p>If you are asking about an existing order, include your order number so we can find it quickly.</p><!-- /wp:paragraph -->
-<!-- wp:heading {"level":2} --><h2 class="wp-block-heading">Who we are</h2><!-- /wp:heading -->
-<!-- wp:paragraph --><p>[vehicle_report_trader]</p><!-- /wp:paragraph -->
+<!-- wp:paragraph {"fontSize":"large","textColor":"muted"} -->
+<p class="has-muted-color has-text-color has-large-font-size">Write to us and we reply during our working hours, [vehicle_report_hours].</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide">
+<!-- wp:column {"width":"55%"} -->
+<div class="wp-block-column" style="flex-basis:55%">
+<!-- wp:shortcode -->
+[vehicle_report_contact_form]
+<!-- /wp:shortcode -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column {"width":"45%"} -->
+<div class="wp-block-column" style="flex-basis:45%">
+<!-- wp:heading {"level":2} -->
+<h2 class="wp-block-heading">How to reach us</h2>
+<!-- /wp:heading -->
+<!-- wp:shortcode -->
+[vehicle_report_contact_details]
+<!-- /wp:shortcode -->
+
+<!-- wp:heading {"level":2} -->
+<h2 class="wp-block-heading">Who we are</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph -->
+<p>[vehicle_report_trader]</p>
+<!-- /wp:paragraph -->
+
+<!-- wp:heading {"level":2} -->
+<h2 class="wp-block-heading">About an order you have placed</h2>
+<!-- /wp:heading -->
+<!-- wp:paragraph -->
+<p>Include your order number and we can find it straight away. If your report is late, say so plainly — we would rather refund you than leave you waiting.</p>
+<!-- /wp:paragraph -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->

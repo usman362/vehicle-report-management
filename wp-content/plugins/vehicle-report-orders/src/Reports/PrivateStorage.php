@@ -64,7 +64,7 @@ final class PrivateStorage {
 			return untrailingslashit( (string) VR_PRIVATE_STORAGE_DIR );
 		}
 
-		$above = untrailingslashit( dirname( untrailingslashit( ABSPATH ) ) ) . '/' . $name;
+		$above = untrailingslashit( dirname( self::web_root() ) ) . '/' . $name;
 
 		if ( is_dir( $above ) || wp_is_writable( dirname( $above ) ) ) {
 			return $above;
@@ -73,6 +73,23 @@ final class PrivateStorage {
 		$uploads = wp_upload_dir();
 
 		return trailingslashit( $uploads['basedir'] ) . $name;
+	}
+
+	/**
+	 * The WordPress root as a resolved absolute path, with no trailing slash.
+	 *
+	 * ABSPATH is whatever the entry point made it, and WP-CLI's `--path=.`
+	 * leaves it as `/site/./`. Taking dirname() of that walks up to the site
+	 * itself rather than above it, which would put private report files inside
+	 * the document root — the one thing this class exists to prevent.
+	 *
+	 * @return string
+	 */
+	private static function web_root(): string {
+		$root = untrailingslashit( ABSPATH );
+		$real = realpath( $root );
+
+		return is_string( $real ) && '' !== $real ? untrailingslashit( $real ) : $root;
 	}
 
 	/**
@@ -98,10 +115,7 @@ final class PrivateStorage {
 	 * @return bool
 	 */
 	public static function is_outside_web_root(): bool {
-		$path = self::base_path();
-		$root = untrailingslashit( ABSPATH );
-
-		return ! str_starts_with( $path, trailingslashit( $root ) );
+		return ! str_starts_with( self::base_path(), trailingslashit( self::web_root() ) );
 	}
 
 	/**

@@ -1,0 +1,43 @@
+Date: 2026-10-27T21:46:10+00:00
+To: integration@example.test
+Subject: Your vehicle report is ready (order 242)
+Content-Type: text/html; charset=UTF-8
+Reply-To: Example Vehicle Reports Ltd (placeholder) <support@example.test>
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta charset="utf-8"><title>Your vehicle report is ready</title></head>
+<body style="margin:0;padding:24px;background:#f7f9fb;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#142638;">
+	<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #dce3ea;border-radius:12px;">
+		<tr>
+			<td style="padding:24px 28px;border-bottom:3px solid #1769aa;">
+				<strong style="font-size:16px;">Example Vehicle Reports Ltd (placeholder)</strong>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:28px;">
+				<h1 style="margin:0 0 16px;font-size:20px;">Your vehicle report is ready</h1>
+				<p>
+	The report for <strong>VR14 RTY</strong> is ready to download.</p>
+
+<p style="margin:24px 0">
+	<a href="http://localhost:8080/?vr-report=242-96-1793396770.6ce4c0b9fe3891242d2418ded1ec3d6b446949a67aa055484f376e351db5586f" style="display:inline-block;background:#1769aa;color:#ffffff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:600">
+		Download your report (PDF)	</a>
+</p>
+
+<p style="font-size:13px;color:#5b6b7b">
+	The link works for 72 hours and only for this order. Please do not forward it — anyone who opens it can read your report.</p>
+
+
+<p style="font-size:13px;color:#5b6b7b">
+	If the link has expired, reply to this email and we will send a new one.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:18px 28px;border-top:1px solid #dce3ea;font-size:12px;color:#5b6b7b;">
+									Questions about this order? Reply to this email or write to support@example.test.							</td>
+		</tr>
+	</table>
+</body>
+</html>
+

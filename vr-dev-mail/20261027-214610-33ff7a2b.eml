@@ -1,0 +1,40 @@
+Date: 2026-10-27T21:46:10+00:00
+To: support@example.test
+Subject: Report delivery failed for order 242
+Content-Type: text/html; charset=UTF-8
+Reply-To: Example Vehicle Reports Ltd (placeholder) <support@example.test>
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head><meta charset="utf-8"><title>A report could not be delivered</title></head>
+<body style="margin:0;padding:24px;background:#f7f9fb;font-family:-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:#142638;">
+	<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:600px;margin:0 auto;background:#ffffff;border:1px solid #dce3ea;border-radius:12px;">
+		<tr>
+			<td style="padding:24px 28px;border-bottom:3px solid #1769aa;">
+				<strong style="font-size:16px;">Example Vehicle Reports Ltd (placeholder)</strong>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:28px;">
+				<h1 style="margin:0 0 16px;font-size:20px;">A report could not be delivered</h1>
+				<p>
+	Order 242 has an uploaded report that could not be emailed to the customer.</p>
+
+<p><strong>Reason:</strong> Maximum delivery attempts reached.</p>
+
+<p>
+	<a href="http://localhost:8080/wp-admin/admin.php?page=wc-orders&amp;action=edit&amp;id=242">Open the order</a>
+</p>
+
+<p style="font-size:13px;color:#5b6b7b">
+	The customer has not been told the report is ready. The file is still stored against the order.</p>
+			</td>
+		</tr>
+		<tr>
+			<td style="padding:18px 28px;border-top:1px solid #dce3ea;font-size:12px;color:#5b6b7b;">
+									Questions about this order? Reply to this email or write to support@example.test.							</td>
+		</tr>
+	</table>
+</body>
+</html>
+

@@ -77,8 +77,10 @@ final class OrderLifecycle {
 			return;
 		}
 
-		$registration = (string) $order->get_meta( OrderMeta::ORIGINAL_REGISTRATION );
-		$target       = '' === $registration ? FulfillmentStatus::NEEDS_CUSTOMER_INFO : FulfillmentStatus::AWAITING_STAFF;
+		// A registration or a VIN both name the vehicle; neither means staff
+		// have nothing to research and must go back to the customer.
+		$reference = OrderRepository::vehicle_reference_of( $order );
+		$target    = '' === $reference ? FulfillmentStatus::NEEDS_CUSTOMER_INFO : FulfillmentStatus::AWAITING_STAFF;
 
 		// needs_customer_info is only reachable from awaiting_staff, so queue first.
 		$order->update_meta_data( OrderMeta::REPORT_STATUS, FulfillmentStatus::AWAITING_STAFF->value );

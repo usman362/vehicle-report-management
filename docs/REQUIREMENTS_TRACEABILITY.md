@@ -1,6 +1,6 @@
 # Requirements traceability
 
-**Updated:** 2026-10-27 · Milestones 0–4 complete, Milestone 5 in progress
+**Updated:** 2026-10-28 · Milestones 0–5 complete, plus the feature parity pass against the reference site (`REFERENCE_COMPARISON.md`)
 
 Each requirement from `PROJECT_MASTER_SPEC.md` is listed with the milestone that
 delivers it, the code that implements it and the test that proves it. Status is
@@ -45,9 +45,32 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 | LIFE-01 | Removing the plugin leaves the business records | §17 | `uninstall.php` | verified on a throwaway install, both paths | done — full removal is opt-in via `VR_REMOVE_ALL_DATA` |
 | AUD-01 | Audit trail for every upload, delivery, resend, status change and refund | §12 | `Audit/AuditLogger.php`, `Admin/AuditLogPage.php` | `AuditRedactionTest`, verified | done |
 | CAP-01 | Capability checks server-side for every admin action | §4, §9 | `Admin/CapabilityManager.php`, `Admin/FulfillmentActions.php` | T11, T30 | done |
-| QA-02 | Integration tests against a real WordPress and WooCommerce | §20, §26 | `tests/integration/` | T11, T14, T26, T30 | done — 55 assertions, run by `scripts/check.sh` |
+| QA-02 | Integration tests against a real WordPress and WooCommerce | §20, §26 | `tests/integration/` | T11, T14, T26, T30 | done — 126 assertions, run by `scripts/check.sh` |
 | MAIL-01 | One confirmation email, carrying the registration and the promise | §11 | `Notifications/OrderEmailAdditions.php` | verified — captured message | done |
 | PRIV-01 | Personal-data export and erasure, and suggested privacy-policy wording | §8, §17 | `Privacy/PersonalData.php` | T25 | done — erasure removes the report file, registration and contact snapshot; the order, its totals and the audit trail are retained |
+
+## Reference parity (Milestone 6)
+
+Built after comparing the reference site named by the client, page by page. The
+numbered sections are the gaps recorded in `REFERENCE_COMPARISON.md`.
+
+| ID | Requirement | Gap | Implementation | Test | Status |
+|---|---|---|---|---|---|
+| PKG-01 | Tiered packages, each promising a named set of checks | 3.1 | `Domain/Package.php`, `Domain/PackageRepository.php`, `Domain/VehicleCheck.php` | `PackageTest`, `VehicleCheckTest`, integration case 07 | done — three tiers, all unpriced until the merchant sets a price |
+| PKG-02 | A page per package, with its own order form | 3.1 | `Storefront/Sections.php`, product base `/packages/` | verified at `/packages/{basic,silver,classic}/` | done |
+| PKG-03 | The tier bought is recorded on the order and cannot be rewritten later | 3.1 | `Checkout/OrderMetaSaver.php`, `OrderMeta::TIER_SNAPSHOT` | integration case 07 | done |
+| ORD-10 | Vehicle type on the order form and at checkout | 3.2 | `Domain/VehicleType.php`, `Checkout/RegistrationField.php` | integration case 07 | done — the merchant chooses which types are offered |
+| ORD-11 | A VIN accepted where there is no current UK plate | 3.2 | `Domain/Vin.php`, `Checkout/RegistrationField.php` | `VinTest`, integration case 07 | done — either identifier satisfies checkout, neither does not |
+| SUP-01 | Contact form that does not publish a mailbox to scrapers | 3.3 | `Storefront/ContactForm.php` | verified — captured message with Reply-To | done — honeypot and a per-visitor cooldown |
+| SUP-02 | Phone, postal address and company details published | 3.3 | `Domain/Settings.php`, `Storefront/Sections.php` | settings screen, `/contact/` | done — a missing address now blocks go-live |
+| SUP-03 | WhatsApp button and live chat, each off until configured | 3.3 | `Storefront/SupportWidgets.php` | integration case 07 | done — chat is named on the cookie page when it is switched on |
+| CNT-01 | Every check published with what it cannot tell you | 3.4 | `Domain/VehicleCheck.php`, `templates/storefront/checks.php` | `VehicleCheckTest`, integration case 07 | done |
+| CNT-02 | Delivery record published from this site's own orders | 3.6 | `Storefront/Sections.php` | manual — hidden below ten deliveries | done — never a marketing figure |
+| CNT-03 | Customer reviews, merchant-entered, real only | 3.6 | `Domain/Settings::reviews()`, `templates/storefront/reviews.php` | integration case 07 | done — no reviews, no section |
+| SEO-01 | Description, Open Graph and Twitter tags on every page | 3.5 | `Seo/MetaTags.php` | verified in page source | done — stands aside for a dedicated SEO plugin |
+| SEO-02 | Organization and FAQ structured data | 3.5 | `Seo/StructuredData.php` | verified in page source | done — no ratings or awards are emitted |
+| SEO-03 | Site icon, so a tab and a shared link are not blank | 3.5 | `content/brand/site-icon.png`, `scripts/seed-content.php` | verified | done — a plain placeholder for the merchant to replace |
+| SEC-05 | Private report storage resolved before it is trusted | — | `Reports/PrivateStorage.php` | integration case 07 | done — found during this pass: an unresolved `ABSPATH` put the directory inside the web root |
 
 ## Scope exclusions (verified, not built)
 
@@ -57,6 +80,8 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 | EXC-02 | No phone-number harvesting or outbound SMS/marketing | §13 | T22 | done (nothing exists) |
 | EXC-03 | No automatic DVLA/DVSA/HPI lookup in MVP | §14 | code review | done (nothing exists) |
 | EXC-04 | No invented vehicle facts, reviews, prices or certifications | §17 | content review | ongoing |
+| EXC-05 | No fabricated press endorsements, usage counts or competitor comparisons | §17 | `REFERENCE_COMPARISON.md` §6 | done (deliberately not built) |
+| EXC-06 | No US vehicle-data claims (NMVTIS, DMV, title brands, auction records) on a UK service | §14, §17 | `REFERENCE_COMPARISON.md` §6 | done (deliberately not built) |
 
 ## Outstanding
 

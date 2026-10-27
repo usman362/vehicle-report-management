@@ -187,6 +187,134 @@ $vr_ready   = array() === $missing;
 			</tr>
 		</table>
 
+		<h2 class="title"><?php esc_html_e( 'How customers reach you', 'vehicle-report-orders' ); ?></h2>
+		<p class="description">
+			<?php esc_html_e( 'A UK trader selling online has to publish a geographic address and a way to be contacted quickly. Anything left blank is shown on the storefront as outstanding, never filled in with a plausible-looking value.', 'vehicle-report-orders' ); ?>
+		</p>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><label for="vr-phone"><?php esc_html_e( 'Phone number', 'vehicle-report-orders' ); ?></label></th>
+				<td><input name="phone" id="vr-phone" type="text" class="regular-text" value="<?php echo esc_attr( (string) $settings['phone'] ); ?>"></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="vr-address"><?php esc_html_e( 'Postal address', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<textarea name="postal_address" id="vr-address" rows="4" class="large-text"><?php echo esc_textarea( (string) $settings['postal_address'] ); ?></textarea>
+					<p class="description"><?php esc_html_e( 'One line per line. Shown on the contact page and in the business details search engines read.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="vr-company"><?php esc_html_e( 'Company number', 'vehicle-report-orders' ); ?></label></th>
+				<td><input name="company_number" id="vr-company" type="text" class="regular-text" value="<?php echo esc_attr( (string) $settings['company_number'] ); ?>"></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="vr-vat"><?php esc_html_e( 'VAT number', 'vehicle-report-orders' ); ?></label></th>
+				<td><input name="vat_number" id="vr-vat" type="text" class="regular-text" value="<?php echo esc_attr( (string) $settings['vat_number'] ); ?>"></td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="vr-whatsapp"><?php esc_html_e( 'WhatsApp number', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<input name="whatsapp_number" id="vr-whatsapp" type="text" class="regular-text" value="<?php echo esc_attr( (string) $settings['whatsapp_number'] ); ?>" placeholder="447700900000">
+					<p class="description"><?php esc_html_e( 'International format, digits only. The floating WhatsApp button appears only once this is set, so leave it empty unless someone answers it.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="vr-chat"><?php esc_html_e( 'Live chat embed', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<input name="live_chat_src" id="vr-chat" type="url" class="large-text" value="<?php echo esc_attr( (string) $settings['live_chat_src'] ); ?>" placeholder="https://embed.example.com/your-id">
+					<p class="description"><?php esc_html_e( 'The HTTPS script address from your own chat provider. It is a third party loading its own script and setting its own cookies on your visitors, so name it on the cookie page before switching it on.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+		</table>
+
+		<h2 class="title"><?php esc_html_e( 'What the order form asks for', 'vehicle-report-orders' ); ?></h2>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Vehicle types accepted', 'vehicle-report-orders' ); ?></th>
+				<td>
+					<fieldset>
+						<?php foreach ( \VehicleReportOrders\Domain\VehicleType::catalogue() as $vr_slug => $vr_label ) : ?>
+							<label for="vr-type-<?php echo esc_attr( $vr_slug ); ?>" style="display:block;margin-bottom:.35rem;">
+								<input
+									type="checkbox"
+									name="vehicle_types[]"
+									id="vr-type-<?php echo esc_attr( $vr_slug ); ?>"
+									value="<?php echo esc_attr( $vr_slug ); ?>"
+									<?php checked( in_array( $vr_slug, \VehicleReportOrders\Domain\Settings::vehicle_types(), true ) ); ?>
+								>
+								<?php echo esc_html( $vr_label ); ?>
+							</label>
+						<?php endforeach; ?>
+						<p class="description"><?php esc_html_e( 'Tick only what you can actually research. Untick everything to stop asking the question at all.', 'vehicle-report-orders' ); ?></p>
+					</fieldset>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><?php esc_html_e( 'Accept a VIN', 'vehicle-report-orders' ); ?></th>
+				<td>
+					<label for="vr-accept-vin">
+						<input name="accept_vin" id="vr-accept-vin" type="checkbox" value="1" <?php checked( (bool) $settings['accept_vin'] ); ?>>
+						<?php esc_html_e( 'Let a customer give a VIN where the vehicle has no current UK registration.', 'vehicle-report-orders' ); ?>
+					</label>
+				</td>
+			</tr>
+		</table>
+
+		<h2 class="title"><?php esc_html_e( 'Search and sharing', 'vehicle-report-orders' ); ?></h2>
+		<table class="form-table" role="presentation">
+			<tr>
+				<th scope="row"><label for="vr-seo"><?php esc_html_e( 'Fallback description', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<textarea name="seo_description" id="vr-seo" rows="3" class="large-text"><?php echo esc_textarea( (string) $settings['seo_description'] ); ?></textarea>
+					<p class="description"><?php esc_html_e( 'Used only where a page has nothing of its own to describe it. Each page otherwise describes itself in its own words.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="vr-social-image"><?php esc_html_e( 'Sharing image', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<input name="social_image_id" id="vr-social-image" type="number" min="0" class="small-text" value="<?php echo esc_attr( (string) (int) $settings['social_image_id'] ); ?>">
+					<p class="description"><?php esc_html_e( 'Media library id of the image shown when a link to this site is shared. Leave at 0 to use the site icon.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+		</table>
+
+		<h2 class="title"><?php esc_html_e( 'Customer reviews', 'vehicle-report-orders' ); ?></h2>
+		<p class="description">
+			<?php esc_html_e( 'Only reviews real customers actually gave you, in their words, with the name they agreed to be published under. Leave every quote empty and no reviews section appears anywhere, which is the honest state before anyone has bought a report.', 'vehicle-report-orders' ); ?>
+		</p>
+		<table class="form-table" role="presentation">
+			<?php
+			$vr_reviews   = \VehicleReportOrders\Domain\Settings::reviews();
+			$vr_reviews[] = array(
+				'quote' => '',
+				'name'  => '',
+				'date'  => '',
+			);
+			?>
+			<?php foreach ( $vr_reviews as $vr_index => $vr_review ) : ?>
+				<tr>
+					<th scope="row">
+						<label for="vr-review-<?php echo esc_attr( (string) $vr_index ); ?>">
+							<?php
+							printf(
+								/* translators: %d: review number. */
+								esc_html__( 'Review %d', 'vehicle-report-orders' ),
+								(int) $vr_index + 1
+							);
+							?>
+						</label>
+					</th>
+					<td>
+						<textarea name="review_quote[]" id="vr-review-<?php echo esc_attr( (string) $vr_index ); ?>" rows="3" class="large-text"><?php echo esc_textarea( $vr_review['quote'] ); ?></textarea>
+						<p>
+							<input type="text" name="review_name[]" value="<?php echo esc_attr( $vr_review['name'] ); ?>" placeholder="<?php esc_attr_e( 'Name', 'vehicle-report-orders' ); ?>">
+							<input type="text" name="review_date[]" value="<?php echo esc_attr( $vr_review['date'] ); ?>" placeholder="<?php esc_attr_e( 'Date of experience', 'vehicle-report-orders' ); ?>">
+						</p>
+					</td>
+				</tr>
+			<?php endforeach; ?>
+		</table>
+
 		<h2 class="title"><?php esc_html_e( 'Go-live confirmation', 'vehicle-report-orders' ); ?></h2>
 		<table class="form-table" role="presentation">
 			<tr>

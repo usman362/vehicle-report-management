@@ -3,13 +3,13 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Vehicle Report Orders 0.1.0\n"
-"Report-Msgid-Bugs-To: https://github.com/usman362/vehicle-report-management/issues\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/vehicle-report-orders\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T19:38:12+00:00\n"
+"POT-Creation-Date: 2026-10-27T21:59:39+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vehicle-report-orders\n"
@@ -153,27 +153,29 @@ msgstr ""
 msgid "Audit log"
 msgstr ""
 
-#: src/Admin/OrderPanel.php:130
-#: src/Notifications/OrderEmailAdditions.php:74
-#: src/Notifications/OrderEmailAdditions.php:86
+#: src/Admin/OrderPanel.php:133
+#: src/Notifications/OrderEmailAdditions.php:89
+#: src/Notifications/OrderEmailAdditions.php:102
 msgid "Vehicle report"
 msgstr ""
 
-#: src/Admin/OrderPanel.php:153
+#: src/Admin/OrderPanel.php:156
 msgid "You do not have permission to see report fulfilment."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:36
+#: src/Admin/SettingsPage.php:37
 msgid "You do not have permission to manage report settings."
 msgstr ""
 
 #. translators: 1: product name, 2: formatted price or a note that none is set.
-#: src/Admin/SettingsPage.php:133
+#. translators: 1: package name, 2: price.
+#: src/Admin/SettingsPage.php:206
+#: templates/storefront/order-form.php:132
 #, php-format
 msgid "%1$s — %2$s"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:135
+#: src/Admin/SettingsPage.php:208
 msgid "no price set"
 msgstr ""
 
@@ -193,28 +195,73 @@ msgstr ""
 msgid "Change site visibility"
 msgstr ""
 
-#: src/Checkout/RegistrationField.php:57
-#: src/Checkout/RegistrationField.php:58
-#: src/Checkout/RegistrationField.php:106
-#: src/Privacy/PersonalData.php:134
-#: templates/storefront/order-form.php:39
+#: src/Checkout/RegistrationField.php:71
+#: src/Checkout/RegistrationField.php:72
+#: src/Checkout/RegistrationField.php:205
+#: src/Privacy/PersonalData.php:135
+#: templates/storefront/order-form.php:68
 msgid "Vehicle registration"
 msgstr ""
 
-#: src/Checkout/RegistrationField.php:76
-#: src/Checkout/RegistrationField.php:135
+#: src/Checkout/RegistrationField.php:96
+#: src/Checkout/RegistrationField.php:274
 msgid "Enter the vehicle registration as it appears on the number plate."
 msgstr ""
 
-#: src/Checkout/RegistrationField.php:107
+#: src/Checkout/RegistrationField.php:109
+#: src/Checkout/RegistrationField.php:226
+#: src/Notifications/OrderEmailAdditions.php:65
+#: src/Privacy/PersonalData.php:139
+#: templates/admin/order-panel.php:57
+#: templates/admin/queue.php:105
+#: templates/storefront/order-form.php:85
+msgid "VIN"
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:110
+msgid "VIN (if you have no UK registration)"
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:131
+#: src/Checkout/RegistrationField.php:278
+msgid "A VIN is 17 characters and does not contain the letters I, O or Q."
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:147
+#: src/Checkout/RegistrationField.php:249
+#: src/Privacy/PersonalData.php:143
+#: templates/admin/order-panel.php:63
+#: templates/storefront/order-form.php:106
+msgid "Kind of vehicle"
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:206
 msgid "AB12 CDE"
 msgstr ""
 
-#: src/Checkout/RegistrationField.php:108
+#: src/Checkout/RegistrationField.php:207
 msgid "The registration of the vehicle this report is about. We check it by hand before the report is prepared."
 msgstr ""
 
-#: src/Checkout/RegistrationField.php:129
+#: src/Checkout/RegistrationField.php:227
+msgid "Give this instead of a registration for an import, or a vehicle with no current UK plate."
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:250
+#: templates/storefront/order-form.php:108
+msgid "Choose one"
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:282
+#: src/Storefront/OrderForm.php:361
+msgid "Choose the kind of vehicle this report is about."
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:350
+msgid "Enter the vehicle registration, or a VIN if the vehicle has no current UK plate, so we know which vehicle to report on."
+msgstr ""
+
+#: src/Checkout/RegistrationField.php:351
 msgid "Please enter the vehicle registration so we know which vehicle to report on."
 msgstr ""
 
@@ -255,7 +302,7 @@ msgid "In progress"
 msgstr ""
 
 #: src/Domain/FulfillmentStatus.php:114
-#: templates/admin/order-panel.php:150
+#: templates/admin/order-panel.php:177
 msgid "Needs customer information"
 msgstr ""
 
@@ -279,40 +326,218 @@ msgstr ""
 msgid "Cancelled"
 msgstr ""
 
-#: src/Domain/Settings.php:165
+#: src/Domain/PackageRepository.php:37
+msgid "Basic"
+msgstr ""
+
+#: src/Domain/PackageRepository.php:44
+msgid "Silver"
+msgstr ""
+
+#: src/Domain/PackageRepository.php:51
+msgid "Classic"
+msgstr ""
+
+#: src/Domain/Settings.php:268
 msgid "Delivery window in business hours (SLA-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:169
+#: src/Domain/Settings.php:272
 msgid "The days of the week the team works (SLA-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:173
+#: src/Domain/Settings.php:276
 msgid "Customer support email address"
 msgstr ""
 
-#: src/Domain/Settings.php:177
+#: src/Domain/Settings.php:280
 msgid "Registered trading name (LEGAL-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:181
+#: src/Domain/Settings.php:284
+msgid "Published postal address, which a UK trader must give before a sale (LEGAL-01)"
+msgstr ""
+
+#: src/Domain/Settings.php:288
 msgid "Approved report data sources (REPORT-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:185
+#: src/Domain/Settings.php:292
 msgid "Terms version recorded against each order (LEGAL-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:189
+#: src/Domain/Settings.php:296
 msgid "Confirmation that the terms, privacy, cookie and refund pages have been reviewed (LEGAL-01)"
 msgstr ""
 
-#: src/Domain/Settings.php:196
+#: src/Domain/Settings.php:303
 msgid "The WooCommerce product that represents the report"
 msgstr ""
 
-#: src/Domain/Settings.php:198
+#: src/Domain/Settings.php:305
 msgid "A real price on the report product (PRICE-01)"
+msgstr ""
+
+#. translators: %s: comma-separated package names.
+#: src/Domain/Settings.php:319
+#, php-format
+msgid "A price on every published package: %s (PRICE-01)"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:38
+msgid "Vehicle details and specification"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:39
+msgid "Make, model, variant, engine size, fuel, transmission, colour and the date the vehicle was first registered."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:40
+msgid "Describes the vehicle as recorded, not its present condition. A vehicle can be correctly described and still be a poor buy."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:43
+msgid "Current tax and MOT status"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:44
+msgid "Whether the vehicle is currently taxed and holds a valid MOT, and when each is due to expire."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:45
+msgid "A snapshot taken on the day we research it. Status can change the day after your report is sent."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:48
+msgid "MOT history, advisories and failures"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:49
+msgid "Every recorded MOT test, the result, the recorded mileage at the time, and the advisories and failure items noted by the tester."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:50
+msgid "Only covers tests that were recorded. A vehicle under three years old will usually have no history at all."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:53
+msgid "Mileage records and inconsistencies"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:54
+msgid "Recorded mileage readings in date order, so a reading that falls rather than rises stands out."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:55
+msgid "Built from readings that were recorded somewhere. A consistent set of readings is not proof that the mileage is genuine."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:58
+msgid "Previous keepers"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:59
+msgid "How many keepers the vehicle has had and when each change was recorded."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:60
+msgid "A keeper is the person responsible for the vehicle, which is not always its legal owner. No names or addresses are supplied, and we would not pass them on if they were."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:63
+msgid "Registration (plate) changes"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:64
+msgid "Whether the vehicle has carried a different registration before, and when it changed."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:65
+msgid "Changing a plate is lawful and common. It is a question to ask the seller, not a finding against the vehicle."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:68
+msgid "Insurance write-off category"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:69
+msgid "Whether an insurer has recorded the vehicle as a write-off, and under which category (A, B, S or N)."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:70
+msgid "Only covers write-offs that were reported to the register we search. Damage settled privately leaves no record anywhere."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:73
+msgid "Stolen vehicle marker"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:74
+msgid "Whether the vehicle is recorded as stolen and not recovered on the register we search."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:75
+msgid "A clear result means no marker was found on that register on that day. It is not a statement that the vehicle was never stolen, and it is not a police check."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:78
+msgid "Outstanding finance"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:79
+msgid "Whether a finance agreement is recorded against the vehicle, with the lender and the date where that is published."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:80
+msgid "Only covers agreements registered with the finance register we search. A lender who has not registered an agreement will not appear."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:83
+msgid "Import, export and scrapped markers"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:84
+msgid "Whether the vehicle was imported, has been exported, or has been recorded as scrapped or unscrapped."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:85
+msgid "An import marker says where the vehicle came from, not whether it was looked after there."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:88
+msgid "Vehicle valuation"
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:89
+msgid "An indicative trade, private and forecourt value for the vehicle as described."
+msgstr ""
+
+#: src/Domain/VehicleCheck.php:90
+msgid "An estimate from the recorded specification and age. Nobody has seen the vehicle, so condition, service history and mileage can move it a long way."
+msgstr ""
+
+#: src/Domain/VehicleType.php:30
+msgid "Car"
+msgstr ""
+
+#: src/Domain/VehicleType.php:31
+msgid "Motorcycle"
+msgstr ""
+
+#: src/Domain/VehicleType.php:32
+msgid "Van or light commercial"
+msgstr ""
+
+#: src/Domain/VehicleType.php:33
+msgid "Truck or heavy goods vehicle"
+msgstr ""
+
+#: src/Domain/VehicleType.php:34
+msgid "Motorhome or caravan"
+msgstr ""
+
+#: src/Domain/VehicleType.php:35
+msgid "Something else"
 msgstr ""
 
 #: src/Notifications/EmailNotifier.php:69
@@ -339,86 +564,97 @@ msgstr ""
 msgid "Maximum delivery attempts reached."
 msgstr ""
 
-#: src/Notifications/OrderEmailAdditions.php:58
-msgid "not supplied — we will ask you"
-msgstr ""
-
-#. translators: 1: business hours, 2: opening hours description.
-#: src/Notifications/OrderEmailAdditions.php:63
-#, php-format
-msgid "Your report is prepared by hand and emailed within %1$d business hours (%2$s)."
-msgstr ""
-
-#: src/Notifications/OrderEmailAdditions.php:67
-msgid "Your report is prepared by hand and emailed as soon as it is ready."
-msgstr ""
-
-#: src/Notifications/OrderEmailAdditions.php:69
-msgid "This message confirms your payment. The report itself arrives in a separate email with a private download link."
-msgstr ""
-
-#: src/Notifications/OrderEmailAdditions.php:75
-#: src/Notifications/OrderEmailAdditions.php:87
-#: templates/admin/order-panel.php:42
+#: src/Notifications/OrderEmailAdditions.php:62
+#: templates/admin/order-panel.php:46
 #: templates/admin/queue.php:69
 msgid "Registration"
 msgstr ""
 
-#: src/Plugin.php:131
+#: src/Notifications/OrderEmailAdditions.php:68
+#: templates/emails/order-received.php:30
+msgid "Vehicle"
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:69
+msgid "not supplied — we will ask you"
+msgstr ""
+
+#. translators: 1: business hours, 2: opening hours description.
+#: src/Notifications/OrderEmailAdditions.php:78
+#, php-format
+msgid "Your report is prepared by hand and emailed within %1$d business hours (%2$s)."
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:82
+msgid "Your report is prepared by hand and emailed as soon as it is ready."
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:84
+msgid "This message confirms your payment. The report itself arrives in a separate email with a private download link."
+msgstr ""
+
+#: src/Notifications/OrderEmailAdditions.php:92
+#: src/Notifications/OrderEmailAdditions.php:106
+#: templates/storefront/order-form.php:122
+msgid "Package"
+msgstr ""
+
+#: src/Plugin.php:141
 msgid "Vehicle Report Orders needs WooCommerce to be installed and active."
 msgstr ""
 
-#: src/Privacy/PersonalData.php:75
+#: src/Privacy/PersonalData.php:76
 msgid "Draft wording for review by the merchant and their legal adviser before publication."
 msgstr ""
 
-#: src/Privacy/PersonalData.php:76
+#: src/Privacy/PersonalData.php:77
 msgid "When you order a vehicle report we record the registration mark you entered, your order and billing details, the version of our terms you accepted, and the times at which your order was paid for and your report was delivered."
 msgstr ""
 
-#: src/Privacy/PersonalData.php:77
+#: src/Privacy/PersonalData.php:78
 msgid "The report itself is stored as a file outside the public part of this website and is reached only through a signed link that expires. Staff actions on your order are written to an audit record so we can show what was done and when."
 msgstr ""
 
-#: src/Privacy/PersonalData.php:78
+#: src/Privacy/PersonalData.php:79
 msgid "If you ask us to erase your data we delete the stored report file, the registration mark and the contact details held against the order, and any link already sent to you stops working. We keep the order itself, its totals and the audit record, because we are required to retain financial records and an audit record that can be deleted on request is not an audit record."
 msgstr ""
 
-#: src/Privacy/PersonalData.php:80
-#: src/Privacy/PersonalData.php:92
-#: src/Privacy/PersonalData.php:108
-#: src/Privacy/PersonalData.php:168
+#: src/Privacy/PersonalData.php:81
+#: src/Privacy/PersonalData.php:93
+#: src/Privacy/PersonalData.php:109
+#: src/Privacy/PersonalData.php:177
 msgid "Vehicle report orders"
 msgstr ""
 
-#: src/Privacy/PersonalData.php:130
+#: src/Privacy/PersonalData.php:131
+#: templates/storefront/contact-form.php:41
 msgid "Order number"
 msgstr ""
 
-#: src/Privacy/PersonalData.php:138
+#: src/Privacy/PersonalData.php:147
 msgid "Report status"
 msgstr ""
 
-#: src/Privacy/PersonalData.php:142
+#: src/Privacy/PersonalData.php:151
 msgid "Delivery deadline"
 msgstr ""
 
-#: src/Privacy/PersonalData.php:146
+#: src/Privacy/PersonalData.php:155
 msgid "Delivered at"
 msgstr ""
 
-#: src/Privacy/PersonalData.php:150
+#: src/Privacy/PersonalData.php:159
 msgid "Terms version accepted"
 msgstr ""
 
 #. translators: %d: report version number.
-#: src/Privacy/PersonalData.php:159
+#: src/Privacy/PersonalData.php:168
 #, php-format
 msgid "Report file (version %d)"
 msgstr ""
 
 #. translators: %s: order number.
-#: src/Privacy/PersonalData.php:222
+#: src/Privacy/PersonalData.php:231
 #, php-format
 msgid "Order %s was kept as a financial record, without the registration, the stored report or the customer email snapshot. Its audit history is retained."
 msgstr ""
@@ -511,7 +747,57 @@ msgstr ""
 msgid "The file contains script markup and was rejected."
 msgstr ""
 
+#: src/Storefront/ContactForm.php:55
+msgid "the contact form is switched off until a support address is configured"
+msgstr ""
+
+#: src/Storefront/ContactForm.php:65
+msgid "Please give your name, an email address we can reply to, and a message."
+msgstr ""
+
+#: src/Storefront/ContactForm.php:66
+msgid "That email address does not look right. We need a working address to reply to."
+msgstr ""
+
+#: src/Storefront/ContactForm.php:67
+msgid "You have just sent a message. Give us a minute to read it before sending another."
+msgstr ""
+
+#: src/Storefront/ContactForm.php:68
+msgid "The message could not be sent. Please email us directly instead."
+msgstr ""
+
+#. translators: %s: visitor name.
+#: src/Storefront/ContactForm.php:125
+#, php-format
+msgid "From: %s"
+msgstr ""
+
+#. translators: %s: visitor email.
+#: src/Storefront/ContactForm.php:126
+#, php-format
+msgid "Email: %s"
+msgstr ""
+
+#. translators: %s: order number.
+#: src/Storefront/ContactForm.php:130
+#, php-format
+msgid "Order number: %s"
+msgstr ""
+
+#. translators: %s: subject the visitor typed.
+#: src/Storefront/ContactForm.php:139
+#, php-format
+msgid "Website enquiry: %s"
+msgstr ""
+
+#. translators: %s: subject the visitor typed.
+#: src/Storefront/ContactForm.php:140
+msgid "Website enquiry"
+msgstr ""
+
 #: src/Storefront/Disclosures.php:50
+#: templates/storefront/packages.php:35
 msgid "price to be confirmed"
 msgstr ""
 
@@ -540,6 +826,7 @@ msgid "trading name to be confirmed"
 msgstr ""
 
 #: src/Storefront/Disclosures.php:135
+#: templates/storefront/contact-details.php:24
 msgid "support address to be confirmed"
 msgstr ""
 
@@ -563,12 +850,53 @@ msgstr ""
 msgid "This page is a starting point for the operator and their legal adviser. It has not been reviewed, it does not yet state the terms of any contract, and no orders can be placed while it stands unconfirmed."
 msgstr ""
 
-#: src/Storefront/OrderForm.php:187
+#: src/Storefront/OrderForm.php:359
 msgid "Enter the registration as it appears on the number plate, for example AB12 CDE."
 msgstr ""
 
-#: src/Storefront/OrderForm.php:188
+#: src/Storefront/OrderForm.php:360
+msgid "A VIN is 17 characters long and does not contain the letters I, O or Q. It is on the V5C logbook and usually stamped on the vehicle."
+msgstr ""
+
+#: src/Storefront/OrderForm.php:362
 msgid "Report ordering is not available right now. Please contact us and we will help."
+msgstr ""
+
+#: src/Storefront/Sections.php:201
+msgid "What this package covers"
+msgstr ""
+
+#: src/Storefront/Sections.php:218
+msgid "Each check is run against the sources we are licensed to use. Where a check cannot be completed for your vehicle, the report says so and explains why."
+msgstr ""
+
+#. translators: %s: package name.
+#: src/Storefront/Sections.php:242
+#, php-format
+msgid "Order the %s package"
+msgstr ""
+
+#: src/Storefront/SupportWidgets.php:60
+msgid "Support"
+msgstr ""
+
+#: src/Storefront/SupportWidgets.php:62
+#: src/Storefront/SupportWidgets.php:86
+msgid "Message us on WhatsApp"
+msgstr ""
+
+#: src/Storefront/SupportWidgets.php:80
+msgid "WhatsApp number to be confirmed"
+msgstr ""
+
+#. translators: %s: chat provider hostname.
+#: src/Storefront/SupportWidgets.php:110
+#, php-format
+msgid "Live chat on this site is provided by %s. Opening any page loads their script, and they set their own cookies to keep your conversation together between pages. We do not control those cookies, and we do not receive anything from them beyond the conversation itself."
+msgstr ""
+
+#: src/Storefront/SupportWidgets.php:111
+msgid "a third-party provider"
 msgstr ""
 
 #: templates/admin/audit-log.php:21
@@ -609,153 +937,157 @@ msgstr ""
 msgid "System"
 msgstr ""
 
-#: templates/admin/order-panel.php:38
+#: templates/admin/order-panel.php:42
 msgid "Fulfilment state"
 msgstr ""
 
-#: templates/admin/order-panel.php:47
+#: templates/admin/order-panel.php:51
 msgid "Not supplied — ask the customer before preparing anything."
 msgstr ""
 
-#: templates/admin/order-panel.php:52
+#: templates/admin/order-panel.php:69
+msgid "Package bought"
+msgstr ""
+
+#: templates/admin/order-panel.php:79
 #: templates/admin/queue.php:73
 msgid "Promise"
 msgstr ""
 
-#: templates/admin/order-panel.php:56
+#: templates/admin/order-panel.php:83
 msgid "No delivery window was agreed when this order was placed."
 msgstr ""
 
 #. translators: %s: hours.
-#: templates/admin/order-panel.php:63
+#: templates/admin/order-panel.php:90
 #, php-format
 msgid "Overdue by %s hours"
 msgstr ""
 
 #. translators: %s: hours.
-#: templates/admin/order-panel.php:72
+#: templates/admin/order-panel.php:99
 #, php-format
 msgid "%s hours remaining"
 msgstr ""
 
-#: templates/admin/order-panel.php:81
+#: templates/admin/order-panel.php:108
 msgid "Assigned to"
 msgstr ""
 
-#: templates/admin/order-panel.php:82
+#: templates/admin/order-panel.php:109
 msgid "Nobody"
 msgstr ""
 
-#: templates/admin/order-panel.php:88
+#: templates/admin/order-panel.php:115
 msgid "Report files"
 msgstr ""
 
-#: templates/admin/order-panel.php:92
+#: templates/admin/order-panel.php:119
 msgid "Version"
 msgstr ""
 
-#: templates/admin/order-panel.php:93
+#: templates/admin/order-panel.php:120
 msgid "Uploaded"
 msgstr ""
 
-#: templates/admin/order-panel.php:94
+#: templates/admin/order-panel.php:121
 msgid "File"
 msgstr ""
 
-#: templates/admin/order-panel.php:95
+#: templates/admin/order-panel.php:122
 msgid "SHA-256"
 msgstr ""
 
-#: templates/admin/order-panel.php:96
+#: templates/admin/order-panel.php:123
 msgid "Sources"
 msgstr ""
 
-#: templates/admin/order-panel.php:97
+#: templates/admin/order-panel.php:124
 msgid "State"
 msgstr ""
 
-#: templates/admin/order-panel.php:115
-#: templates/admin/order-panel.php:184
+#: templates/admin/order-panel.php:142
+#: templates/admin/order-panel.php:211
 msgid "What each source said"
 msgstr ""
 
-#: templates/admin/order-panel.php:142
+#: templates/admin/order-panel.php:169
 msgid "Assign to me"
 msgstr ""
 
-#: templates/admin/order-panel.php:146
+#: templates/admin/order-panel.php:173
 msgid "Mark in progress"
 msgstr ""
 
-#: templates/admin/order-panel.php:154
+#: templates/admin/order-panel.php:181
 msgid "Deliver to customer"
 msgstr ""
 
-#: templates/admin/order-panel.php:158
+#: templates/admin/order-panel.php:185
 msgid "Resend link"
 msgstr ""
 
-#: templates/admin/order-panel.php:160
+#: templates/admin/order-panel.php:187
 msgid "Links already sent will stop working. Continue?"
 msgstr ""
 
-#: templates/admin/order-panel.php:160
+#: templates/admin/order-panel.php:187
 msgid "Revoke links"
 msgstr ""
 
-#: templates/admin/order-panel.php:167
+#: templates/admin/order-panel.php:194
 msgid "Upload a report"
 msgstr ""
 
-#: templates/admin/order-panel.php:169
+#: templates/admin/order-panel.php:196
 msgid "PDF only. Uploading stores the file privately; the customer is told nothing until you choose to deliver it."
 msgstr ""
 
-#: templates/admin/order-panel.php:172
+#: templates/admin/order-panel.php:199
 msgid "Report file"
 msgstr ""
 
-#: templates/admin/order-panel.php:176
+#: templates/admin/order-panel.php:203
 msgid "Sources used"
 msgstr ""
 
-#: templates/admin/order-panel.php:177
+#: templates/admin/order-panel.php:204
 msgid "e.g. DVSA MOT history (checked 27 Oct 2026), DVLA vehicle enquiry"
 msgstr ""
 
-#: templates/admin/order-panel.php:180
+#: templates/admin/order-panel.php:207
 msgid "Anything else the customer should know"
 msgstr ""
 
-#: templates/admin/order-panel.php:181
+#: templates/admin/order-panel.php:208
 msgid "e.g. the plate has changed owner twice since the last MOT"
 msgstr ""
 
-#: templates/admin/order-panel.php:187
+#: templates/admin/order-panel.php:214
 msgid "No data sources are configured yet, so a report cannot be stored. Add them under Vehicle Reports → Settings."
 msgstr ""
 
-#: templates/admin/order-panel.php:191
+#: templates/admin/order-panel.php:218
 msgid "Answer every source. \"Checked — no record\" and \"could not be checked\" mean different things to the customer, and the report says which happened."
 msgstr ""
 
-#: templates/admin/order-panel.php:210
+#: templates/admin/order-panel.php:237
 msgid "If it could not be checked, why — the customer is told this"
 msgstr ""
 
-#: templates/admin/order-panel.php:218
+#: templates/admin/order-panel.php:245
 msgid "Store report"
 msgstr ""
 
-#: templates/admin/order-panel.php:224
+#: templates/admin/order-panel.php:251
 msgid "Cannot produce this report"
 msgstr ""
 
-#: templates/admin/order-panel.php:225
+#: templates/admin/order-panel.php:252
 msgid "Why, in words the customer can be told"
 msgstr ""
 
-#: templates/admin/order-panel.php:227
+#: templates/admin/order-panel.php:254
 msgid "Mark as cannot fulfil"
 msgstr ""
 
@@ -782,7 +1114,7 @@ msgid "Overdue only"
 msgstr ""
 
 #: templates/admin/queue.php:61
-msgid "Order number, registration or email"
+msgid "Order number, registration, VIN or email"
 msgstr ""
 
 #: templates/admin/queue.php:62
@@ -810,27 +1142,27 @@ msgstr ""
 msgid "No report orders match. Paid orders appear here automatically once the gateway confirms payment."
 msgstr ""
 
-#: templates/admin/queue.php:101
+#: templates/admin/queue.php:107
 msgid "missing"
 msgstr ""
 
-#: templates/admin/queue.php:110
+#: templates/admin/queue.php:119
 msgid "No window agreed"
-msgstr ""
-
-#. translators: %s: number of hours.
-#: templates/admin/queue.php:117
-#, php-format
-msgid "%s h overdue"
 msgstr ""
 
 #. translators: %s: number of hours.
 #: templates/admin/queue.php:126
 #, php-format
+msgid "%s h overdue"
+msgstr ""
+
+#. translators: %s: number of hours.
+#: templates/admin/queue.php:135
+#, php-format
 msgid "%s h left"
 msgstr ""
 
-#: templates/admin/queue.php:133
+#: templates/admin/queue.php:142
 msgid "Unassigned"
 msgstr ""
 
@@ -990,22 +1322,130 @@ msgid "Inside the web root. Protection depends on the web server honouring .htac
 msgstr ""
 
 #: templates/admin/settings.php:190
-msgid "Go-live confirmation"
+msgid "How customers reach you"
 msgstr ""
 
-#: templates/admin/settings.php:193
-msgid "Ready for real customers"
+#: templates/admin/settings.php:192
+msgid "A UK trader selling online has to publish a geographic address and a way to be contacted quickly. Anything left blank is shown on the storefront as outstanding, never filled in with a plausible-looking value."
 msgstr ""
 
-#: templates/admin/settings.php:197
-msgid "Price, delivery window, data sources and policies are approved and deliverable."
+#: templates/admin/settings.php:196
+msgid "Phone number"
 msgstr ""
 
 #: templates/admin/settings.php:200
+msgid "Postal address"
+msgstr ""
+
+#: templates/admin/settings.php:203
+msgid "One line per line. Shown on the contact page and in the business details search engines read."
+msgstr ""
+
+#: templates/admin/settings.php:207
+#: templates/storefront/contact-details.php:47
+msgid "Company number"
+msgstr ""
+
+#: templates/admin/settings.php:211
+#: templates/storefront/contact-details.php:51
+msgid "VAT number"
+msgstr ""
+
+#: templates/admin/settings.php:215
+msgid "WhatsApp number"
+msgstr ""
+
+#: templates/admin/settings.php:218
+msgid "International format, digits only. The floating WhatsApp button appears only once this is set, so leave it empty unless someone answers it."
+msgstr ""
+
+#: templates/admin/settings.php:222
+msgid "Live chat embed"
+msgstr ""
+
+#: templates/admin/settings.php:225
+msgid "The HTTPS script address from your own chat provider. It is a third party loading its own script and setting its own cookies on your visitors, so name it on the cookie page before switching it on."
+msgstr ""
+
+#: templates/admin/settings.php:230
+msgid "What the order form asks for"
+msgstr ""
+
+#: templates/admin/settings.php:233
+msgid "Vehicle types accepted"
+msgstr ""
+
+#: templates/admin/settings.php:248
+msgid "Tick only what you can actually research. Untick everything to stop asking the question at all."
+msgstr ""
+
+#: templates/admin/settings.php:253
+msgid "Accept a VIN"
+msgstr ""
+
+#: templates/admin/settings.php:257
+msgid "Let a customer give a VIN where the vehicle has no current UK registration."
+msgstr ""
+
+#: templates/admin/settings.php:263
+msgid "Search and sharing"
+msgstr ""
+
+#: templates/admin/settings.php:266
+msgid "Fallback description"
+msgstr ""
+
+#: templates/admin/settings.php:269
+msgid "Used only where a page has nothing of its own to describe it. Each page otherwise describes itself in its own words."
+msgstr ""
+
+#: templates/admin/settings.php:273
+msgid "Sharing image"
+msgstr ""
+
+#: templates/admin/settings.php:276
+msgid "Media library id of the image shown when a link to this site is shared. Leave at 0 to use the site icon."
+msgstr ""
+
+#: templates/admin/settings.php:281
+msgid "Customer reviews"
+msgstr ""
+
+#: templates/admin/settings.php:283
+msgid "Only reviews real customers actually gave you, in their words, with the name they agreed to be published under. Leave every quote empty and no reviews section appears anywhere, which is the honest state before anyone has bought a report."
+msgstr ""
+
+#. translators: %d: review number.
+#: templates/admin/settings.php:301
+#, php-format
+msgid "Review %d"
+msgstr ""
+
+#: templates/admin/settings.php:310
+msgid "Name"
+msgstr ""
+
+#: templates/admin/settings.php:311
+msgid "Date of experience"
+msgstr ""
+
+#: templates/admin/settings.php:318
+msgid "Go-live confirmation"
+msgstr ""
+
+#: templates/admin/settings.php:321
+msgid "Ready for real customers"
+msgstr ""
+
+#: templates/admin/settings.php:325
+msgid "Price, delivery window, data sources and policies are approved and deliverable."
+msgstr ""
+
+#: templates/admin/settings.php:328
 msgid "Cannot be confirmed while anything above is outstanding."
 msgstr ""
 
-#: templates/admin/settings.php:206
+#: templates/admin/settings.php:334
 msgid "Save settings"
 msgstr ""
 
@@ -1037,10 +1477,6 @@ msgstr ""
 
 #: templates/emails/order-received.php:25
 msgid "Thank you — your payment has been confirmed and your request is with our team."
-msgstr ""
-
-#: templates/emails/order-received.php:30
-msgid "Vehicle"
 msgstr ""
 
 #. translators: 1: number of business hours, 2: business hours description.
@@ -1099,26 +1535,168 @@ msgstr ""
 msgid "Questions about this order? Reply to this email or write to %s."
 msgstr ""
 
-#: templates/storefront/order-form.php:56
-msgid "We check the registration by hand before preparing your report. Entering it here does not look anything up yet."
+#: templates/storefront/checks.php:30
+msgid "What it does not tell you:"
 msgstr ""
 
-#: templates/storefront/order-form.php:61
+#: templates/storefront/contact-details.php:20
+msgid "Email"
+msgstr ""
+
+#: templates/storefront/contact-details.php:29
+msgid "Phone"
+msgstr ""
+
+#: templates/storefront/contact-details.php:33
+msgid "phone number to be confirmed"
+msgstr ""
+
+#: templates/storefront/contact-details.php:38
+msgid "Address"
+msgstr ""
+
+#: templates/storefront/contact-details.php:42
+msgid "postal address to be confirmed"
+msgstr ""
+
+#: templates/storefront/contact-form.php:19
+msgid "Thank you — your message has been sent. We reply during our working hours."
+msgstr ""
+
+#: templates/storefront/contact-form.php:31
+msgid "Your name"
+msgstr ""
+
+#: templates/storefront/contact-form.php:36
+msgid "Your email address"
+msgstr ""
+
+#: templates/storefront/contact-form.php:43
+msgid "If you are asking about an order you have already placed, this helps us find it straight away."
+msgstr ""
+
+#: templates/storefront/contact-form.php:47
+msgid "Subject"
+msgstr ""
+
+#: templates/storefront/contact-form.php:52
+msgid "Message"
+msgstr ""
+
+#: templates/storefront/contact-form.php:57
+msgid "Leave this field empty"
+msgstr ""
+
+#: templates/storefront/contact-form.php:62
+msgid "Send message"
+msgstr ""
+
+#. translators: %s: support email address.
+#: templates/storefront/contact-form.php:69
+#, php-format
+msgid "Your message goes to %s and nowhere else. We use your address to reply, and we do not add you to any mailing list."
+msgstr ""
+
+#: templates/storefront/order-form.php:51
+msgid "What do you have?"
+msgstr ""
+
+#: templates/storefront/order-form.php:55
+msgid "A UK registration"
+msgstr ""
+
+#: templates/storefront/order-form.php:60
+msgid "A VIN"
+msgstr ""
+
+#: templates/storefront/order-form.php:99
+msgid "17 characters, on your V5C logbook. Use this for an import or a vehicle with no current UK plate."
+msgstr ""
+
+#. translators: %s: package name.
+#: templates/storefront/order-form.php:138
+#, php-format
+msgid "%s — price to be confirmed"
+msgstr ""
+
+#: templates/storefront/order-form.php:152
+msgid "We check what you enter by hand before preparing your report. Entering it here does not look anything up yet."
+msgstr ""
+
+#: templates/storefront/order-form.php:157
 msgid "Continue to report order"
 msgstr ""
 
 #. translators: %s: price, already formatted.
-#: templates/storefront/order-form.php:72
+#: templates/storefront/order-form.php:168
 #, php-format
-msgid "Price: %s."
+msgid "From %s."
 msgstr ""
 
 #. translators: 1: business hours, 2: opening hours description.
-#: templates/storefront/order-form.php:82
+#: templates/storefront/order-form.php:178
 #, php-format
 msgid "Emailed within %1$d business hours (%2$s)."
 msgstr ""
 
-#: templates/storefront/order-form.php:93
+#: templates/storefront/order-form.php:189
 msgid "Ordering is switched off until the price, delivery window and report sources are confirmed."
+msgstr ""
+
+#. translators: %d: number of vehicles covered.
+#: templates/storefront/packages.php:44
+#, php-format
+msgid "Covers %d vehicle."
+msgid_plural "Covers %d vehicles."
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/storefront/packages.php:57
+msgid "Included:"
+msgstr ""
+
+#: templates/storefront/packages.php:57
+msgid "Not included:"
+msgstr ""
+
+#. translators: %s: package name.
+#: templates/storefront/packages.php:70
+#, php-format
+msgid "See the %s package"
+msgstr ""
+
+#: templates/storefront/packages.php:76
+msgid "this package has not been set up yet"
+msgstr ""
+
+#: templates/storefront/packages.php:84
+msgid "A package says which checks we will run. It does not promise that every check returns a record for your vehicle: where one cannot be completed, your report says so and explains why."
+msgstr ""
+
+#. translators: %d: whole hours.
+#: templates/storefront/stats.php:18
+#, php-format
+msgid "%d hour"
+msgid_plural "%d hours"
+msgstr[0] ""
+msgstr[1] ""
+
+#. translators: %d: minutes.
+#: templates/storefront/stats.php:23
+#, php-format
+msgid "%d minute"
+msgid_plural "%d minutes"
+msgstr[0] ""
+msgstr[1] ""
+
+#: templates/storefront/stats.php:30
+msgid "Reports delivered"
+msgstr ""
+
+#: templates/storefront/stats.php:34
+msgid "Typical delivery"
+msgstr ""
+
+#: templates/storefront/stats.php:39
+msgid "Counted from this site's own delivered orders, not from a marketing figure. \"Typical\" is the middle of those deliveries, so half took longer."
 msgstr ""

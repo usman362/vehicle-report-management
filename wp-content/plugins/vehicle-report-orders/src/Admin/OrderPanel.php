@@ -13,6 +13,9 @@ use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableControlle
 use VehicleReportOrders\Domain\FulfillmentStatus;
 use VehicleReportOrders\Domain\OrderMeta;
 use VehicleReportOrders\Domain\OrderRepository;
+use VehicleReportOrders\Domain\PackageRepository;
+use VehicleReportOrders\Domain\VehicleCheck;
+use VehicleReportOrders\Domain\VehicleType;
 use VehicleReportOrders\Domain\Settings;
 use VehicleReportOrders\Reports\Coverage;
 use VehicleReportOrders\Reports\ReportService;
@@ -164,6 +167,18 @@ final class OrderPanel {
 		$transitions  = FulfillmentStatus::transitions()[ $status->value ];
 		$sources      = Settings::source_list();
 		$coverage     = is_object( $current ) ? Coverage::from_json( (string) ( $current->coverage_json ?? '' ) ) : null;
+
+		$vehicle_vin  = (string) $order->get_meta( OrderMeta::ORIGINAL_VIN );
+		$type_slug    = (string) $order->get_meta( OrderMeta::VEHICLE_TYPE );
+		$vehicle_type = '' !== $type_slug ? VehicleType::label( $type_slug ) : '';
+
+		$snapshot       = PackageRepository::snapshot_for( $order );
+		$package_name   = is_array( $snapshot ) ? (string) ( $snapshot['name'] ?? '' ) : '';
+		$package_checks = array();
+
+		foreach ( is_array( $snapshot ) && is_array( $snapshot['checks'] ?? null ) ? $snapshot['checks'] : array() as $check_key ) {
+			$package_checks[] = VehicleCheck::label( (string) $check_key );
+		}
 
 		$this->panel_was_rendered = true;
 

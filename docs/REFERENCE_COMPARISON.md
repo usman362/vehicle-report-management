@@ -4,6 +4,13 @@ Reviewed 28 October 2026 against the live reference site. Every page in the
 reference's own sitemap was opened and read; its plugin stack was read from the
 markup. Nothing here is guessed.
 
+**Status, 28 October 2026** — everything in section 3 has been built, except
+where the entry says a merchant decision or a merchant account is needed. The
+commercial figures stay empty: packages exist, prices do not, and ordering stays
+switched off until the merchant sets them. Section 6 is unchanged and remains
+deliberately unbuilt. `REQUIREMENTS_TRACEABILITY.md` lists each item with the
+code and the test that proves it.
+
 The reference is **not a quality bar to copy wholesale**. A large part of it is
 either US-market copy on a UK domain, or claims that cannot be substantiated.
 Those parts are listed separately in section 6 and are deliberately not built,
@@ -50,11 +57,11 @@ chat widget.
 
 | Reference | Here | Status |
 |---|---|---|
-| `/` Home | `/` Home | Present. Ours is much shorter — see 3. |
-| `/packages/` | `/pricing/` | Present, but **one price, no tiers**. |
-| `/packages/basic\|silver\|classic` | — | **Missing.** No tiered products. |
+| `/` Home | `/` Home | Present, with the explanatory sections, check blocks, package comparison and delivery record. |
+| `/packages/` | `/pricing/` | Present, with a three-tier comparison showing what each tier excludes. |
+| `/packages/basic\|silver\|classic` | same paths | Present, each with its own check list and order form. |
 | `/about-us/` | `/about/` | Present. |
-| `/contact/` | `/contact/` | Present, but **email only** — no form, phone or address. |
+| `/contact/` | `/contact/` | Present, with a form, phone, postal address and company details. |
 | `/cart/` | `/cart/` | Present. |
 | `/checkout/` | `/checkout/` | Present, and stronger (validated registration, SLA shown, honest coverage). |
 | `/my-account/` | `/my-account/` | Present. |
@@ -69,55 +76,72 @@ chat widget.
 
 ---
 
-## 3. Genuine gaps — things worth building
+## 3. Genuine gaps — now built
 
 Ordered by how much they affect a visitor's decision to buy.
 
-### 3.1 Commercial structure
-- **Tiered packages.** The reference sells three. This site sells one report at
-  one price. This is a merchant decision, not a build decision: it changes the
-  product model, the pricing page, the checkout and the fulfilment brief.
-- **Per-tier "what you get" list** on each package page.
-- **Currency.** The reference shows USD on a `.co.uk` domain. This site shows
-  GBP, which is the correct default for UK consumers; multi-currency is only
-  worth adding if the merchant genuinely sells outside the UK.
+### 3.1 Commercial structure — built
+- **Tiered packages.** Three tiers (Basic, Silver, Classic), each a WooCommerce
+  product at `/packages/{slug}/`, each promising a named set of checks. A tier
+  with no price cannot be bought and says so; go-live is blocked until every
+  published tier has one. Which tiers to sell, and at what price, remains the
+  merchant's decision — the structure no longer waits on it.
+- **Per-tier "what you get" list** on each package page, and a comparison on
+  `/pricing/` that shows what each tier does *not* include as well.
+- **Currency.** Still GBP only, which is the correct default for UK consumers.
+  Multi-currency is not built: it is only worth adding if the merchant genuinely
+  sells outside the UK, and showing USD on a `.co.uk` domain, as the reference
+  does, is the opposite of helpful.
 
-### 3.2 Order form
-- **Vehicle type** (car / motorbike / van / other). Affects which sources apply.
-- **VIN as an alternative to a registration**, for imports and vehicles without
-  a current UK plate.
-- **Name and phone** captured before checkout. WooCommerce collects a name and
-  email at checkout; a phone is optional and currently unused.
-- **Pre-order enquiry path** for someone who wants to ask before paying.
+### 3.2 Order form — built
+- **Vehicle type**, from a list the merchant controls. Nothing they have not
+  ticked can be ordered.
+- **VIN as an alternative to a registration.** Either identifies the vehicle;
+  a checkout naming neither is refused, on both the block and classic checkouts.
+  A paid VIN-only order goes to staff rather than back to the customer.
+- **Name and email** are collected by WooCommerce at checkout as before.
+- **Pre-order enquiry path**: the contact form in 3.3, reachable from the
+  navigation on every page.
 
-### 3.3 Contact and support
-- **Contact form** on `/contact/` (the reference uses CF7; here it would be one
-  honest form that creates an email, with spam protection).
-- **Phone number and postal address** in the footer and on `/contact/` —
-  required for a UK trading business under the Consumer Contracts Regulations.
-- **Live chat** (Tawk.to or similar) and a **WhatsApp button**. Both are
-  merchant accounts, not code.
+### 3.3 Contact and support — built
+- **Contact form** on `/contact/`: sends to the support address and nowhere
+  else, with a hidden field for bots and a short per-visitor cooldown. Nothing
+  is stored and no list is built.
+- **Phone number, postal address, company and VAT numbers**, published on
+  `/contact/` and in the business details search engines read. A missing postal
+  address is now a go-live blocker, because a UK trader has to publish one.
+- **Live chat and a WhatsApp button**: both built, both hidden until the
+  merchant supplies their own account. Switching chat on names the provider on
+  the cookie page, because it is a third party setting cookies on visitors.
 
-### 3.4 Marketing depth on the home page
-The reference devotes most of its home page to explaining what a report answers.
-This site states its position in four short sections and stops. Worth adding,
-written honestly:
-- a "what a report can tell you" section, one block per check that is actually
-  licensed, each saying plainly what it can and cannot answer;
-- a short "is this for me?" explainer for used-car buyers;
-- a worked example tied to the sample report;
-- imagery. There is currently none — the site is entirely type and colour.
+### 3.4 Marketing depth on the home page — built
+- **"What a report can tell you"**, one block per check, each stating what it
+  cannot tell you as well as what it can. A check published without its limits
+  reads as a guarantee, so the catalogue refuses to hold one without them.
+- **"Do I need a vehicle report?"**, written for a used-car buyer, next to a
+  plain statement of what a clear result does not mean.
+- **A package comparison** and a closing order form.
+- **Imagery** is still absent: the site is type and colour. Photography is a
+  brand asset the merchant supplies — see 7.7.
 
-### 3.5 SEO and sharing — all absent here
-- No meta description, no Open Graph or Twitter card tags, no site icon
-  (favicon). Pages shared on WhatsApp or social currently render bare.
-- `wp-sitemap.xml` and `robots.txt` are served by core and work.
-- No structured data (`Service` / `FAQPage` / `Organization`).
+### 3.5 SEO and sharing — built
+- Meta description, Open Graph and Twitter card tags on every page, taken from
+  the page's own words. A dedicated SEO plugin, if one is ever installed, takes
+  over and these stand aside rather than printing a second, conflicting set.
+- A site icon: a plain number-plate shape in the theme's navy, with no wordmark,
+  for the merchant to replace with their own logo.
+- `Organization` and `FAQPage` structured data. No rating, review count or award
+  is emitted, because this site has none to report.
+- `wp-sitemap.xml` and `robots.txt` continue to be served by core.
 
-### 3.6 Trust signals, built honestly
-- **Reviews** — only once real customers have left them, attributed and dated.
-- **Published counts** — e.g. reports delivered, average delivery time. These
-  can be computed from this site's own order data, so they would be true.
+### 3.6 Trust signals — built
+- **Reviews**: entered by the merchant on the settings screen, published as
+  written with the name and date. No reviews means no reviews section, which is
+  the honest state before anyone has bought a report.
+- **Delivery record**: reports delivered and the middle delivery time, counted
+  from this site's own orders. Hidden below ten deliveries, because one fast or
+  one slow order moves the figure enough to mislead.
+- **Press logos** are not built. See section 6.
 
 ---
 
@@ -139,6 +163,9 @@ Worth stating to the client, because it is where the money went.
 - Backup and restore scripts, proven by destroying and restoring the site.
 - Accessibility checked with axe-core across all 16 pages; mobile layouts checked.
 - Translation templates for plugin and theme.
+- Every check published with its limits, so a tier cannot be sold as a guarantee.
+- A contact form that stores nothing and builds no list.
+- A delivery record counted from real orders, hidden until it means something.
 
 ---
 
@@ -175,14 +202,22 @@ Each of these is in the reference and is a rule in this project's brief.
 
 ---
 
-## 7. Decisions needed before any of section 3 is built
+## 7. Decisions still needed from the merchant
 
-1. One price or three tiers — and if tiers, what each one actually includes.
-2. The confirmed price per tier, in GBP, VAT position stated.
-3. Which vehicle types are accepted.
-4. Whether VIN orders are accepted.
-5. Registered trading name, postal address and phone number.
-6. Live chat and WhatsApp: accounts, and who answers them, in what hours.
-7. Logo, brand colours, photography.
-8. Which data sources are licensed — this decides what the marketing sections
-   are allowed to say.
+None of these block the build any more; they block go-live.
+
+1. The confirmed price for each tier, in GBP, with the VAT position stated.
+   Until these exist, ordering stays switched off.
+2. Whether three tiers is the right shape, and whether each one's list of checks
+   matches what the merchant can actually deliver.
+3. Which vehicle types are accepted, and whether VIN orders are accepted. Both
+   are tick-boxes on the settings screen.
+4. Registered trading name, postal address, phone number, company and VAT
+   numbers.
+5. Live chat and WhatsApp: the accounts, who answers them, and in what hours.
+   Both stay hidden until supplied.
+6. Which data sources are licensed. This decides what the marketing sections are
+   allowed to say and what the fulfilment coverage grid asks staff to answer.
+7. Logo, brand colours and photography, replacing the placeholder site icon.
+8. Legal review of the terms, privacy, cookie and refund pages, and the
+   confirmation that switches the draft notice off.

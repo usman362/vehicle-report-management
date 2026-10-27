@@ -8,10 +8,10 @@
 <h1 class="wp-block-heading has-xx-large-font-size">A UK vehicle history report, checked by a person</h1>
 <!-- /wp:heading -->
 <!-- wp:paragraph {"fontSize":"large","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-large-font-size">Enter a registration and we prepare a written report from named sources, then email it to you. No instant lookup, no invented results.</p>
+<p class="has-muted-color has-text-color has-large-font-size">Enter a registration or a VIN and we prepare a written report from named sources, then email it to you. No instant lookup, no invented results.</p>
 <!-- /wp:paragraph -->
 <!-- wp:paragraph -->
-<p><strong>Price:</strong> [vehicle_report_price] · <strong>Delivered:</strong> [vehicle_report_sla]</p>
+<p><strong>From:</strong> [vehicle_report_price] · <strong>Delivered:</strong> [vehicle_report_sla]</p>
 <!-- /wp:paragraph -->
 </div>
 <!-- /wp:column -->
@@ -20,6 +20,36 @@
 <!-- wp:shortcode -->
 [vehicle_report_order_form heading="Order a vehicle report"]
 <!-- /wp:shortcode -->
+</div>
+<!-- /wp:column -->
+</div>
+<!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:shortcode -->
+[vehicle_report_stats]
+<!-- /wp:shortcode -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"3rem","bottom":"1rem"}}},"layout":{"type":"constrained","wideSize":"1160px"}} -->
+<div class="wp-block-group" style="padding-top:3rem;padding-bottom:1rem">
+<!-- wp:heading --><h2 class="wp-block-heading">Do I need a vehicle report?</h2><!-- /wp:heading -->
+<!-- wp:columns {"align":"wide"} -->
+<div class="wp-block-columns alignwide">
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:paragraph --><p>If you are buying a used vehicle, the seller knows things about it that you do not. A report is how you check the parts of that story which were written down somewhere: how many keepers it has had, whether an insurer has written it off, whether money is still owed on it, and whether the mileage on the dashboard matches what was recorded at each MOT.</p><!-- /wp:paragraph -->
+<!-- wp:paragraph --><p>None of that replaces looking at the vehicle, or a mechanic's inspection. It tells you which questions to ask before you hand over any money, and sometimes it tells you to walk away.</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:column -->
+<!-- wp:column -->
+<div class="wp-block-column">
+<!-- wp:group {"className":"vr-note"} -->
+<div class="wp-block-group vr-note">
+<!-- wp:heading {"level":3,"fontSize":"large"} --><h3 class="wp-block-heading has-large-font-size">What a clear report does not mean</h3><!-- /wp:heading -->
+<!-- wp:paragraph --><p>A check that finds nothing means no record was found on the register we searched, on the day we searched it. Damage settled privately, a finance agreement that was never registered, or an accident nobody reported leave no trace anywhere. We say so in the report rather than letting a blank line read as a guarantee.</p><!-- /wp:paragraph -->
+</div>
+<!-- /wp:group -->
 </div>
 <!-- /wp:column -->
 </div>
@@ -54,6 +84,24 @@
 <!-- /wp:column -->
 </div>
 <!-- /wp:columns -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","bottom":"1rem"}}},"layout":{"type":"constrained","wideSize":"1160px"}} -->
+<div class="wp-block-group" style="padding-top:2rem;padding-bottom:1rem">
+<!-- wp:heading --><h2 class="wp-block-heading">What a report can tell you</h2><!-- /wp:heading -->
+<!-- wp:paragraph {"textColor":"muted"} --><p class="has-muted-color has-text-color">Each check below is described with its limits, because a check described without them reads as a promise. Which of these we can run for your vehicle depends on the sources we are licensed to use, and your report records the answer source by source.</p><!-- /wp:paragraph -->
+<!-- wp:shortcode -->
+[vehicle_report_checks]
+<!-- /wp:shortcode -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","bottom":"1rem"}}},"backgroundColor":"surface","layout":{"type":"constrained","wideSize":"1160px"}} -->
+<div class="wp-block-group has-surface-background-color has-background" style="padding-top:2rem;padding-bottom:1rem">
+<!-- wp:shortcode -->
+[vehicle_report_packages heading="Choose a package"]
+<!-- /wp:shortcode -->
 </div>
 <!-- /wp:group -->
 
@@ -93,3 +141,15 @@
 </div>
 <!-- /wp:group -->
 
+<!-- wp:shortcode -->
+[vehicle_report_reviews heading="What customers say"]
+<!-- /wp:shortcode -->
+
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"2rem","bottom":"3rem"}}},"backgroundColor":"surface","layout":{"type":"constrained","wideSize":"1160px"}} -->
+<div class="wp-block-group has-surface-background-color has-background" style="padding-top:2rem;padding-bottom:3rem">
+<!-- wp:heading --><h2 class="wp-block-heading">Ready when you are</h2><!-- /wp:heading -->
+<!-- wp:shortcode -->
+[vehicle_report_order_form compact="yes"]
+<!-- /wp:shortcode -->
+</div>
+<!-- /wp:group -->

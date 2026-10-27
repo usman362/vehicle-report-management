@@ -58,7 +58,7 @@ defined( 'ABSPATH' ) || exit;
 			<?php esc_html_e( 'Overdue only', 'vehicle-report-orders' ); ?>
 		</label>
 
-		<input type="search" name="s" value="<?php echo esc_attr( (string) $filters['search'] ); ?>" placeholder="<?php esc_attr_e( 'Order number, registration or email', 'vehicle-report-orders' ); ?>" style="width:280px;">
+		<input type="search" name="s" value="<?php echo esc_attr( (string) $filters['search'] ); ?>" placeholder="<?php esc_attr_e( 'Order number, registration, VIN or email', 'vehicle-report-orders' ); ?>" style="width:280px;">
 		<?php submit_button( __( 'Filter', 'vehicle-report-orders' ), 'secondary', '', false ); ?>
 	</form>
 
@@ -87,6 +87,9 @@ defined( 'ABSPATH' ) || exit;
 				$vr_status       = OrderRepository::status_of( $vr_order );
 				$vr_registration = OrderRepository::registration_of( $vr_order );
 				$vr_hours        = OrderRepository::hours_until_due( $vr_order );
+				$vr_vin          = (string) $vr_order->get_meta( \VehicleReportOrders\Domain\OrderMeta::ORIGINAL_VIN );
+				$vr_snapshot     = \VehicleReportOrders\Domain\PackageRepository::snapshot_for( $vr_order );
+				$vr_tier         = is_array( $vr_snapshot ) ? (string) ( $vr_snapshot['name'] ?? '' ) : '';
 				$vr_assignee     = (int) $vr_order->get_meta( \VehicleReportOrders\Domain\OrderMeta::ASSIGNED_STAFF_ID );
 				$vr_user         = $vr_assignee > 0 ? get_userdata( $vr_assignee ) : null;
 				?>
@@ -97,8 +100,14 @@ defined( 'ABSPATH' ) || exit;
 					<td>
 						<?php if ( $vr_registration ) : ?>
 							<code><?php echo esc_html( $vr_registration->for_display() ); ?></code>
+						<?php elseif ( '' !== $vr_vin ) : ?>
+							<code><?php echo esc_html( $vr_vin ); ?></code>
+							<br><span class="description"><?php esc_html_e( 'VIN', 'vehicle-report-orders' ); ?></span>
 						<?php else : ?>
 							<span style="color:#b93838;"><?php esc_html_e( 'missing', 'vehicle-report-orders' ); ?></span>
+						<?php endif; ?>
+						<?php if ( '' !== $vr_tier ) : ?>
+							<br><span class="description"><?php echo esc_html( $vr_tier ); ?></span>
 						<?php endif; ?>
 					</td>
 					<td><?php echo esc_html( $vr_order->get_billing_email() ); ?></td>

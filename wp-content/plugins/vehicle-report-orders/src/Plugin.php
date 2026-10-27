@@ -26,8 +26,13 @@ use VehicleReportOrders\Reports\DownloadController;
 use VehicleReportOrders\Reports\ReportService;
 use VehicleReportOrders\Privacy\PersonalData;
 use VehicleReportOrders\Reports\ReportVersionRepository;
+use VehicleReportOrders\Seo\MetaTags;
+use VehicleReportOrders\Seo\StructuredData;
+use VehicleReportOrders\Storefront\ContactForm;
 use VehicleReportOrders\Storefront\Disclosures;
 use VehicleReportOrders\Storefront\OrderForm;
+use VehicleReportOrders\Storefront\Sections;
+use VehicleReportOrders\Storefront\SupportWidgets;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -103,6 +108,11 @@ final class Plugin {
 		( new PersonalData( $versions ) )->register();
 		( new OrderForm() )->register();
 		( new Disclosures() )->register();
+		( new Sections() )->register();
+		( new ContactForm() )->register();
+		( new SupportWidgets() )->register();
+		( new MetaTags() )->register();
+		( new StructuredData() )->register();
 		$notifier->register();
 
 		if ( is_admin() ) {

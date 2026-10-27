@@ -2,10 +2,14 @@
 
 UK vehicle history **report ordering and manual fulfilment** website.
 
-A customer enters a registration mark, pays in GBP, and staff prepare and send a
-genuine, source-attributed PDF by email. The site does **not** query DVLA, DVSA
+A customer picks a package and enters a registration or a VIN, pays in GBP, and
+staff prepare and send a genuine, source-attributed PDF by email. The site does **not** query DVLA, DVSA
 or HPI, and it is **not** a CRM, lead system or messaging platform — see
 [`CLAUDE.md`](CLAUDE.md) and [`docs/SCOPE_CHANGELOG.md`](docs/SCOPE_CHANGELOG.md).
+
+The feature set was compared page by page against the reference site the client
+named; the gaps, what was built from them and what was deliberately left out are
+in [`docs/REFERENCE_COMPARISON.md`](docs/REFERENCE_COMPARISON.md).
 
 ## Documentation
 
@@ -79,11 +83,16 @@ local site it is skipped with a reason rather than silently passing.
 
 ## What works today
 
-A customer enters a registration, pays, and staff deliver a report:
+A customer picks a package, names a vehicle, pays, and staff deliver a report:
 
-- **Order** — registration entry on the storefront, carried into the block or
-  classic checkout, captured onto the order with the price, delivery window and
-  terms version that applied at the time.
+- **Order** — a registration or a VIN, the kind of vehicle, and the package, all
+  entered on the storefront and carried into the block or classic checkout.
+  Either identifier names the vehicle; a checkout giving neither is refused. The
+  order keeps the price, delivery window, terms version and package that applied
+  at the time, so a later change cannot rewrite what was promised.
+- **Packages** — tiers the merchant defines, each promising a named set of
+  checks, each with its own page at `/packages/{slug}/`. A tier with no price
+  cannot be bought and says so; go-live is blocked until every tier has one.
 - **Payment** — only a verified WooCommerce payment queues the work. A repeated
   webhook, a refresh or a manual status change is recognised and logged rather
   than queueing twice.
@@ -112,6 +121,24 @@ A customer enters a registration, pays, and staff deliver a report:
   trail stay, because financial records must survive and an audit trail that
   can be deleted on request is not an audit trail.
 
+- **What a report can tell you** — every check is published with what it cannot
+  tell you as well as what it can, because a check described without its limits
+  reads as a guarantee. The same catalogue drives the package lists, so the
+  marketing and the product cannot drift apart.
+- **Trust signals** — the delivery record is counted from this site's own orders
+  and stays hidden below ten deliveries; reviews are the merchant's real ones,
+  entered by hand, and no reviews means no reviews section. No press logo, usage
+  count or competitor comparison is generated anywhere.
+- **Contact and support** — a contact form that emails the support address and
+  stores nothing, with a honeypot and a per-visitor cooldown; phone, postal
+  address and company details published once supplied; and a WhatsApp button and
+  live chat that stay hidden until the merchant gives their own account. Turning
+  chat on names the provider on the cookie page.
+- **Search and sharing** — description, Open Graph and Twitter tags taken from
+  each page's own words, `Organization` and `FAQPage` structured data, and a
+  placeholder site icon. No rating or award is emitted, and a dedicated SEO
+  plugin takes over if one is ever installed.
+
 - **Pages** — storefront, about, sample-report and legal pages live in
   `content/pages/` and are rebuilt by `scripts/seed-content.php`, so the wording
   is reviewable in a diff and a fresh install comes up identical. The terms,
@@ -132,8 +159,8 @@ campaigns or outbound marketing — see
 
 ## Before it can take real money
 
-Price, delivery window, report data licence, legal merchant identity and brand
-assets are outstanding — see the blockers in
+Package prices, delivery window, report data licence, legal merchant identity
+(including a published postal address) and brand assets are outstanding — see the blockers in
 [`docs/DECISIONS.md`](docs/DECISIONS.md). Until they are supplied the storefront
 will not start an order, and the go-live confirmation cannot be ticked.
 

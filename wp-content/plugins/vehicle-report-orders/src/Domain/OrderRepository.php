@@ -88,10 +88,17 @@ final class OrderRepository {
 		if ( '' !== $search ) {
 			$normalized = RegistrationNumber::normalize( $search );
 
+			$vin = Vin::normalize( $search );
+
 			if ( '' !== $normalized && RegistrationNumber::is_plausible( $normalized ) ) {
 				$args['meta_query'][] = array(
 					'key'   => OrderMeta::NORMALIZED_REGISTRATION,
 					'value' => $normalized,
+				);
+			} elseif ( Vin::is_plausible( $vin ) ) {
+				$args['meta_query'][] = array(
+					'key'   => OrderMeta::NORMALIZED_VIN,
+					'value' => $vin,
 				);
 			} elseif ( is_numeric( $search ) ) {
 				$args['include'] = array( (int) $search );
@@ -183,6 +190,29 @@ final class OrderRepository {
 
 			return null;
 		}
+	}
+
+	/**
+	 * How the queue names the vehicle on an order.
+	 *
+	 * A registration where one was given, otherwise the VIN. An order with
+	 * neither cannot happen through checkout, but an imported or hand-made
+	 * order could, so it is reported honestly rather than shown blank.
+	 *
+	 * @param \WC_Order $order Order.
+	 *
+	 * @return string
+	 */
+	public static function vehicle_reference_of( \WC_Order $order ): string {
+		$registration = (string) $order->get_meta( OrderMeta::ORIGINAL_REGISTRATION );
+
+		if ( '' !== trim( $registration ) ) {
+			return trim( $registration );
+		}
+
+		$vin = (string) $order->get_meta( OrderMeta::ORIGINAL_VIN );
+
+		return trim( $vin );
 	}
 
 	/**

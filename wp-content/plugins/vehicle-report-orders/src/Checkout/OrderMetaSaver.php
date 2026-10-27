@@ -12,8 +12,11 @@ namespace VehicleReportOrders\Checkout;
 use VehicleReportOrders\Audit\AuditLogger;
 use VehicleReportOrders\Domain\FulfillmentStatus;
 use VehicleReportOrders\Domain\OrderMeta;
+use VehicleReportOrders\Domain\PackageRepository;
 use VehicleReportOrders\Domain\RegistrationNumber;
 use VehicleReportOrders\Domain\Settings;
+use VehicleReportOrders\Domain\VehicleType;
+use VehicleReportOrders\Domain\Vin;
 
 defined( 'ABSPATH' ) || exit;
 
@@ -58,6 +61,21 @@ final class OrderMetaSaver {
 			$order->update_meta_data( OrderMeta::NORMALIZED_REGISTRATION, $normalized );
 		}
 
+		$vin = RegistrationField::submitted_vin( $order );
+
+		if ( '' !== $vin ) {
+			$order->update_meta_data( OrderMeta::ORIGINAL_VIN, $vin );
+			$order->update_meta_data( OrderMeta::NORMALIZED_VIN, Vin::normalize( $vin ) );
+		}
+
+		$type = RegistrationField::submitted_type( $order );
+
+		if ( VehicleType::is_offered( $type ) ) {
+			$order->update_meta_data( OrderMeta::VEHICLE_TYPE, $type );
+		}
+
+		$this->remember_tier( $order );
+
 		$order->update_meta_data( OrderMeta::CUSTOMER_EMAIL_SNAPSHOT, $order->get_billing_email() );
 		$order->update_meta_data( OrderMeta::PACKAGE_SNAPSHOT, wp_json_encode( $this->package_snapshot( $order ) ) );
 		$order->update_meta_data( OrderMeta::DELIVERY_SLA_SNAPSHOT, wp_json_encode( $this->sla_snapshot() ) );
@@ -79,9 +97,34 @@ final class OrderMetaSaver {
 			'order.captured',
 			array(
 				'registration_present' => '' !== $entered,
+				'vin_present'          => '' !== $vin,
 				'items'                => count( $order->get_items() ),
 			)
 		);
+	}
+
+	/**
+	 * Record which tier was bought, so a later change to the tier cannot
+	 * rewrite what this customer was promised.
+	 *
+	 * @param \WC_Order $order Order being created.
+	 *
+	 * @return void
+	 */
+	private function remember_tier( \WC_Order $order ): void {
+		foreach ( $order->get_items() as $item ) {
+			if ( ! $item instanceof \WC_Order_Item_Product ) {
+				continue;
+			}
+
+			$package = PackageRepository::find_by_product( (int) $item->get_product_id() );
+
+			if ( null !== $package ) {
+				PackageRepository::remember( $order, $package );
+
+				return;
+			}
+		}
 	}
 
 	/**

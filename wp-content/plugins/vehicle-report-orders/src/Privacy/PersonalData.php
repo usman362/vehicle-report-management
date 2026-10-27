@@ -12,6 +12,7 @@ namespace VehicleReportOrders\Privacy;
 use VehicleReportOrders\Audit\AuditLogger;
 use VehicleReportOrders\Domain\OrderMeta;
 use VehicleReportOrders\Domain\OrderRepository;
+use VehicleReportOrders\Domain\VehicleType;
 use VehicleReportOrders\Reports\PrivateStorage;
 use VehicleReportOrders\Reports\ReportVersionRepository;
 use VehicleReportOrders\Schema;
@@ -135,6 +136,14 @@ final class PersonalData {
 					'value' => $registration ? $registration->entered() : '',
 				),
 				array(
+					'name'  => __( 'VIN', 'vehicle-report-orders' ),
+					'value' => (string) $order->get_meta( OrderMeta::ORIGINAL_VIN ),
+				),
+				array(
+					'name'  => __( 'Kind of vehicle', 'vehicle-report-orders' ),
+					'value' => VehicleType::label( (string) $order->get_meta( OrderMeta::VEHICLE_TYPE ) ),
+				),
+				array(
 					'name'  => __( 'Report status', 'vehicle-report-orders' ),
 					'value' => OrderRepository::status_of( $order )->label(),
 				),
@@ -203,7 +212,7 @@ final class PersonalData {
 
 			$this->forget_report_files( $order->get_id() );
 
-			foreach ( array( OrderMeta::ORIGINAL_REGISTRATION, OrderMeta::NORMALIZED_REGISTRATION, OrderMeta::CUSTOMER_EMAIL_SNAPSHOT, OrderMeta::STAFF_NOTES ) as $key ) {
+			foreach ( array( OrderMeta::ORIGINAL_REGISTRATION, OrderMeta::NORMALIZED_REGISTRATION, OrderMeta::ORIGINAL_VIN, OrderMeta::NORMALIZED_VIN, OrderMeta::CUSTOMER_EMAIL_SNAPSHOT, OrderMeta::STAFF_NOTES ) as $key ) {
 				if ( '' !== (string) $order->get_meta( $key ) ) {
 					$order->delete_meta_data( $key );
 					$removed = true;

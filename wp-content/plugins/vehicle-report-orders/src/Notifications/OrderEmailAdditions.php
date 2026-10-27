@@ -11,6 +11,7 @@ namespace VehicleReportOrders\Notifications;
 
 use VehicleReportOrders\Domain\OrderMeta;
 use VehicleReportOrders\Domain\OrderRepository;
+use VehicleReportOrders\Domain\PackageRepository;
 use VehicleReportOrders\Domain\Settings;
 
 defined( 'ABSPATH' ) || exit;
@@ -49,13 +50,27 @@ final class OrderEmailAdditions {
 		}
 
 		$registration = OrderRepository::registration_of( $order );
+		$vin          = (string) $order->get_meta( OrderMeta::ORIGINAL_VIN );
 
-		if ( null === $registration && '' === (string) $order->get_meta( OrderMeta::REPORT_STATUS ) ) {
+		if ( null === $registration && '' === $vin && '' === (string) $order->get_meta( OrderMeta::REPORT_STATUS ) ) {
 			return; // Not one of ours.
 		}
 
 		$hours = Settings::sla_hours();
-		$mark  = null !== $registration ? $registration->for_display() : __( 'not supplied — we will ask you', 'vehicle-report-orders' );
+
+		if ( null !== $registration ) {
+			$label = __( 'Registration', 'vehicle-report-orders' );
+			$mark  = $registration->for_display();
+		} elseif ( '' !== $vin ) {
+			$label = __( 'VIN', 'vehicle-report-orders' );
+			$mark  = $vin;
+		} else {
+			$label = __( 'Vehicle', 'vehicle-report-orders' );
+			$mark  = __( 'not supplied — we will ask you', 'vehicle-report-orders' );
+		}
+
+		$snapshot = PackageRepository::snapshot_for( $order );
+		$package  = is_array( $snapshot ) ? (string) ( $snapshot['name'] ?? '' ) : '';
 
 		$promise = null !== $hours
 			? sprintf(
@@ -70,10 +85,11 @@ final class OrderEmailAdditions {
 
 		if ( $plain_text ) {
 			printf(
-				"\n%s\n%s: %s\n%s\n%s\n",
+				"\n%s\n%s: %s\n%s%s\n%s\n",
 				esc_html__( 'Vehicle report', 'vehicle-report-orders' ),
-				esc_html__( 'Registration', 'vehicle-report-orders' ),
+				esc_html( $label ),
 				esc_html( $mark ),
+				'' !== $package ? esc_html__( 'Package', 'vehicle-report-orders' ) . ': ' . esc_html( $package ) . "\n" : '',
 				esc_html( $promise ),
 				esc_html( $sent_to_admin ? '' : $separate )
 			);
@@ -82,10 +98,13 @@ final class OrderEmailAdditions {
 		}
 
 		printf(
-			'<h2 style="margin-top:24px;">%s</h2><p><strong>%s:</strong> %s</p><p>%s</p>%s',
+			'<h2 style="margin-top:24px;">%s</h2><p><strong>%s:</strong> %s</p>%s<p>%s</p>%s',
 			esc_html__( 'Vehicle report', 'vehicle-report-orders' ),
-			esc_html__( 'Registration', 'vehicle-report-orders' ),
+			esc_html( $label ),
 			esc_html( $mark ),
+			'' !== $package
+				? '<p><strong>' . esc_html__( 'Package', 'vehicle-report-orders' ) . ':</strong> ' . esc_html( $package ) . '</p>'
+				: '',
 			esc_html( $promise ),
 			$sent_to_admin ? '' : '<p style="color:#5b6b7b;font-size:13px;">' . esc_html( $separate ) . '</p>'
 		);

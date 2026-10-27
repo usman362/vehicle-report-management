@@ -21,6 +21,10 @@ final class OrderMeta {
 	public const NORMALIZED_REGISTRATION = '_vr_normalized_registration';
 	public const CUSTOMER_EMAIL_SNAPSHOT = '_vr_customer_email_snapshot';
 	public const PACKAGE_SNAPSHOT        = '_vr_package_snapshot_json';
+	public const TIER_SNAPSHOT           = '_vr_tier_snapshot_json';
+	public const VEHICLE_TYPE            = '_vr_vehicle_type';
+	public const ORIGINAL_VIN            = '_vr_original_vin';
+	public const NORMALIZED_VIN          = '_vr_normalized_vin';
 	public const DELIVERY_SLA_SNAPSHOT   = '_vr_delivery_sla_snapshot';
 	public const TERMS_VERSION           = '_vr_terms_version_accepted';
 	public const TERMS_ACCEPTED_AT       = '_vr_terms_accepted_at';

@@ -7,6 +7,10 @@
  * @var \WC_Order                                              $order        Order.
  * @var \VehicleReportOrders\Domain\FulfillmentStatus          $status       Current state.
  * @var \VehicleReportOrders\Domain\RegistrationNumber|null    $registration Registration mark.
+ * @var string                                                 $vehicle_vin  VIN, where one was given.
+ * @var string                                                 $vehicle_type Kind of vehicle, in words.
+ * @var string                                                 $package_name Tier bought, in words.
+ * @var array<int, string>                                     $package_checks Checks that tier promised.
  * @var float|null                                             $hours_left   Hours against the promise.
  * @var list<object>                                           $versions     Report versions.
  * @var object|null                                            $current      Current version.
@@ -48,6 +52,29 @@ $vr_allowed   = array_map( static fn( FulfillmentStatus $state ): string => $sta
 					<?php endif; ?>
 				</td>
 			</tr>
+			<?php if ( '' !== $vehicle_vin ) : ?>
+				<tr>
+					<th><?php esc_html_e( 'VIN', 'vehicle-report-orders' ); ?></th>
+					<td><code><?php echo esc_html( $vehicle_vin ); ?></code></td>
+				</tr>
+			<?php endif; ?>
+			<?php if ( '' !== $vehicle_type ) : ?>
+				<tr>
+					<th><?php esc_html_e( 'Kind of vehicle', 'vehicle-report-orders' ); ?></th>
+					<td><?php echo esc_html( $vehicle_type ); ?></td>
+				</tr>
+			<?php endif; ?>
+			<?php if ( '' !== $package_name ) : ?>
+				<tr>
+					<th><?php esc_html_e( 'Package bought', 'vehicle-report-orders' ); ?></th>
+					<td>
+						<strong><?php echo esc_html( $package_name ); ?></strong>
+						<?php if ( array() !== $package_checks ) : ?>
+							<br><span class="description"><?php echo esc_html( implode( ', ', $package_checks ) ); ?></span>
+						<?php endif; ?>
+					</td>
+				</tr>
+			<?php endif; ?>
 			<tr>
 				<th><?php esc_html_e( 'Promise', 'vehicle-report-orders' ); ?></th>
 				<td>

@@ -42,10 +42,33 @@ final class Settings {
 			'data_sources'        => '',     // One source per line, shown on the report-sources page.
 			'sample_report_url'   => '',     // Merchant-supplied example report, shown on the sample page.
 			'legal_copy_approved' => false,  // Terms, privacy, cookie and refund copy reviewed by the merchant's lawyer.
-			'report_product_id'   => 0,      // WooCommerce product that represents the report.
+			'report_product_id'   => 0,      // WooCommerce product behind the entry-level package.
+			'packages'            => array(), // Tiers; empty means the shipped defaults, which carry no prices.
 			'download_ttl_hours'  => 72,     // Lifetime of a report download link.
 			'max_delivery_tries'  => 5,
 			'live_mode_confirmed' => false,  // Merchant has signed off price, SLA, sources and policies.
+
+			// How the merchant can be reached. A UK trader has to publish these.
+			'phone'               => '',
+			'postal_address'      => '',
+			'company_number'      => '',
+			'vat_number'          => '',
+
+			// Optional support channels; each stays hidden until it is filled in.
+			'whatsapp_number'     => '',     // International format, digits only.
+			'live_chat_src'       => '',     // Embed script URL for the merchant's own chat provider.
+
+			// What the order form asks for.
+			'vehicle_types'       => array( 'car', 'motorcycle', 'van' ),
+			'accept_vin'          => true,   // Allow a VIN where there is no current UK plate.
+
+			// Search and sharing.
+			'seo_description'     => '',     // Fallback meta description for pages that have none.
+			'social_image_id'     => 0,      // Image used when a page is shared.
+
+			// Trust signals. Both stay empty until the merchant supplies the real thing.
+			'reviews'             => array(), // Real, attributed customer reviews only.
+			'trust_logos'         => array(), // Attachment ids the merchant is entitled to display.
 		);
 	}
 
@@ -92,6 +115,86 @@ final class Settings {
 		$lines = preg_split( '/\r\n|\r|\n/', $raw );
 
 		return array_values( array_filter( array_map( 'trim', is_array( $lines ) ? $lines : array() ) ) );
+	}
+
+	/**
+	 * The vehicle types the order form accepts.
+	 *
+	 * @return array<int, string>
+	 */
+	public static function vehicle_types(): array {
+		$stored = self::get( 'vehicle_types' );
+
+		return is_array( $stored ) ? array_values( array_filter( array_map( 'strval', $stored ) ) ) : array();
+	}
+
+	/**
+	 * Whether a VIN may be given instead of a registration.
+	 *
+	 * @return bool
+	 */
+	public static function accepts_vin(): bool {
+		return (bool) self::get( 'accept_vin' );
+	}
+
+	/**
+	 * The merchant's published phone number.
+	 *
+	 * @return string
+	 */
+	public static function phone(): string {
+		return trim( (string) self::get( 'phone' ) );
+	}
+
+	/**
+	 * The merchant's published postal address.
+	 *
+	 * @return string
+	 */
+	public static function postal_address(): string {
+		return trim( (string) self::get( 'postal_address' ) );
+	}
+
+	/**
+	 * A WhatsApp link for the configured number, or an empty string.
+	 *
+	 * @return string
+	 */
+	public static function whatsapp_url(): string {
+		$digits = preg_replace( '/\D+/', '', (string) self::get( 'whatsapp_number' ) );
+
+		if ( ! is_string( $digits ) || strlen( $digits ) < 8 ) {
+			return '';
+		}
+
+		return 'https://wa.me/' . $digits;
+	}
+
+	/**
+	 * The real customer reviews the merchant has supplied.
+	 *
+	 * Nothing is invented here. An empty list renders no reviews section at
+	 * all, which is the honest state for a service that has not been used yet.
+	 *
+	 * @return array<int, array{quote: string, name: string, date: string}>
+	 */
+	public static function reviews(): array {
+		$stored = self::get( 'reviews' );
+		$rows   = array();
+
+		foreach ( is_array( $stored ) ? $stored : array() as $row ) {
+			if ( ! is_array( $row ) || '' === trim( (string) ( $row['quote'] ?? '' ) ) ) {
+				continue;
+			}
+
+			$rows[] = array(
+				'quote' => trim( (string) $row['quote'] ),
+				'name'  => trim( (string) ( $row['name'] ?? '' ) ),
+				'date'  => trim( (string) ( $row['date'] ?? '' ) ),
+			);
+		}
+
+		return $rows;
 	}
 
 	/**
@@ -177,6 +280,10 @@ final class Settings {
 			$missing['trader_name'] = __( 'Registered trading name (LEGAL-01)', 'vehicle-report-orders' );
 		}
 
+		if ( '' === trim( (string) $settings['postal_address'] ) ) {
+			$missing['postal_address'] = __( 'Published postal address, which a UK trader must give before a sale (LEGAL-01)', 'vehicle-report-orders' );
+		}
+
 		if ( '' === trim( (string) $settings['data_sources'] ) ) {
 			$missing['data_sources'] = __( 'Approved report data sources (REPORT-01)', 'vehicle-report-orders' );
 		}
@@ -196,6 +303,22 @@ final class Settings {
 			$missing['report_product_id'] = __( 'The WooCommerce product that represents the report', 'vehicle-report-orders' );
 		} elseif ( '' === (string) $product->get_price() || (float) $product->get_price() <= 0 ) {
 			$missing['report_price'] = __( 'A real price on the report product (PRICE-01)', 'vehicle-report-orders' );
+		}
+
+		$unpriced = array();
+
+		foreach ( PackageRepository::all() as $package ) {
+			if ( ! $package->is_purchasable() ) {
+				$unpriced[] = $package->name();
+			}
+		}
+
+		if ( array() !== $unpriced ) {
+			$missing['package_prices'] = sprintf(
+				/* translators: %s: comma-separated package names. */
+				__( 'A price on every published package: %s (PRICE-01)', 'vehicle-report-orders' ),
+				implode( ', ', $unpriced )
+			);
 		}
 
 		return $missing;

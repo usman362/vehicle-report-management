@@ -11,6 +11,7 @@ namespace VehicleReportOrders\Admin;
 
 use VehicleReportOrders\Audit\AuditLogger;
 use VehicleReportOrders\Domain\Settings;
+use VehicleReportOrders\Domain\VehicleType;
 use VehicleReportOrders\Reports\PrivateStorage;
 
 defined( 'ABSPATH' ) || exit;
@@ -73,6 +74,22 @@ final class SettingsPage {
 			'report_product_id'   => isset( $_POST['report_product_id'] ) ? absint( wp_unslash( $_POST['report_product_id'] ) ) : 0,
 			'download_ttl_hours'  => isset( $_POST['download_ttl_hours'] ) ? max( 1, absint( wp_unslash( $_POST['download_ttl_hours'] ) ) ) : 72,
 			'max_delivery_tries'  => isset( $_POST['max_delivery_tries'] ) ? max( 1, absint( wp_unslash( $_POST['max_delivery_tries'] ) ) ) : 5,
+
+			'phone'               => isset( $_POST['phone'] ) ? sanitize_text_field( wp_unslash( $_POST['phone'] ) ) : '',
+			'postal_address'      => isset( $_POST['postal_address'] ) ? sanitize_textarea_field( wp_unslash( $_POST['postal_address'] ) ) : '',
+			'company_number'      => isset( $_POST['company_number'] ) ? sanitize_text_field( wp_unslash( $_POST['company_number'] ) ) : '',
+			'vat_number'          => isset( $_POST['vat_number'] ) ? sanitize_text_field( wp_unslash( $_POST['vat_number'] ) ) : '',
+
+			'whatsapp_number'     => isset( $_POST['whatsapp_number'] ) ? sanitize_text_field( wp_unslash( $_POST['whatsapp_number'] ) ) : '',
+			'live_chat_src'       => isset( $_POST['live_chat_src'] ) ? sanitize_url( wp_unslash( $_POST['live_chat_src'] ) ) : '',
+
+			'vehicle_types'       => $this->posted_vehicle_types(),
+			'accept_vin'          => isset( $_POST['accept_vin'] ),
+
+			'seo_description'     => isset( $_POST['seo_description'] ) ? sanitize_textarea_field( wp_unslash( $_POST['seo_description'] ) ) : '',
+			'social_image_id'     => isset( $_POST['social_image_id'] ) ? absint( wp_unslash( $_POST['social_image_id'] ) ) : 0,
+
+			'reviews'             => $this->posted_reviews(),
 		);
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
@@ -92,6 +109,62 @@ final class SettingsPage {
 				'outstanding'         => array_keys( $still_missing ),
 			)
 		);
+	}
+
+	/**
+	 * The vehicle types ticked on the settings screen.
+	 *
+	 * @return array<int, string>
+	 */
+	private function posted_vehicle_types(): array {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce checked in render(); every element is passed through sanitize_key() below.
+		$posted = isset( $_POST['vehicle_types'] ) ? (array) wp_unslash( $_POST['vehicle_types'] ) : array();
+		$valid  = array_keys( VehicleType::catalogue() );
+
+		$chosen = array();
+
+		foreach ( $posted as $slug ) {
+			$slug = sanitize_key( (string) $slug );
+
+			if ( in_array( $slug, $valid, true ) ) {
+				$chosen[] = $slug;
+			}
+		}
+
+		return $chosen;
+	}
+
+	/**
+	 * The reviews entered on the settings screen.
+	 *
+	 * Rows without a quote are dropped, so clearing a quote removes the review.
+	 *
+	 * @return array<int, array{quote: string, name: string, date: string}>
+	 */
+	private function posted_reviews(): array {
+		// phpcs:disable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nonce checked in render(); every element is sanitised in the loop below.
+		$quotes = isset( $_POST['review_quote'] ) ? (array) wp_unslash( $_POST['review_quote'] ) : array();
+		$names  = isset( $_POST['review_name'] ) ? (array) wp_unslash( $_POST['review_name'] ) : array();
+		$dates  = isset( $_POST['review_date'] ) ? (array) wp_unslash( $_POST['review_date'] ) : array();
+		// phpcs:enable WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+
+		$reviews = array();
+
+		foreach ( $quotes as $index => $quote ) {
+			$text = trim( sanitize_textarea_field( (string) $quote ) );
+
+			if ( '' === $text ) {
+				continue;
+			}
+
+			$reviews[] = array(
+				'quote' => $text,
+				'name'  => isset( $names[ $index ] ) ? sanitize_text_field( (string) $names[ $index ] ) : '',
+				'date'  => isset( $dates[ $index ] ) ? sanitize_text_field( (string) $dates[ $index ] ) : '',
+			);
+		}
+
+		return $reviews;
 	}
 
 	/**
