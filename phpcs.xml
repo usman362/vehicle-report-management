@@ -22,6 +22,16 @@
     </rule>
     <rule ref="PHPCompatibilityWP"/>
 
+    <!-- PHPCompatibility does not yet recognise enum methods as object context,
+         so it reports $this and self inside an enum as PHP 7.1 breakage.
+         Both are valid in the PHP 8.1 minimum this plugin requires. -->
+    <rule ref="PHPCompatibility.Variables.ForbiddenThisUseContexts.OutsideObjectContext">
+        <exclude-pattern>*/Domain/FulfillmentStatus.php</exclude-pattern>
+    </rule>
+    <rule ref="PHPCompatibility.FunctionDeclarations.NewParamTypeDeclarations.SelfOutsideClassScopeFound">
+        <exclude-pattern>*/Domain/FulfillmentStatus.php</exclude-pattern>
+    </rule>
+
     <rule ref="WordPress.WP.I18n">
         <properties>
             <property name="text_domain" type="array">

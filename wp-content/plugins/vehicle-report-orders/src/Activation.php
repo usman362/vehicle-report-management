@@ -9,6 +9,9 @@ declare( strict_types=1 );
 
 namespace VehicleReportOrders;
 
+use VehicleReportOrders\Admin\CapabilityManager;
+use VehicleReportOrders\Reports\PrivateStorage;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -24,22 +27,31 @@ final class Activation {
 	public const VERSION_OPTION = 'vr_plugin_version';
 
 	/**
-	 * Schema creation and capability registration are added by the milestones
-	 * that introduce them; activation currently only records the version so an
-	 * upgrade routine has a starting point.
+	 * Create tables, roles and the protected report directory.
+	 *
+	 * Nothing here touches existing orders or WooCommerce settings.
 	 *
 	 * @return void
 	 */
 	public static function activate(): void {
+		Schema::install();
+		CapabilityManager::install();
+		PrivateStorage::prepare();
+
 		update_option( self::VERSION_OPTION, VERSION );
 	}
 
 	/**
-	 * Clean up scheduled work on deactivation.
+	 * Leave data and staff roles intact; only stop scheduled work and remove
+	 * the capabilities granted to core roles.
 	 *
 	 * @return void
 	 */
 	public static function deactivate(): void {
-		// Scheduled events are unscheduled here once delivery retries exist.
+		CapabilityManager::remove_from_core_roles();
+
+		if ( function_exists( 'as_unschedule_all_actions' ) ) {
+			as_unschedule_all_actions( 'vr_retry_report_delivery' );
+		}
 	}
 }
