@@ -59,9 +59,40 @@ $vr_ready   = array() === $missing;
 				</td>
 			</tr>
 			<tr>
-				<th scope="row"><label for="vr-business-hours"><?php esc_html_e( 'Business hours', 'vehicle-report-orders' ); ?></label></th>
+				<th scope="row"><?php esc_html_e( 'Working days', 'vehicle-report-orders' ); ?></th>
 				<td>
-					<input name="business_hours" id="vr-business-hours" type="text" class="regular-text" value="<?php echo esc_attr( (string) $settings['business_hours'] ); ?>" placeholder="<?php esc_attr_e( 'Monday to Friday, 9am–5pm UK time', 'vehicle-report-orders' ); ?>">
+					<fieldset>
+						<legend class="screen-reader-text"><?php esc_html_e( 'Working days', 'vehicle-report-orders' ); ?></legend>
+						<?php foreach ( $this->weekday_names() as $vr_day => $vr_name ) : ?>
+							<label style="margin-right:12px;">
+								<input type="checkbox" name="business_days[]" value="<?php echo esc_attr( (string) $vr_day ); ?>" <?php checked( in_array( $vr_day, (array) $settings['business_days'], true ) ); ?>>
+								<?php echo esc_html( $vr_name ); ?>
+							</label>
+						<?php endforeach; ?>
+					</fieldset>
+					<p class="description"><?php esc_html_e( 'The delivery window is counted only during these days and hours, so a Friday evening order is not promised for Saturday.', 'vehicle-report-orders' ); ?></p>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row"><label for="vr-open"><?php esc_html_e( 'Opening hours', 'vehicle-report-orders' ); ?></label></th>
+				<td>
+					<input name="business_open" id="vr-open" type="time" value="<?php echo esc_attr( (string) $settings['business_open'] ); ?>">
+					<span>&ndash;</span>
+					<input name="business_close" type="time" value="<?php echo esc_attr( (string) $settings['business_close'] ); ?>">
+					<p class="description">
+						<?php
+						$vr_label = \VehicleReportOrders\Domain\Settings::business_hours_label();
+						echo esc_html(
+							'' === $vr_label
+								? __( 'No working days selected yet.', 'vehicle-report-orders' )
+								: sprintf(
+									/* translators: %s: human description of the opening hours. */
+									__( 'Customers will be told: %s', 'vehicle-report-orders' ),
+									$vr_label
+								)
+						);
+						?>
+					</p>
 				</td>
 			</tr>
 		</table>

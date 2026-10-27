@@ -61,7 +61,9 @@ final class SettingsPage {
 
 		$values = array(
 			'sla_hours'          => isset( $_POST['sla_hours'] ) ? absint( wp_unslash( $_POST['sla_hours'] ) ) : 0,
-			'business_hours'     => isset( $_POST['business_hours'] ) ? sanitize_text_field( wp_unslash( $_POST['business_hours'] ) ) : '',
+			'business_days'      => isset( $_POST['business_days'] ) ? array_values( array_filter( array_map( 'absint', (array) wp_unslash( $_POST['business_days'] ) ), static fn( int $day ): bool => $day >= 1 && $day <= 7 ) ) : array(),
+			'business_open'      => isset( $_POST['business_open'] ) ? sanitize_text_field( wp_unslash( $_POST['business_open'] ) ) : '09:00',
+			'business_close'     => isset( $_POST['business_close'] ) ? sanitize_text_field( wp_unslash( $_POST['business_close'] ) ) : '17:00',
 			'support_email'      => isset( $_POST['support_email'] ) ? sanitize_email( wp_unslash( $_POST['support_email'] ) ) : '',
 			'trader_name'        => isset( $_POST['trader_name'] ) ? sanitize_text_field( wp_unslash( $_POST['trader_name'] ) ) : '',
 			'terms_version'      => isset( $_POST['terms_version'] ) ? sanitize_text_field( wp_unslash( $_POST['terms_version'] ) ) : '',
@@ -88,6 +90,21 @@ final class SettingsPage {
 				'outstanding'         => array_keys( $still_missing ),
 			)
 		);
+	}
+
+	/**
+	 * Weekday names keyed by ISO-8601 number.
+	 *
+	 * @return array<int, string>
+	 */
+	public function weekday_names(): array {
+		$names = array();
+
+		for ( $day = 1; $day <= 7; $day++ ) {
+			$names[ $day ] = wp_date( 'D', (int) strtotime( '2026-10-26 12:00:00 UTC' ) + ( ( $day - 1 ) * DAY_IN_SECONDS ) );
+		}
+
+		return $names;
 	}
 
 	/**

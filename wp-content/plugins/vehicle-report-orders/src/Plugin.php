@@ -13,6 +13,9 @@ use VehicleReportOrders\Admin\AuditLogPage;
 use VehicleReportOrders\Admin\FulfillmentQueuePage;
 use VehicleReportOrders\Admin\Menu;
 use VehicleReportOrders\Admin\SettingsPage;
+use VehicleReportOrders\Checkout\OrderMetaSaver;
+use VehicleReportOrders\Checkout\RegistrationField;
+use VehicleReportOrders\Domain\OrderLifecycle;
 use VehicleReportOrders\Domain\OrderRepository;
 
 defined( 'ABSPATH' ) || exit;
@@ -76,6 +79,10 @@ final class Plugin {
 		if ( Schema::needs_update() ) {
 			Schema::install();
 		}
+
+		( new RegistrationField() )->register();
+		( new OrderMetaSaver() )->register();
+		( new OrderLifecycle() )->register();
 
 		if ( is_admin() ) {
 			$orders = new OrderRepository();

@@ -9,6 +9,8 @@ declare( strict_types=1 );
 
 namespace VehicleReportOrders\Domain;
 
+use DateTimeZone;
+
 defined( 'ABSPATH' ) || exit;
 
 /**
@@ -30,8 +32,10 @@ final class Settings {
 	 */
 	public static function defaults(): array {
 		return array(
-			'sla_hours'           => 0,      // Business hours promised before delivery.
-			'business_hours'      => '',     // Free text shown next to the SLA.
+			'sla_hours'           => 0,                        // Business hours promised before delivery.
+			'business_days'       => array( 1, 2, 3, 4, 5 ),   // ISO-8601 weekday numbers the team works.
+			'business_open'       => '09:00',
+			'business_close'      => '17:00',
 			'support_email'       => '',
 			'trader_name'         => '',
 			'terms_version'       => '',
@@ -88,6 +92,51 @@ final class Settings {
 	}
 
 	/**
+	 * The merchant's opening hours as a calculator.
+	 *
+	 * @return BusinessHours
+	 */
+	public static function business_hours(): BusinessHours {
+		$settings = self::all();
+
+		return new BusinessHours(
+			is_array( $settings['business_days'] ) ? $settings['business_days'] : array(),
+			(string) $settings['business_open'],
+			(string) $settings['business_close'],
+			self::timezone()
+		);
+	}
+
+	/**
+	 * The site's timezone, which the opening hours are expressed in.
+	 *
+	 * @return DateTimeZone
+	 */
+	public static function timezone(): DateTimeZone {
+		if ( function_exists( 'wp_timezone' ) ) {
+			return wp_timezone();
+		}
+
+		return new DateTimeZone( 'UTC' );
+	}
+
+	/**
+	 * Opening hours in words, for the storefront and emails.
+	 *
+	 * @return string
+	 */
+	public static function business_hours_label(): string {
+		$names = array();
+
+		for ( $day = 1; $day <= 7; $day++ ) {
+			// 2026-10-26 was a Monday, so adding $day-1 days names each weekday.
+			$names[ $day ] = wp_date( 'l', (int) strtotime( '2026-10-26 12:00:00 UTC' ) + ( ( $day - 1 ) * DAY_IN_SECONDS ) );
+		}
+
+		return self::business_hours()->describe( $names );
+	}
+
+	/**
 	 * Settings that must exist before the site may take real money.
 	 *
 	 * The list mirrors the launch blockers in docs/DECISIONS.md.
@@ -102,8 +151,8 @@ final class Settings {
 			$missing['sla_hours'] = __( 'Delivery window in business hours (SLA-01)', 'vehicle-report-orders' );
 		}
 
-		if ( '' === trim( (string) $settings['business_hours'] ) ) {
-			$missing['business_hours'] = __( 'Business hours the window is counted in (SLA-01)', 'vehicle-report-orders' );
+		if ( ! self::business_hours()->is_configured() ) {
+			$missing['business_days'] = __( 'The days of the week the team works (SLA-01)', 'vehicle-report-orders' );
 		}
 
 		if ( ! is_email( (string) $settings['support_email'] ) ) {
