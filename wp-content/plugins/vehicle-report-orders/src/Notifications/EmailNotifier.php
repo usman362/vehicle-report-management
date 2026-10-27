@@ -105,34 +105,6 @@ final class EmailNotifier {
 	}
 
 	/**
-	 * Confirm a verified payment and set expectations.
-	 *
-	 * @param \WC_Order $order Order.
-	 *
-	 * @return bool
-	 */
-	public function send_order_received( \WC_Order $order ): bool {
-		$subject = sprintf(
-			/* translators: %s: order number. */
-			__( 'We have your report request (order %s)', 'vehicle-report-orders' ),
-			$order->get_order_number()
-		);
-
-		$registration = OrderRepository::registration_of( $order );
-
-		$body = $this->render(
-			'order-received',
-			array(
-				'order'        => $order,
-				'registration' => $registration ? $registration->for_display() : '',
-				'due_at'       => (string) $order->get_meta( OrderMeta::SLA_DUE_AT ),
-			)
-		);
-
-		return $this->dispatch( $order, $order->get_billing_email(), $subject, $body );
-	}
-
-	/**
 	 * Warn staff that a delivery failed.
 	 *
 	 * @param \WC_Order $order  Order.

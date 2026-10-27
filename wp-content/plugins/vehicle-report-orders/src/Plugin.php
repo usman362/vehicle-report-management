@@ -20,6 +20,7 @@ use VehicleReportOrders\Admin\FulfillmentActions;
 use VehicleReportOrders\Admin\OrderPanel;
 use VehicleReportOrders\Domain\OrderRepository;
 use VehicleReportOrders\Notifications\EmailNotifier;
+use VehicleReportOrders\Notifications\OrderEmailAdditions;
 use VehicleReportOrders\Reports\DownloadController;
 use VehicleReportOrders\Reports\ReportService;
 use VehicleReportOrders\Reports\ReportVersionRepository;
@@ -95,6 +96,7 @@ final class Plugin {
 		( new OrderMetaSaver() )->register();
 		( new OrderLifecycle() )->register();
 		( new DownloadController( $reports ) )->register();
+		( new OrderEmailAdditions() )->register();
 		( new OrderForm() )->register();
 		( new Disclosures() )->register();
 		$notifier->register();
