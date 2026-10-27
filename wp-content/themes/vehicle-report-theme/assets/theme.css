@@ -42,6 +42,9 @@
 	padding: 0.9rem 1rem;
 	border: 2px solid var(--wp--preset--color--border);
 	border-radius: 10px;
+	/* Without border-box the padding and border are added to the 100%, which
+	   pushes the plate past the edge of its card on a narrow screen. */
+	box-sizing: border-box;
 	width: 100%;
 	max-width: 22rem;
 	background: #fff;

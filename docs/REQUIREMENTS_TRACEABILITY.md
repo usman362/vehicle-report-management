@@ -27,6 +27,7 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 | REG-02 | Registration field on the order form and checkout | §6.2 | `Storefront/OrderForm.php`, `Checkout/RegistrationField.php` | T01, T02 | done |
 | PAGE-01 | Public pages with truthful pricing, sources and delivery disclosure | §5, §6 | `Storefront/Disclosures.php`, `content/pages/`, `vehicle-report-theme` | T29, manual review | done — values come from settings; placeholders shown until the merchant supplies them |
 | PAGE-02 | Sample report, about and legal pages | §5, §6.6, §6.7 | `content/pages/{sample-report,about,terms,privacy-policy,cookies,refunds}.html`, `scripts/seed-content.php` | manual review | pages exist and are reproducible from the repository; the legal four carry an enforced draft notice until the merchant's adviser signs the wording off (LEGAL-01) |
+| A11Y-01 | Accessible, usable on a phone | §5, §20 | `vehicle-report-theme` (`theme.json` root padding, header/footer/checkout parts, `templates/page-checkout.html`) | T18, T19 | done — axe-core clean on every page; a full order placed at 375 px |
 | PAGE-03 | Store actually reachable by customers | §5 | `Admin/StoreVisibility.php` | verified — notice shown while WooCommerce coming-soon mode is on | done |
 | ORD-01 | Order metadata persisted through WooCommerce CRUD | §8 | `Checkout/OrderMetaSaver.php` | T01, T24 | done |
 | PAY-01 | Verified gateway outcome only; no paid state from a thank-you visit | §7, §10 | `Domain/OrderLifecycle.php` | T05, T06 | done |

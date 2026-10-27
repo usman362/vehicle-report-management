@@ -35,8 +35,8 @@ were exercised against the running local site and the evidence is noted.
 
 | ID | Case | Coverage | Result |
 |---|---|---|---|
-| T18 | Mobile checkout | partly verified — storefront at 375 px; full checkout pass outstanding | Open |
-| T19 | Keyboard and screen reader | partly verified — labels, focus states and semantics in place; a full pass is outstanding | Open |
+| T18 | Mobile checkout | verified — a complete order placed at 375 px: registration entered, block checkout filled, order 71 paid, with the registration, deadline and terms version captured. No horizontal overflow on any page, and the registration field no longer escapes its card | Orderable on a phone |
+| T19 | Keyboard and screen reader | verified — axe-core 4.10 run against all 13 pages plus cart, checkout and the confirmation page: no violations in this site's own markup. Three landmark faults and a missing checkout `h1` were found and fixed | Clean |
 | T20 | Search engine visits a private URL | verified — `noindex` and `no-store` sent on report routes | No report content served |
 | T21 | Backup restore | not yet run | Open: must include the private report directory |
 | T22 | Search for CRM, seller lists, messaging or lead scraping | automated — `grep` over the plugin finds none; no such dependency, table, route or screen exists | Nothing found |
@@ -58,6 +58,23 @@ were exercised against the running local site and the evidence is noted.
 | Pages are reproducible from the repository | verified — `wp eval-file scripts/seed-content.php` created or refreshed all 13 pages and set the front, privacy and terms page options | A fresh install comes up with the same site |
 | Customers can actually reach the store | verified — WooCommerce was found in coming-soon mode, which serves the shop, cart and checkout only to signed-in administrators; the plugin's screens now warn while it is on, and `setup-local.sh` opens the store | The trap is visible instead of silent |
 
+## Accessibility
+
+Audited with axe-core 4.10.2 in the browser, on every storefront page and on
+cart, checkout and the order confirmation. What it found, and what was done:
+
+| Finding | Where it came from | Fixed by |
+|---|---|---|
+| Duplicate `banner` and `contentinfo` landmarks | the theme's header and footer parts each wrapped their content in a second `<header>` / `<footer>` inside the one the template part already renders | plain `<div>` wrappers in `parts/header.html` and `parts/footer.html` |
+| `aria-hidden` element containing focusable controls | WooCommerce hooks a mini-cart drawer into block-theme headers | the mini cart is unhooked in `functions.php`: this store sells one report from an order form, so a basket drawer adds a step rather than removing one |
+| Checkout had no `h1`, a nested `<header>` and no footer | WooCommerce's own `page-checkout` template and `checkout-header` part | theme overrides: `templates/page-checkout.html` and `parts/checkout-header.html` |
+| Content touching both screen edges below 420 px | the theme set no root padding | `useRootPaddingAwareAlignments` with a `clamp(1rem, 4vw, 2rem)` gutter in `theme.json` |
+| The registration field escaping its card on a phone | `width: 100%` on a `content-box` input with padding and a 2px border | `box-sizing: border-box` on `.vr-registration-plate input` |
+
+What remains are two findings in WordPress's own admin bar and skip link, which
+only signed-in administrators ever see, and one on a WooCommerce loading
+skeleton that is replaced as soon as payment methods load.
+
 ## How these were run
 
 - `./scripts/check.sh` runs the lot: PHP syntax, WordPress coding standards,
@@ -70,5 +87,4 @@ were exercised against the running local site and the evidence is noted.
 ## Still to do
 
 - Gateway sandbox cases (T08, T16, T28) once the merchant supplies Stripe test keys.
-- Full accessibility and mobile checkout pass (T18, T19).
 - A restore rehearsal that includes the private report directory (T21).

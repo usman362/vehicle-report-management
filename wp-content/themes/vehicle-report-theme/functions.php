@@ -53,3 +53,22 @@ add_action(
 	},
 	1
 );
+
+/**
+ * Keep WooCommerce's mini cart out of the header.
+ *
+ * WooCommerce hooks a mini cart into block-theme headers automatically. This
+ * store sells one report at a time from an order form, so a basket drawer adds
+ * a step rather than removing one — and the drawer it renders is hidden from
+ * assistive technology while still holding focusable controls.
+ *
+ * @param string[] $hooked_blocks Blocks WordPress is about to insert.
+ *
+ * @return string[]
+ */
+add_filter(
+	'hooked_block_types',
+	static function ( array $hooked_blocks ): array {
+		return array_values( array_diff( $hooked_blocks, array( 'woocommerce/mini-cart' ) ) );
+	}
+);
