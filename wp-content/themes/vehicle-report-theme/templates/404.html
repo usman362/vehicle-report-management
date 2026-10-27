@@ -1,10 +1,25 @@
 <!-- wp:template-part {"slug":"header","tagName":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"padding":{"top":"4rem","bottom":"4rem"}}},"layout":{"type":"constrained"}} -->
-<main class="wp-block-group" style="padding-top:4rem;padding-bottom:4rem">
-	<!-- wp:heading {"level":1} --><h1 class="wp-block-heading">Page not found</h1><!-- /wp:heading -->
-	<!-- wp:paragraph --><p>The page you were looking for is not here. If you were opening a report link, it may have expired — contact support and we will send a new one.</p><!-- /wp:paragraph -->
-	<!-- wp:home-link {"label":"Back to the home page"} /-->
+<!-- wp:group {"tagName":"main","layout":{"type":"default"}} -->
+<main class="wp-block-group">
+	<!-- wp:group {"className":"vr-page-head","style":{"spacing":{"padding":{"top":"clamp(2.5rem,5vw,4rem)","bottom":"clamp(2.5rem,5vw,4rem)"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vr-page-head" style="padding-top:clamp(2.5rem,5vw,4rem);padding-bottom:clamp(2.5rem,5vw,4rem)">
+		<!-- wp:heading {"level":1} --><h1 class="wp-block-heading">Page not found</h1><!-- /wp:heading -->
+	</div>
+	<!-- /wp:group -->
+
+	<!-- wp:group {"className":"vr-page-body","style":{"spacing":{"padding":{"top":"clamp(2rem,4vw,3.5rem)","bottom":"clamp(2rem,4vw,3.5rem)"}}},"layout":{"type":"constrained"}} -->
+	<div class="wp-block-group vr-page-body" style="padding-top:clamp(2rem,4vw,3.5rem);padding-bottom:clamp(2rem,4vw,3.5rem)">
+		<!-- wp:paragraph --><p>The page you were looking for is not here. If you were opening a report link, it may have expired — contact us and we will send a new one.</p><!-- /wp:paragraph -->
+		<!-- wp:html -->
+		<div class="vr-cta-band">
+			<p><strong>Lost your report link?</strong> Links expire on purpose. Tell us your order number and we will issue a new one.</p>
+			<a class="vr-cta-button" href="/contact/">Contact us</a>
+		</div>
+		<!-- /wp:html -->
+		<!-- wp:paragraph {"style":{"spacing":{"margin":{"top":"2rem"}}}} --><p style="margin-top:2rem"><a href="/">Back to the home page</a></p><!-- /wp:paragraph -->
+	</div>
+	<!-- /wp:group -->
 </main>
 <!-- /wp:group -->
 

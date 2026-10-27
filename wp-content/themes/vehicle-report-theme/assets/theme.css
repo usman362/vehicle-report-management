@@ -18,9 +18,21 @@
 	position: sticky;
 	top: 0;
 	z-index: 80;
+	border-bottom: 1px solid var(--wp--preset--color--border);
+	isolation: isolate;
+}
+
+/* The blur lives on a pseudo-element, not on the header itself. A
+   backdrop-filter makes its element a containing block for `position: fixed`
+   descendants, which pinned the mobile menu overlay inside the header strip
+   instead of over the page. */
+.vr-site-header::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
 	background: rgba(255, 255, 255, .88);
 	backdrop-filter: saturate(180%) blur(12px);
-	border-bottom: 1px solid var(--wp--preset--color--border);
 }
 
 /* The label sits in its own span, which otherwise keeps the body colour and
@@ -946,3 +958,66 @@
 .vr-package-checks h2 { margin-top: 0; }
 
 .vr-product-body .product_meta { color: var(--wp--preset--color--muted); font-size: var(--wp--preset--font-size--small); }
+
+/* --- Short pages ---------------------------------------------------------- */
+
+/* Without this a short page — 404, an empty cart — leaves a strip of
+   background below the footer. */
+html, body { height: auto; }
+
+body.wp-site-blocks,
+.wp-site-blocks {
+	display: flex;
+	flex-direction: column;
+	min-height: 100vh;
+}
+
+.wp-site-blocks > main { flex: 1 0 auto; }
+
+.wp-site-blocks > footer { flex: none; margin-block-start: 0 !important; }
+
+.vr-site-footer { margin-top: 0; }
+
+/* --- Mobile menu overlay -------------------------------------------------- */
+
+/* The header aligns its nav right; in the full-screen overlay that pushes the
+   items against the edge and clips the call-to-action pill. */
+.wp-block-navigation__responsive-container.is-menu-open {
+	padding: clamp(3rem, 8vw, 4.5rem) clamp(1.25rem, 6vw, 2.5rem) !important;
+}
+
+/* In the overlay the list turns vertical, so the header's right alignment
+   becomes `align-items` — and it is set on a generated container class, which
+   outranks a plain class selector. */
+.wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content,
+.wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container,
+.wp-block-navigation__responsive-container.is-menu-open .wp-block-page-list {
+	align-items: center !important;
+	justify-content: flex-start !important;
+	width: 100%;
+	gap: .35rem;
+}
+
+/* The list item is a column in the overlay, so horizontal placement is
+   `align-items`, not `justify-content`. */
+.wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item {
+	width: 100%;
+	display: flex;
+	align-items: center !important;
+	justify-content: center !important;
+	text-align: center;
+}
+
+.wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item__content {
+	padding: .85rem 0;
+	font-size: 1.15rem;
+}
+
+.wp-block-navigation__responsive-container.is-menu-open .vr-nav-cta { margin-top: 1rem; }
+
+/* WordPress zeroes the padding on nav links inside the overlay, which left the
+   call-to-action's text touching the edge of its own pill. */
+.wp-block-navigation__responsive-container.is-menu-open .vr-nav-cta a {
+	padding: .9rem 2.2rem !important;
+	font-size: 1.05rem;
+}

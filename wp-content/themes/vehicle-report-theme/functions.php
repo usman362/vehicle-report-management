@@ -94,6 +94,11 @@ add_action(
 		remove_action( 'woocommerce_after_single_product_summary', 'woocommerce_output_related_products', 20 );
 		remove_action( 'woocommerce_cart_collaterals', 'woocommerce_cross_sell_display' );
 
+		// WooCommerce opens its own <main> around the product. The template
+		// already provides one, and two main landmarks is one too many.
+		remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10 );
+		remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10 );
+
 		add_filter( 'woocommerce_product_get_image', '__return_empty_string' );
 		add_filter( 'woocommerce_placeholder_img', '__return_empty_string' );
 	}
