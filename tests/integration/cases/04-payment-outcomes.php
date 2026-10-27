@@ -11,6 +11,7 @@ use VehicleReportOrders\Domain\FulfillmentStatus;
 use VehicleReportOrders\Domain\OrderLifecycle;
 use VehicleReportOrders\Domain\OrderMeta;
 use VehicleReportOrders\Domain\OrderRepository;
+use VehicleReportOrders\Domain\Settings;
 use VehicleReportOrders\Reports\DownloadToken;
 use VehicleReportOrders\Reports\ReportService;
 use VehicleReportOrders\Reports\ReportVersionRepository;
@@ -79,6 +80,24 @@ foreach ( array(
 
 // A failed order that is later paid for properly does become work: a decline
 // must not poison the order for good.
+//
+// The deadline only exists if the merchant has said what it is, so the case
+// supplies that itself rather than depending on whatever this site happens to
+// be configured with.
+$vr_sla_before   = Settings::get( 'sla_hours' );
+$vr_days_before  = Settings::get( 'business_days' );
+$vr_open_before  = Settings::get( 'business_open' );
+$vr_close_before = Settings::get( 'business_close' );
+
+Settings::update(
+	array(
+		'sla_hours'      => 8,
+		'business_days'  => array( 1, 2, 3, 4, 5 ),
+		'business_open'  => '09:00',
+		'business_close' => '17:00',
+	)
+);
+
 $vr_recovered = vr_it_order( 'VR08 RTY' );
 $vr_recovered->set_status( 'failed' );
 $vr_recovered->update_meta_data( OrderMeta::REPORT_STATUS, FulfillmentStatus::NOT_READY->value );
@@ -90,6 +109,15 @@ $vr_recovered = wc_get_order( $vr_recovered->get_id() );
 
 vr_it_is( 'a retried payment puts the order in the queue', FulfillmentStatus::AWAITING_STAFF, OrderRepository::status_of( $vr_recovered ) );
 vr_it_ok( 'a retried payment sets the delivery deadline', '' !== (string) $vr_recovered->get_meta( OrderMeta::SLA_DUE_AT ) );
+
+Settings::update(
+	array(
+		'sla_hours'      => $vr_sla_before,
+		'business_days'  => $vr_days_before,
+		'business_open'  => $vr_open_before,
+		'business_close' => $vr_close_before,
+	)
+);
 
 vr_it_case( 'Money back means access back (T16)' );
 

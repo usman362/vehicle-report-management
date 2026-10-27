@@ -114,4 +114,36 @@ foreach ( array( 'refund_returns', 'sample-page' ) as $vr_stale ) {
 	}
 }
 
+// The product the report is sold as, deliberately without a price. The
+// merchant sets that, and until they do the storefront refuses to start an
+// order — inventing a plausible-looking figure here would defeat the point.
+if ( class_exists( 'WC_Product_Simple' ) && class_exists( 'VehicleReportOrders\\Domain\\Settings' ) ) {
+	$vr_product_id = (int) VehicleReportOrders\Domain\Settings::get( 'report_product_id' );
+	$vr_product    = $vr_product_id > 0 ? wc_get_product( $vr_product_id ) : null;
+
+	if ( ! $vr_product ) {
+		$vr_existing = get_page_by_path( 'vehicle-history-report', OBJECT, 'product' );
+		$vr_product  = $vr_existing instanceof WP_Post ? wc_get_product( $vr_existing->ID ) : null;
+	}
+
+	if ( ! $vr_product ) {
+		$vr_new = new WC_Product_Simple();
+		$vr_new->set_name( 'Vehicle history report' );
+		$vr_new->set_slug( 'vehicle-history-report' );
+		$vr_new->set_status( 'publish' );
+		$vr_new->set_catalog_visibility( 'hidden' );
+		$vr_new->set_virtual( true );
+		$vr_new->set_sold_individually( true );
+		$vr_new->set_short_description( 'One written vehicle history report, researched by a person and emailed as a PDF.' );
+		$vr_product_id = (int) $vr_new->save();
+
+		WP_CLI::log( sprintf( '  %-20s %-9s #%d', 'report product', 'created', $vr_product_id ) );
+	} else {
+		$vr_product_id = $vr_product->get_id();
+		WP_CLI::log( sprintf( '  %-20s %-9s #%d', 'report product', 'exists', $vr_product_id ) );
+	}
+
+	VehicleReportOrders\Domain\Settings::update( array( 'report_product_id' => $vr_product_id ) );
+}
+
 WP_CLI::success( sprintf( '%d pages seeded from content/pages/.', count( $vr_ids ) ) );

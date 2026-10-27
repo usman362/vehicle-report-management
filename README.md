@@ -26,6 +26,7 @@ or HPI, and it is **not** a CRM, lead system or messaging platform — see
 .                                   WordPress root (core files are gitignored)
 ├── CLAUDE.md                       agent instructions and scope lock
 ├── docs/                           specification and decisions
+├── .github/workflows/              checks that run on every push
 ├── content/pages/                  storefront and legal page copy, as files
 ├── scripts/                        setup, serve, check, seed-content, backup, restore
 ├── tests/Unit/                     PHPUnit unit tests (no WordPress needed)
@@ -61,6 +62,12 @@ credentials.
 
 Individually: `vendor/bin/phpcs`, `vendor/bin/phpcbf`, `vendor/bin/phpunit`, and
 `wp eval-file tests/integration/run.php`.
+
+GitHub Actions runs the same things on every push and pull request
+(`.github/workflows/ci.yml`): standards and unit tests on PHP 8.1 and 8.3, and
+the integration suite against a WordPress built from scratch by
+`scripts/setup-local.sh` — which also keeps that script honest, since a setup
+script nobody runs from nothing stops working quietly.
 
 The unit suite needs no WordPress at all: it covers the domain logic — plate
 parsing, the state machine, business-hours arithmetic, upload validation, token

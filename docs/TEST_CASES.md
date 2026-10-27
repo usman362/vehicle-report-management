@@ -88,6 +88,8 @@ skeleton that is replaced as soon as payment methods load.
 
 ## How these were run
 
+- GitHub Actions runs everything below on every push and pull request, and
+  builds the site from nothing first, so the setup script is verified too.
 - `./scripts/check.sh` runs the lot: PHP syntax, WordPress coding standards,
   the unit suite (no WordPress needed) and the integration suite.
 - The integration suite is `wp eval-file tests/integration/run.php`. It runs

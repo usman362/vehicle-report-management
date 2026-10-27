@@ -15,7 +15,10 @@ DB_HOST="${DB_HOST:-127.0.0.1}"
 SITE_URL="${WP_URL:-http://localhost:8080}"
 
 echo "① Database"
-mysql -u"$DB_USER" -e "CREATE DATABASE IF NOT EXISTS \`$DB_NAME\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+# A root account with a password is normal outside a laptop, so the password
+# and host are passed through when they are set.
+mysql -u"$DB_USER" ${DB_PASSWORD:+-p"$DB_PASSWORD"} -h "$DB_HOST" \
+    -e "CREATE DATABASE IF NOT EXISTS \`$DB_NAME\` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
 
 echo "② WordPress core"
 [ -f wp-settings.php ] || wp core download --skip-content
