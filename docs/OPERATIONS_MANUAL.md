@@ -70,6 +70,18 @@ revocation, refused download and failed permission check. Entries cannot be
 edited or deleted, and sensitive values are redacted before they are stored.
 It is the first place to look when a customer disputes something.
 
+## Uploading a report
+
+Before the file can be stored you answer, for every source published on the
+data-sources page, one of three things: a record was found, the source was
+checked and holds nothing for this vehicle, or it could not be checked. The
+last one has to say why, and the customer is told that reason in their email.
+
+"No record for this vehicle" and "could not be checked" are not
+interchangeable. The first is a finding. The second is a gap, and the email
+says so in as many words — a gap read as a pass is the one mistake this
+service cannot afford.
+
 ## Refunding an order
 
 Refund in WooCommerce, not only in the payment provider's dashboard. A full

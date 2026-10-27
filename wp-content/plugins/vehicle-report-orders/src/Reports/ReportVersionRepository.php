@@ -49,10 +49,11 @@ final class ReportVersionRepository {
 				'prepared_by'       => (int) ( $data['prepared_by'] ?? get_current_user_id() ),
 				'source_summary'    => (string) ( $data['source_summary'] ?? '' ),
 				'coverage_notes'    => (string) ( $data['coverage_notes'] ?? '' ),
+				'coverage_json'     => (string) ( $data['coverage_json'] ?? '' ),
 				'status'            => 'uploaded',
 				'created_at'        => current_time( 'mysql', true ),
 			),
-			array( '%d', '%d', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s' )
+			array( '%d', '%d', '%s', '%s', '%s', '%d', '%s', '%d', '%s', '%s', '%s', '%s', '%s' )
 		);
 
 		if ( ! $inserted ) {

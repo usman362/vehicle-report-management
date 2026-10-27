@@ -14,6 +14,8 @@ use VehicleReportOrders\Domain\FulfillmentStatus;
 use VehicleReportOrders\Domain\OrderMeta;
 use VehicleReportOrders\Domain\OrderRepository;
 use VehicleReportOrders\Notifications\EmailNotifier;
+use VehicleReportOrders\Domain\Settings;
+use VehicleReportOrders\Reports\Coverage;
 use VehicleReportOrders\Reports\ReportService;
 use WP_Error;
 
@@ -211,6 +213,15 @@ final class FulfillmentActions {
 		$notes   = isset( $_POST['coverage_notes'] ) ? sanitize_textarea_field( wp_unslash( $_POST['coverage_notes'] ) ) : '';
 		// phpcs:enable WordPress.Security.NonceVerification.Missing
 
+		$outcomes = $this->posted_list( 'coverage_outcome', 'sanitize_key' );
+		$reasons  = $this->posted_list( 'coverage_reason', 'sanitize_textarea_field' );
+
+		$coverage = Coverage::from_input( $outcomes, $reasons, Settings::source_list() );
+
+		if ( is_wp_error( $coverage ) ) {
+			return $coverage;
+		}
+
 		if ( '' === trim( $sources ) ) {
 			return new WP_Error(
 				'vr_sources_required',
@@ -225,13 +236,19 @@ final class FulfillmentActions {
 			return new WP_Error( 'vr_no_file', __( 'Choose a PDF to upload.', 'vehicle-report-orders' ) );
 		}
 
-		$version_id = $this->reports->store_upload( $order, $file, $sources, $notes );
+		$version_id = $this->reports->store_upload( $order, $file, $sources, $notes, $coverage );
 
 		if ( is_wp_error( $version_id ) ) {
 			return $version_id;
 		}
 
-		return __( 'Report stored. Nothing has been sent to the customer yet.', 'vehicle-report-orders' );
+		return $coverage->is_complete()
+			? __( 'Report stored. Nothing has been sent to the customer yet.', 'vehicle-report-orders' )
+			: sprintf(
+				/* translators: %s: coverage summary, for example "2 of 3 sources checked". */
+				__( 'Report stored (%s). The customer will be told which checks were not possible. Nothing has been sent yet.', 'vehicle-report-orders' ),
+				$coverage->summary()
+			);
 	}
 
 	/**
@@ -320,6 +337,32 @@ final class FulfillmentActions {
 		AuditLogger::log( $order->get_id(), 'permission.denied', array( 'attempted' => $action ) );
 
 		return new WP_Error( 'vr_forbidden', __( 'You do not have permission to do that.', 'vehicle-report-orders' ) );
+	}
+
+	/**
+	 * A submitted list of scalars, each passed through a sanitiser.
+	 *
+	 * Written out rather than inlined so there is one place where raw input is
+	 * read, and so nested arrays — which would blow up a sanitiser expecting a
+	 * string — are dropped rather than passed along.
+	 *
+	 * @param string   $key       Key in the request body.
+	 * @param callable $sanitizer Sanitiser applied to each value.
+	 *
+	 * @return array<int|string, string>
+	 */
+	private function posted_list( string $key, callable $sanitizer ): array {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing, WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- The nonce is checked in handle(); every value is sanitised immediately below.
+		$raw = isset( $_POST[ $key ] ) ? (array) wp_unslash( $_POST[ $key ] ) : array();
+		$out = array();
+
+		foreach ( $raw as $index => $value ) {
+			if ( is_scalar( $value ) ) {
+				$out[ $index ] = (string) call_user_func( $sanitizer, (string) $value );
+			}
+		}
+
+		return $out;
 	}
 
 	/**

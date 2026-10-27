@@ -13,6 +13,8 @@ use Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableControlle
 use VehicleReportOrders\Domain\FulfillmentStatus;
 use VehicleReportOrders\Domain\OrderMeta;
 use VehicleReportOrders\Domain\OrderRepository;
+use VehicleReportOrders\Domain\Settings;
+use VehicleReportOrders\Reports\Coverage;
 use VehicleReportOrders\Reports\ReportService;
 
 defined( 'ABSPATH' ) || exit;
@@ -26,11 +28,36 @@ defined( 'ABSPATH' ) || exit;
 final class OrderPanel {
 
 	/**
+	 * The id of the form the panel's controls submit through.
+	 *
+	 * WordPress wraps the order screen in a form of its own, and a browser
+	 * discards a form nested inside another one — silently, so the controls
+	 * still render and simply stop working. The panel therefore has no form:
+	 * its controls name this one, which is printed in the admin footer,
+	 * outside WordPress's.
+	 */
+	public const FORM_ID = 'vr-fulfilment-form';
+
+	/**
 	 * Report storage.
 	 *
 	 * @var ReportService
 	 */
 	private ReportService $reports;
+
+	/**
+	 * Whether the footer form has already been printed this request.
+	 *
+	 * @var bool
+	 */
+	private bool $form_printed = false;
+
+	/**
+	 * Whether the panel rendered, and so whether a form is needed at all.
+	 *
+	 * @var bool
+	 */
+	private bool $panel_was_rendered = false;
 
 	/**
 	 * Constructor.
@@ -49,6 +76,30 @@ final class OrderPanel {
 	public function register(): void {
 		add_action( 'add_meta_boxes', array( $this, 'add_meta_box' ), 10, 2 );
 		add_action( 'admin_notices', array( $this, 'render_notice' ) );
+		add_action( 'admin_footer', array( $this, 'render_form' ) );
+	}
+
+	/**
+	 * Print the form the panel's controls submit through.
+	 *
+	 * It is empty on purpose: the fields live in the panel and name it with
+	 * their form attribute, which is how a browser lets a control sit outside
+	 * the form it belongs to.
+	 *
+	 * @return void
+	 */
+	public function render_form(): void {
+		if ( $this->form_printed || ! $this->panel_was_rendered ) {
+			return;
+		}
+
+		$this->form_printed = true;
+
+		printf(
+			'<form id="%s" method="post" action="%s" enctype="multipart/form-data"></form>',
+			esc_attr( self::FORM_ID ),
+			esc_url( admin_url( 'admin-post.php' ) )
+		);
 	}
 
 	/**
@@ -111,6 +162,10 @@ final class OrderPanel {
 		$current      = $this->reports->versions()->current_for( $order->get_id() );
 		$assignee     = (int) $order->get_meta( OrderMeta::ASSIGNED_STAFF_ID );
 		$transitions  = FulfillmentStatus::transitions()[ $status->value ];
+		$sources      = Settings::source_list();
+		$coverage     = is_object( $current ) ? Coverage::from_json( (string) ( $current->coverage_json ?? '' ) ) : null;
+
+		$this->panel_was_rendered = true;
 
 		include __DIR__ . '/../../templates/admin/order-panel.php';
 	}

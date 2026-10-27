@@ -83,6 +83,18 @@ final class Settings {
 	}
 
 	/**
+	 * The published data sources, one per line, as a list.
+	 *
+	 * @return array<int, string>
+	 */
+	public static function source_list(): array {
+		$raw   = (string) self::get( 'data_sources' );
+		$lines = preg_split( '/\r\n|\r|\n/', $raw );
+
+		return array_values( array_filter( array_map( 'trim', is_array( $lines ) ? $lines : array() ) ) );
+	}
+
+	/**
 	 * Promised delivery window in business hours, or null when unset.
 	 *
 	 * @return int|null

@@ -100,6 +100,10 @@ A customer enters a registration, pays, and staff deliver a report:
   plainly, charges nothing and queues no work, and the same order can still be
   paid for afterwards. A full refund revokes the customer's links; a partial one
   does not.
+- **Coverage** — a report cannot be stored until staff have said, for every
+  published source, whether a record was found, nothing was recorded, or the
+  check was not possible — and the last has to say why. The customer's email
+  repeats it source by source, so a gap cannot be read as a pass.
 - **Record** — an append-only audit trail with redaction, covering uploads,
   deliveries, resends, refusals and failed permission checks.
 - **Data requests** — WordPress's own export and erasure tools answer for this

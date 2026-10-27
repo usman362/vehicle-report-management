@@ -14,6 +14,7 @@ use VehicleReportOrders\Domain\FulfillmentStatus;
 use VehicleReportOrders\Domain\OrderMeta;
 use VehicleReportOrders\Domain\OrderRepository;
 use VehicleReportOrders\Domain\Settings;
+use VehicleReportOrders\Reports\Coverage;
 use VehicleReportOrders\Reports\ReportService;
 use VehicleReportOrders\Schema;
 
@@ -79,6 +80,8 @@ final class EmailNotifier {
 			$order->get_order_number()
 		);
 
+		$version = $this->reports->versions()->current_for( $order->get_id() );
+
 		$body = $this->render(
 			'report-ready',
 			array(
@@ -86,6 +89,7 @@ final class EmailNotifier {
 				'link'         => $link,
 				'registration' => $registration ? $registration->for_display() : '',
 				'ttl_hours'    => $ttl_hours,
+				'coverage'     => is_object( $version ) ? Coverage::from_json( (string) ( $version->coverage_json ?? '' ) ) : null,
 			)
 		);
 

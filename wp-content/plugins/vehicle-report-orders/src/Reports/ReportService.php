@@ -51,11 +51,12 @@ final class ReportService {
 	 * @param \WC_Order            $order   Order the report belongs to.
 	 * @param array<string, mixed> $file    Entry from $_FILES.
 	 * @param string               $sources Sources staff actually used.
-	 * @param string               $notes   Coverage limitations.
+	 * @param string               $notes   Coverage limitations, in the preparer's own words.
+	 * @param Coverage|null        $coverage Source-by-source record of what could be checked.
 	 *
 	 * @return int|WP_Error New version identifier.
 	 */
-	public function store_upload( \WC_Order $order, array $file, string $sources, string $notes ) {
+	public function store_upload( \WC_Order $order, array $file, string $sources, string $notes, ?Coverage $coverage = null ) {
 		if ( ! PrivateStorage::prepare() ) {
 			return new WP_Error( 'vr_storage_unavailable', __( 'The private report directory is not writable.', 'vehicle-report-orders' ) );
 		}
@@ -107,6 +108,7 @@ final class ReportService {
 				'sha256'            => $hash,
 				'source_summary'    => $sources,
 				'coverage_notes'    => $notes,
+				'coverage_json'     => $coverage instanceof Coverage ? $coverage->to_json() : '',
 			)
 		);
 
@@ -128,6 +130,7 @@ final class ReportService {
 				'sha256'     => $hash,
 				'size_bytes' => $size,
 				'sources'    => $sources,
+				'coverage'   => $coverage instanceof Coverage ? $coverage->summary() : 'not recorded',
 			),
 			$previous->value,
 			FulfillmentStatus::REPORT_UPLOADED->value

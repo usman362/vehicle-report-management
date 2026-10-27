@@ -58,6 +58,15 @@ were exercised against the running local site and the evidence is noted.
 | Pages are reproducible from the repository | verified — `wp eval-file scripts/seed-content.php` created or refreshed all 13 pages and set the front, privacy and terms page options | A fresh install comes up with the same site |
 | Customers can actually reach the store | verified — WooCommerce was found in coming-soon mode, which serves the shop, cart and checkout only to signed-in administrators; the plugin's screens now warn while it is on, and `setup-local.sh` opens the store | The trap is visible instead of silent |
 
+## Source-by-source coverage
+
+| Case | How it was checked | Result |
+|---|---|---|
+| A report cannot be stored with a source unanswered | automated — `tests/integration/cases/05-coverage.php`, and in the browser on the order screen: the refusal appears as an admin notice naming the source | Refused |
+| "Could not be checked" has to say why | automated — refused with `vr_coverage_reason_required` | Refused |
+| The record survives storage and reaches the customer | automated — the delivery email lists every source, says "Not checked" where it was not, gives the reason, and adds that a gap is not a sign there is nothing to find | Delivered as recorded |
+| An older report with no coverage still works | automated — `Coverage::from_json()` returns null and the email simply omits the section | No breakage |
+
 ## The development gateway
 
 `wp-content/mu-plugins/vr-dev-gateway.php` is a payment method whose outcome is

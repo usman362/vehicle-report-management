@@ -27,9 +27,11 @@
          Both are valid in the PHP 8.1 minimum this plugin requires. -->
     <rule ref="PHPCompatibility.Variables.ForbiddenThisUseContexts.OutsideObjectContext">
         <exclude-pattern>*/Domain/FulfillmentStatus.php</exclude-pattern>
+        <exclude-pattern>*/Domain/CoverageOutcome.php</exclude-pattern>
     </rule>
     <rule ref="PHPCompatibility.FunctionDeclarations.NewParamTypeDeclarations.SelfOutsideClassScopeFound">
         <exclude-pattern>*/Domain/FulfillmentStatus.php</exclude-pattern>
+        <exclude-pattern>*/Domain/CoverageOutcome.php</exclude-pattern>
     </rule>
 
     <rule ref="WordPress.WP.I18n">

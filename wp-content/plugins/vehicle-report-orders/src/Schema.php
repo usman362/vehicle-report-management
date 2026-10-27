@@ -23,7 +23,7 @@ defined( 'ABSPATH' ) || exit;
  */
 final class Schema {
 
-	public const VERSION = 1;
+	public const VERSION = 2;
 
 	public const VERSION_OPTION = 'vr_schema_version';
 
@@ -109,6 +109,7 @@ final class Schema {
 				prepared_by BIGINT UNSIGNED NULL,
 				source_summary TEXT NULL,
 				coverage_notes TEXT NULL,
+				coverage_json LONGTEXT NULL,
 				status VARCHAR(20) NOT NULL DEFAULT 'uploaded',
 				superseded_at DATETIME NULL,
 				created_at DATETIME NOT NULL,
