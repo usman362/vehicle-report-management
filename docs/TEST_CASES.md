@@ -23,10 +23,10 @@ were exercised against the running local site and the evidence is noted.
 |---|---|---|---|
 | T09 | Staff upload a safe PDF | verified — order 12 version 1 | Stored above the web root, hash recorded |
 | T10 | Staff upload a PHP file or an oversized file | automated — `UploadValidatorTest` | Rejected on magic bytes, extension and size; nothing stored |
-| T11 | Unprivileged user calls the upload endpoint | code — capability check in `FulfillmentActions`; refusal written to the audit log | Needs an integration test to prove end to end |
+| T11 | Unprivileged user calls the action endpoint | automated — `tests/integration/cases/01-capabilities.php`: a support agent calling claim and deliver is refused with `vr_forbidden`, and both refusals appear in the audit log | Refused and recorded |
 | T12 | Recipient opens their signed link | verified | 200 with the PDF |
 | T13 | Another order's link, or an expired one | verified + automated — `DownloadTokenTest` | Tampered 403, expired 410, revoked 403, undelivered 403 |
-| T14 | Mail outage after upload | code — attempt recorded, retry scheduled with back-off, staff told after the maximum | Needs an integration test |
+| T14 | Mail outage after upload | automated — `tests/integration/cases/02-delivery-retry.php`: the mailer is made to reject everything; each attempt is logged, a retry is really queued, the service gives up exactly once at the maximum, flags the order, ignores a late retry, and sends when the mailer recovers | Retried, escalated, recovered |
 | T15 | Manual resend | verified — resend issues a fresh link and logs it | Same order, same report |
 | T16 | Refund | code — recorded in the audit log, fulfilment history untouched | Needs a gateway sandbox |
 | T17 | Staff cannot fulfil | verified — requires a written reason before the state changes | No fabricated report possible |
@@ -43,11 +43,11 @@ were exercised against the running local site and the evidence is noted.
 | T23 | Checkout and fulfilment without matchmaking | verified — orders 29 and 31 | No buyer introduction, CRM or promotional message anywhere |
 | T24 | Order placed before a price or policy change | verified — price, delivery window and terms version are snapshotted on the order | Snapshot unchanged |
 | T25 | Customer data export or deletion request | verified — export returned the registration, status, deadline and report hash for order 29; erasure on a test order deleted the stored file, cleared the registration and contact snapshot, marked the report row erased, left the order and its audit history in place, and turned a link already issued into a 403 | Export complete, erasure complete, financial record retained |
-| T26 | Two customers order the same registration | code — orders are separate records with separate tokens and secrets | Needs an integration test |
+| T26 | Two customers order the same registration | automated — `tests/integration/cases/03-order-isolation.php`: separate secrets, links and files; neither token verifies against the other order, and revoking one leaves the other working | Fully isolated |
 | T27 | Report file replaced | verified — a second upload supersedes the first, both rows kept | History retained |
 | T28 | Gateway unavailable | not yet run | Open |
 | T29 | A claim with no data source behind it | verified — the storefront prints a visible placeholder instead of an invented figure, and ordering is blocked until sources are configured | No unsupported promise rendered |
-| T30 | Staff role exports a customer list | code — export capability is not granted to fulfilment or support roles | Needs an integration test |
+| T30 | Staff role exports a customer list | automated — `tests/integration/cases/01-capabilities.php`: none of the three staff roles holds `export`, `list_users`, `edit_users`, `manage_woocommerce`, `manage_options` or either personal-data capability | No route to a customer list |
 
 ## Pages and store visibility
 
@@ -58,9 +58,17 @@ were exercised against the running local site and the evidence is noted.
 | Pages are reproducible from the repository | verified — `wp eval-file scripts/seed-content.php` created or refreshed all 13 pages and set the front, privacy and terms page options | A fresh install comes up with the same site |
 | Customers can actually reach the store | verified — WooCommerce was found in coming-soon mode, which serves the shop, cart and checkout only to signed-in administrators; the plugin's screens now warn while it is on, and `setup-local.sh` opens the store | The trap is visible instead of silent |
 
+## How these were run
+
+- `./scripts/check.sh` runs the lot: PHP syntax, WordPress coding standards,
+  the unit suite (no WordPress needed) and the integration suite.
+- The integration suite is `wp eval-file tests/integration/run.php`. It runs
+  inside the real WordPress and WooCommerce, creates its own orders, staff
+  users and report files, and deletes them again whether or not it passes.
+  It is skipped, with a reason printed, where there is no local site.
+
 ## Still to do
 
 - Gateway sandbox cases (T08, T16, T28) once the merchant supplies Stripe test keys.
-- WordPress integration tests for the capability and delivery paths (T11, T14, T26, T30).
 - Full accessibility and mobile checkout pass (T18, T19).
 - A restore rehearsal that includes the private report directory (T21).

@@ -35,10 +35,11 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 | FUL-01 | Staff fulfilment queue with filters and SLA age | §12 | `Admin/FulfillmentQueuePage.php`, `Domain/OrderRepository.php` | verified on the running site | done |
 | FUL-02 | Private report storage, no public PDF URL | §11, §17 | `Reports/PrivateStorage.php`, `Reports/UploadValidator.php` | T09, T10 | done — files live above the web root |
 | FUL-03 | Scoped, expiring download link | §7, §11 | `Reports/DownloadToken.php`, `Reports/DownloadController.php` | T12, T13, `DownloadTokenTest` | done |
-| FUL-04 | Delivery email with retries and attempt log | §11 | `Notifications/EmailNotifier.php` | T14, T15 | done — retry path needs an integration test |
+| FUL-04 | Delivery email with retries and attempt log | §11 | `Notifications/EmailNotifier.php` | T14, T15 | done |
 | FUL-05 | Replacing a report keeps the previous version | §11 | `Reports/ReportVersionRepository.php` | T27 | done |
 | AUD-01 | Audit trail for every upload, delivery, resend, status change and refund | §12 | `Audit/AuditLogger.php`, `Admin/AuditLogPage.php` | `AuditRedactionTest`, verified | done |
-| CAP-01 | Capability checks server-side for every admin action | §4, §9 | `Admin/CapabilityManager.php`, `Admin/FulfillmentActions.php` | T11, T30 | done — integration test outstanding |
+| CAP-01 | Capability checks server-side for every admin action | §4, §9 | `Admin/CapabilityManager.php`, `Admin/FulfillmentActions.php` | T11, T30 | done |
+| QA-02 | Integration tests against a real WordPress and WooCommerce | §20, §26 | `tests/integration/` | T11, T14, T26, T30 | done — 55 assertions, run by `scripts/check.sh` |
 | MAIL-01 | One confirmation email, carrying the registration and the promise | §11 | `Notifications/OrderEmailAdditions.php` | verified — captured message | done |
 | PRIV-01 | Personal-data export and erasure, and suggested privacy-policy wording | §8, §17 | `Privacy/PersonalData.php` | T25 | done — erasure removes the report file, registration and contact snapshot; the order, its totals and the audit trail are retained |
 
@@ -55,7 +56,6 @@ one of: `done`, `in progress`, `not started`, `blocked`.
 
 | ID | Requirement | Spec | Status |
 |---|---|---|---|
-| QA-02 | WordPress integration tests for capability, delivery and tenancy paths | §20 | not started |
 | PAY-03 | Gateway sandbox cases: decline, refund, outage | §10 | blocked on merchant Stripe test keys (PAY-01 decision) |
 
 `T…` identifiers refer to the acceptance matrix in `PROJECT_MASTER_SPEC.md` §20

@@ -77,13 +77,30 @@ final class FulfillmentActions {
 
 		check_admin_referer( self::ACTION . '_' . $order_id );
 
+		$this->finish( $order_id, $this->run( $order_id, $action ) );
+	}
+
+	/**
+	 * Carry out an action on behalf of the current user.
+	 *
+	 * Separate from handle() so the request plumbing — the nonce and the
+	 * redirect — is not in the way of exercising the permission rules.
+	 * Every action re-checks the current user's capability for itself;
+	 * reaching this method is not permission to do anything.
+	 *
+	 * @param int    $order_id Order identifier.
+	 * @param string $action   Action name as submitted.
+	 *
+	 * @return string|WP_Error Message for the operator, or the refusal.
+	 */
+	public function run( int $order_id, string $action ) {
 		$order = wc_get_order( $order_id );
 
 		if ( ! $order instanceof \WC_Order ) {
-			$this->finish( $order_id, new WP_Error( 'vr_unknown_order', __( 'That order no longer exists.', 'vehicle-report-orders' ) ) );
+			return new WP_Error( 'vr_unknown_order', __( 'That order no longer exists.', 'vehicle-report-orders' ) );
 		}
 
-		$result = match ( $action ) {
+		return match ( $action ) {
 			'claim'          => $this->claim( $order ),
 			'start'          => $this->move( $order, FulfillmentStatus::IN_PROGRESS, 'fulfilment.started' ),
 			'request_info'   => $this->move( $order, FulfillmentStatus::NEEDS_CUSTOMER_INFO, 'fulfilment.info_requested' ),
@@ -94,8 +111,6 @@ final class FulfillmentActions {
 			'revoke'         => $this->revoke( $order ),
 			default          => new WP_Error( 'vr_unknown_action', __( 'Unknown action.', 'vehicle-report-orders' ) ),
 		};
-
-		$this->finish( $order_id, $result );
 	}
 
 	/**

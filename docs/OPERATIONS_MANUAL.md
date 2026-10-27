@@ -70,6 +70,14 @@ revocation, refused download and failed permission check. Entries cannot be
 edited or deleted, and sensitive values are redacted before they are stored.
 It is the first place to look when a customer disputes something.
 
+## After a WordPress, WooCommerce or plugin update
+
+Run `./scripts/check.sh` on a copy of the site. Step ④ exercises the parts that
+quietly stop working after an update: whether a support agent is still refused
+when they try to deliver, whether a failed delivery still queues a retry, and
+whether two orders for the same registration still have separate links. It
+cleans up after itself, so it is safe to run on staging.
+
 ## Changing page wording
 
 The storefront and legal pages are files in `content/pages/`, not just rows in

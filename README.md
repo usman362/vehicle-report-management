@@ -28,7 +28,8 @@ or HPI, and it is **not** a CRM, lead system or messaging platform — see
 ├── docs/                           specification and decisions
 ├── content/pages/                  storefront and legal page copy, as files
 ├── scripts/                        setup-local.sh, serve.sh, check.sh, seed-content.php
-├── tests/                          PHPUnit unit tests (no WordPress needed)
+├── tests/Unit/                     PHPUnit unit tests (no WordPress needed)
+├── tests/integration/              cases that run inside real WordPress
 ├── phpcs.xml  phpunit.xml  composer.json
 └── wp-content/
     ├── plugins/vehicle-report-orders/   all domain logic lives here
@@ -55,10 +56,19 @@ credentials.
 ## Checks
 
 ```bash
-./scripts/check.sh           # php -l, WordPress coding standards, unit tests
+./scripts/check.sh           # php -l, coding standards, unit tests, integration tests
 ```
 
-Individually: `vendor/bin/phpcs`, `vendor/bin/phpcbf`, `vendor/bin/phpunit`.
+Individually: `vendor/bin/phpcs`, `vendor/bin/phpcbf`, `vendor/bin/phpunit`, and
+`wp eval-file tests/integration/run.php`.
+
+The unit suite needs no WordPress at all: it covers the domain logic — plate
+parsing, the state machine, business-hours arithmetic, upload validation, token
+signing — and the scope lock. The integration suite runs inside the real
+WordPress and WooCommerce, because capability enforcement, delivery retries and
+per-order isolation cannot be proved anywhere else. It creates its own orders,
+staff users and report files and removes them again, pass or fail; without a
+local site it is skipped with a reason rather than silently passing.
 
 ## What works today
 
