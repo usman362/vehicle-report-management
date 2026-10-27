@@ -46,7 +46,7 @@ were exercised against the running local site and the evidence is noted.
 | T26 | Two customers order the same registration | automated — `tests/integration/cases/03-order-isolation.php`: separate secrets, links and files; neither token verifies against the other order, and revoking one leaves the other working | Fully isolated |
 | T27 | Report file replaced | verified — a second upload supersedes the first, both rows kept | History retained |
 | T28 | Gateway unavailable | verified — the development gateway throws as an unreachable provider would: the customer is told nothing has been charged and asked to try again, the order is left `failed`, and the same order was then paid for successfully on a later attempt, so a failure does not poison it | Fails safe and recovers |
-| T29 | A claim with no data source behind it | verified — the storefront prints a visible placeholder instead of an invented figure, and ordering is blocked until sources are configured | No unsupported promise rendered |
+| T29 | A claim with no data source behind it | automated — `tests/integration/cases/06-storefront.php`: with the settings cleared, every disclosure shortcode renders a visible placeholder instead of a figure, the legal pages carry their draft notice, and ordering is switched off | No unsupported promise rendered |
 | T30 | Staff role exports a customer list | automated — `tests/integration/cases/01-capabilities.php`: none of the three staff roles holds `export`, `list_users`, `edit_users`, `manage_woocommerce`, `manage_options` or either personal-data capability | No route to a customer list |
 
 ## Pages and store visibility

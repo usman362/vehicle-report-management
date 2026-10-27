@@ -67,6 +67,7 @@ final class OrderForm {
 		$price     = $this->formatted_price();
 		$sla_hours = Settings::sla_hours();
 		$compact   = 'yes' === $attributes['compact'];
+		$heading   = (string) $attributes['heading'];
 
 		ob_start();
 		include __DIR__ . '/../../templates/storefront/order-form.php';
