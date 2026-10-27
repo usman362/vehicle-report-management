@@ -16,6 +16,9 @@ or HPI, and it is **not** a CRM, lead system or messaging platform — see
 | [`docs/DECISIONS.md`](docs/DECISIONS.md) | Confirmed decisions, open questions and launch blockers |
 | [`docs/SCOPE_CHANGELOG.md`](docs/SCOPE_CHANGELOG.md) | What changed in v1.1 and what must not be built |
 | [`docs/REQUIREMENTS_TRACEABILITY.md`](docs/REQUIREMENTS_TRACEABILITY.md) | Each requirement mapped to its milestone, code and test |
+| [`docs/TEST_CASES.md`](docs/TEST_CASES.md) | The acceptance matrix with how each case was covered and its result |
+| [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) | Putting the site on a server, including where report files must live |
+| [`docs/OPERATIONS_MANUAL.md`](docs/OPERATIONS_MANUAL.md) | How staff prepare, deliver and correct a report |
 
 ## Repository layout
 
@@ -56,14 +59,43 @@ credentials.
 
 Individually: `vendor/bin/phpcs`, `vendor/bin/phpcbf`, `vendor/bin/phpunit`.
 
-## Current state
+## What works today
 
-Milestones 0 and 1 are in place: specification in the repository, decisions
-recorded, a working local WordPress + WooCommerce environment with HPOS enabled,
-the plugin skeleton activating cleanly, and the coding-standards and test
-harness running.
+A customer enters a registration, pays, and staff deliver a report:
 
-**The site cannot go live yet.** Price, delivery SLA, report data licence, legal
-merchant identity and brand assets are still outstanding — they are listed as
-blockers in [`docs/DECISIONS.md`](docs/DECISIONS.md). Payments stay in test mode
-until the merchant account and those approvals exist.
+- **Order** — registration entry on the storefront, carried into the block or
+  classic checkout, captured onto the order with the price, delivery window and
+  terms version that applied at the time.
+- **Payment** — only a verified WooCommerce payment queues the work. A repeated
+  webhook, a refresh or a manual status change is recognised and logged rather
+  than queueing twice.
+- **Promise** — the deadline is counted in the merchant's own working hours, so
+  a Friday evening order is never promised for Saturday.
+- **Fulfilment** — a queue with filters and overdue flags, an order panel for
+  claiming, uploading, delivering, resending and revoking, and a reason required
+  before an order can be marked unfulfillable.
+- **Report files** — validated by their bytes, hashed, stored above the web root
+  with unguessable names, and versioned so a replacement keeps its predecessor.
+- **Delivery** — signed, expiring, per-order links. Rotating an order's secret
+  revokes every link already sent.
+- **Record** — an append-only audit trail with redaction, covering uploads,
+  deliveries, resends, refusals and failed permission checks.
+
+Honesty is enforced, not just documented: the price, delivery window, opening
+hours and data sources are read from settings at render time and shown as
+visible placeholders until the merchant supplies them, and ordering stays
+switched off until they are.
+
+## What is not here, by instruction
+
+No CRM, buyer–seller matchmaking, seller leads, phone-number harvesting, SMS
+campaigns or outbound marketing — see
+[`docs/SCOPE_CHANGELOG.md`](docs/SCOPE_CHANGELOG.md). A test
+(`tests/Unit/ScopeLockTest.php`) fails the build if such code ever appears.
+
+## Before it can take real money
+
+Price, delivery window, report data licence, legal merchant identity and brand
+assets are outstanding — see the blockers in
+[`docs/DECISIONS.md`](docs/DECISIONS.md). Until they are supplied the storefront
+will not start an order, and the go-live confirmation cannot be ticked.
