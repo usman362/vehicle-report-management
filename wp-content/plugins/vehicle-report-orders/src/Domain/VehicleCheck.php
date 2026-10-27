@@ -93,6 +93,62 @@ final class VehicleCheck {
 	}
 
 	/**
+	 * A line drawing for each check, as the inner markup of a 24×24 SVG.
+	 *
+	 * Drawn here rather than loaded from an icon font: no third-party request,
+	 * no licence, and the stroke follows the surrounding text colour. Decorative
+	 * only — every icon sits beside its own heading, so it is hidden from
+	 * assistive technology rather than described twice.
+	 *
+	 * @param string $key Check slug.
+	 *
+	 * @return string
+	 */
+	public static function icon( string $key ): string {
+		$paths = array(
+			'vehicle_details' => '<path d="M3 13l2-5a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 8l2 5"/><path d="M3 13h18v4a1 1 0 0 1-1 1h-1a1 1 0 0 1-1-1v-1H6v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><circle cx="7" cy="15.5" r="1"/><circle cx="17" cy="15.5" r="1"/>',
+			'tax_mot_status'  => '<path d="M12 3l7 3v5c0 4.3-2.9 8.2-7 9.4C7.9 19.2 5 15.3 5 11V6z"/><path d="M9 11.5l2 2 4-4"/>',
+			'mot_history'     => '<rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M8.5 10h7M8.5 14h7M8.5 17.5h4"/>',
+			'mileage'         => '<path d="M4 18a8 8 0 1 1 16 0"/><path d="M12 18l4.2-5"/><circle cx="12" cy="18" r="1.3"/>',
+			'keepers'         => '<circle cx="9" cy="8" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><path d="M16 5.5a3 3 0 0 1 0 5.8"/><path d="M17.5 14.4A5.5 5.5 0 0 1 20.5 19"/>',
+			'plate_changes'   => '<rect x="2.5" y="7" width="19" height="10" rx="2"/><path d="M6.5 7v10"/><path d="M10 11h2M14 11h3M10 14h7"/>',
+			'write_off'       => '<path d="M12 4.5L21 19H3z"/><path d="M12 10v4"/><path d="M12 16.6v.1"/>',
+			'stolen'          => '<path d="M12 3l7 3v5c0 4.3-2.9 8.2-7 9.4C7.9 19.2 5 15.3 5 11V6z"/><path d="M9.5 9.5l5 5M14.5 9.5l-5 5"/>',
+			'finance'         => '<rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M6 12h.1M18 12h-.1"/>',
+			'import_export'   => '<circle cx="12" cy="12" r="8.5"/><path d="M3.5 12h17"/><path d="M12 3.5c2.3 2.4 3.5 5.4 3.5 8.5S14.3 18.1 12 20.5c-2.3-2.4-3.5-5.4-3.5-8.5S9.7 5.9 12 3.5z"/>',
+			'valuation'       => '<path d="M11.4 3.2H20v8.6l-8.9 8.9a1.6 1.6 0 0 1-2.3 0L3.1 15a1.6 1.6 0 0 1 0-2.3z"/><circle cx="16.3" cy="7.1" r="1.3"/>',
+		);
+
+		return $paths[ $key ] ?? '<circle cx="12" cy="12" r="8.5"/><path d="M12 8.5v4M12 15.4v.1"/>';
+	}
+
+	/**
+	 * The SVG elements `icon()` is allowed to return, for `wp_kses()`.
+	 *
+	 * @return array<string, array<string, bool>>
+	 */
+	public static function icon_markup_allowed(): array {
+		$geometry = array(
+			'd'      => true,
+			'cx'     => true,
+			'cy'     => true,
+			'r'      => true,
+			'x'      => true,
+			'y'      => true,
+			'rx'     => true,
+			'ry'     => true,
+			'width'  => true,
+			'height' => true,
+		);
+
+		return array(
+			'path'   => $geometry,
+			'circle' => $geometry,
+			'rect'   => $geometry,
+		);
+	}
+
+	/**
 	 * Whether a slug names a check in the catalogue.
 	 *
 	 * @param string $key Check slug.

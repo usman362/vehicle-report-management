@@ -12,7 +12,7 @@ declare( strict_types=1 );
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<section class="vr-reviews">
+<section class="vr-reviews alignwide">
 	<?php if ( '' !== $heading ) : ?>
 		<h2><?php echo esc_html( $heading ); ?></h2>
 	<?php endif; ?>

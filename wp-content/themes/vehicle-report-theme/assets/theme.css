@@ -1,15 +1,155 @@
-/* Small additions on top of theme.json; the palette and spacing live there. */
+/* Components on top of theme.json, which owns the palette, type scale and spacing. */
+
+:root {
+	--vr-shadow-sm: 0 1px 2px rgba(11, 26, 43, .06), 0 2px 8px rgba(11, 26, 43, .05);
+	--vr-shadow-md: 0 2px 6px rgba(11, 26, 43, .07), 0 14px 32px rgba(11, 26, 43, .09);
+	--vr-shadow-lg: 0 6px 14px rgba(11, 26, 43, .10), 0 34px 70px rgba(11, 26, 43, .22);
+	--vr-radius: 16px;
+	--vr-ease: cubic-bezier(.22, .61, .36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	* { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
+
+/* --- Header --------------------------------------------------------------- */
+
+.vr-site-header {
+	position: sticky;
+	top: 0;
+	z-index: 80;
+	background: rgba(255, 255, 255, .88);
+	backdrop-filter: saturate(180%) blur(12px);
+	border-bottom: 1px solid var(--wp--preset--color--border);
+}
+
+/* The label sits in its own span, which otherwise keeps the body colour and
+   fails contrast against the accent fill. */
+.vr-nav-cta a,
+.vr-nav-cta a * {
+	color: #fff;
+}
+
+.vr-nav-cta a {
+	background: var(--wp--preset--color--accent);
+	text-decoration: none;
+	padding: .7rem 1.25rem;
+	border-radius: 999px;
+	font-weight: 600;
+	box-shadow: var(--vr-shadow-sm);
+	transition: transform .18s var(--vr-ease), background .18s var(--vr-ease);
+	display: inline-block;
+}
+
+.vr-nav-cta a:hover { background: var(--wp--preset--color--navy); transform: translateY(-1px); }
+
+/* --- Hero ----------------------------------------------------------------- */
+
+.vr-hero {
+	position: relative;
+	padding-inline: clamp(1rem, 4vw, 2rem);
+	overflow: hidden;
+	background: var(--wp--preset--gradient--hero, linear-gradient(135deg, #071321 0%, #122c47 48%, #1b4a78 100%));
+	color: #eaf1f8;
+	isolation: isolate;
+}
+
+/* The backdrop is drawn, not photographed: no stock imagery, no licence to
+   worry about, and it stays sharp at any width. */
+.vr-hero::before {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background-image: url("backdrop.svg");
+	background-size: cover;
+	background-position: center right;
+	opacity: .85;
+}
+
+.vr-hero::after {
+	content: "";
+	position: absolute;
+	inset: 0;
+	z-index: -1;
+	background: radial-gradient(90rem 40rem at 78% 18%, rgba(227, 178, 60, .16), transparent 62%);
+}
+
+.vr-hero h1,
+.vr-hero h2 { color: #fff; }
+
+.vr-hero p { color: #c6d6e6; }
+
+.vr-eyebrow {
+	display: inline-flex;
+	align-items: center;
+	gap: .55rem;
+	font-size: var(--wp--preset--font-size--small);
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	font-weight: 600;
+	color: var(--wp--preset--color--highlight);
+	margin-bottom: 1rem;
+}
+
+.vr-eyebrow::before {
+	content: "";
+	width: 2rem;
+	height: 2px;
+	background: var(--wp--preset--color--highlight);
+}
+
+.vr-hero-meta {
+	display: flex;
+	flex-wrap: wrap;
+	gap: .6rem;
+	margin-top: 1.75rem;
+	padding: 0;
+	list-style: none;
+}
+
+.vr-hero-meta li {
+	display: inline-flex;
+	align-items: center;
+	gap: .5rem;
+	background: rgba(255, 255, 255, .09);
+	border: 1px solid rgba(255, 255, 255, .16);
+	color: #eaf1f8;
+	border-radius: 999px;
+	padding: .5rem 1rem;
+	font-size: var(--wp--preset--font-size--small);
+}
+
+.vr-hero-meta svg { width: 1rem; height: 1rem; flex: none; color: var(--wp--preset--color--highlight); }
+
+/* --- Cards ---------------------------------------------------------------- */
 
 .vr-card {
 	background: var(--wp--preset--color--surface);
 	border: 1px solid var(--wp--preset--color--border);
-	border-radius: 14px;
-	padding: clamp(1.25rem, 1rem + 1vw, 2rem);
+	border-radius: var(--vr-radius);
+	padding: clamp(1.4rem, 1rem + 1.2vw, 2.1rem);
+	box-shadow: var(--vr-shadow-sm);
 }
+
+.vr-hero .vr-card {
+	border-color: transparent;
+	box-shadow: var(--vr-shadow-lg);
+	color: var(--wp--preset--color--ink);
+}
+
+.vr-hero .vr-card h2,
+.vr-hero .vr-card p,
+.vr-hero .vr-card label,
+.vr-hero .vr-card legend { color: var(--wp--preset--color--ink); }
+
+.vr-hero .vr-card .has-small-font-size { color: var(--wp--preset--color--muted); }
+
+/* --- Steps ---------------------------------------------------------------- */
 
 .vr-steps { counter-reset: vr-step; }
 
-.vr-steps > .wp-block-column { position: relative; padding-top: 2.75rem; }
+.vr-steps > .wp-block-column { position: relative; padding-top: 3.25rem; }
 
 .vr-steps > .wp-block-column::before {
 	counter-increment: vr-step;
@@ -17,262 +157,316 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	width: 2rem;
-	height: 2rem;
-	border-radius: 50%;
+	width: 2.5rem;
+	height: 2.5rem;
 	display: grid;
 	place-items: center;
+	border-radius: 50%;
+	background: var(--wp--preset--color--navy);
+	color: #fff;
 	font-weight: 700;
-	color: var(--wp--preset--color--surface);
-	background: var(--wp--preset--color--accent);
+	box-shadow: var(--vr-shadow-sm);
 }
+
+/* A hairline joining the steps, so they read as a sequence rather than a row. */
+@media (min-width: 782px) {
+	.vr-steps > .wp-block-column:not(:last-child)::after {
+		content: "";
+		position: absolute;
+		top: 1.25rem;
+		left: 3.1rem;
+		right: -1.25rem;
+		height: 1px;
+		background: linear-gradient(90deg, var(--wp--preset--color--border), transparent);
+	}
+}
+
+/* --- Notes and placeholders ---------------------------------------------- */
 
 .vr-note {
-	border-left: 4px solid var(--wp--preset--color--accent);
+	border-left: 4px solid var(--wp--preset--color--highlight);
 	background: var(--wp--preset--color--surface);
-	padding: 1rem 1.25rem;
-	border-radius: 0 10px 10px 0;
-}
-
-.vr-registration-plate input[type="text"] {
-	font-size: 1.35rem;
-	letter-spacing: 0.12em;
-	text-transform: uppercase;
-	font-weight: 700;
-	padding: 0.9rem 1rem;
-	border: 2px solid var(--wp--preset--color--border);
-	border-radius: 10px;
-	/* Without border-box the padding and border are added to the 100%, which
-	   pushes the plate past the edge of its card on a narrow screen. */
-	box-sizing: border-box;
-	width: 100%;
-	max-width: 22rem;
-	background: #fff;
-}
-
-.vr-registration-plate input[type="text"]:focus {
-	outline: 3px solid rgba( 23, 105, 170, .35 );
-	border-color: var(--wp--preset--color--accent);
+	padding: 1.15rem 1.4rem;
+	border-radius: 0 12px 12px 0;
+	box-shadow: var(--vr-shadow-sm);
 }
 
 .vr-error { color: var(--wp--preset--color--danger); font-weight: 600; }
 
-@media (max-width: 600px) {
-	.vr-steps > .wp-block-column { padding-top: 2.5rem; }
-}
-
-.vr-nav-cta a {
-	background: var(--wp--preset--color--accent);
-	color: var(--wp--preset--color--surface) !important;
-	padding: 0.5rem 1rem;
-	border-radius: 8px;
-	text-decoration: none !important;
-}
-
 .vr-pending {
-	background: #fff5d6;
-	border-bottom: 1px dashed #b98a38;
-	font-style: italic;
-	padding: 0 0.25rem;
+	background: #fff6dc;
+	border-bottom: 1px dashed #c9a227;
+	padding: 0 .25rem;
+	font-style: normal;
 }
 
-.vr-sources { margin: 0.5rem 0 1rem 1.25rem; }
+.vr-draft-notice { border-left-color: var(--wp--preset--color--danger); }
 
-/* A legal page whose wording the operator has not yet confirmed. */
-.vr-draft-notice {
-	border-left: 4px solid var(--wp--preset--color--danger, #b3261e);
-	background: color-mix(in srgb, var(--wp--preset--color--danger, #b3261e) 6%, transparent);
+.vr-draft-notice p { margin: 0; }
+
+.vr-sources { margin: .5rem 0 1rem 1.25rem; }
+
+/* --- Order form ----------------------------------------------------------- */
+
+.vr-order-form h2 { margin-top: 0; }
+
+/* The identifier choice is a segmented control: two radios, one track. */
+.vr-identifier-choice {
+	border: 0;
+	margin: 0 0 1.25rem;
+	padding: 0;
 }
 
-.vr-draft-notice p {
-	margin: 0;
+.vr-identifier-choice legend { padding: 0; margin-bottom: .6rem; }
+
+.vr-identifier-choice > label {
+	display: inline-flex;
+	align-items: center;
+	gap: .45rem;
+	border: 1px solid var(--wp--preset--color--border);
+	background: var(--wp--preset--color--background);
+	border-radius: 999px;
+	padding: .5rem 1rem;
+	margin-right: .5rem;
+	cursor: pointer;
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	transition: border-color .18s var(--vr-ease), background .18s var(--vr-ease);
 }
 
-.vr-footer-nav {
-	margin: 1rem 0;
-	gap: 0.35rem 1.1rem;
+.vr-identifier-choice > label:has(input:checked) {
+	border-color: var(--wp--preset--color--accent);
+	background: #e9f2fa;
 }
 
-.vr-footer-nav a {
-	color: var(--wp--preset--color--navy, inherit);
+.vr-identifier-choice > label:has(input:focus-visible) {
+	outline: 3px solid rgba(27, 111, 179, .35);
+	outline-offset: 2px;
 }
 
-/* --- Packages ------------------------------------------------------------ */
+/* The registration box is a number plate, because that is what the visitor is
+   copying from. Yellow ground, black characters, blue band down the left. */
+.vr-registration-plate input[type="text"]#vr-registration {
+	font-size: 1.45rem;
+	letter-spacing: .14em;
+	text-transform: uppercase;
+	font-weight: 800;
+	padding: .95rem 1rem .95rem 2.6rem;
+	border: 2px solid #1a1a1a;
+	border-radius: 10px;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 23rem;
+	color: #111;
+	background-color: #f5d130;
+	background-image: linear-gradient(90deg, #0b3a8f 0 1.9rem, transparent 1.9rem);
+	box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5);
+}
+
+.vr-registration-plate input[type="text"]#vr-registration::placeholder { color: rgba(0, 0, 0, .45); }
+
+.vr-registration-plate input[type="text"] {
+	font-size: 1.05rem;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	font-weight: 600;
+	padding: .85rem 1rem;
+	border: 2px solid var(--wp--preset--color--border);
+	border-radius: 10px;
+	/* Without border-box the padding and border are added to the 100%, which
+	   pushes the field past the edge of its card on a narrow screen. */
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 23rem;
+	background: #fff;
+}
+
+.vr-registration-plate input[type="text"]:focus,
+.vr-order-form select:focus,
+.vr-contact-form input:focus,
+.vr-contact-form textarea:focus {
+	outline: 3px solid rgba(27, 111, 179, .35);
+	outline-offset: 1px;
+	border-color: var(--wp--preset--color--accent);
+}
+
+.vr-order-form .vr-identifier-field span {
+	display: block;
+	margin-top: .4rem;
+	color: var(--wp--preset--color--muted);
+}
+
+.vr-order-form select {
+	padding: .75rem .85rem;
+	border: 2px solid var(--wp--preset--color--border);
+	border-radius: 10px;
+	box-sizing: border-box;
+	width: 100%;
+	max-width: 23rem;
+	background: #fff;
+	font-size: 1rem;
+}
+
+.vr-order-form button[type="submit"] { width: 100%; max-width: 23rem; }
+
+/* --- Packages ------------------------------------------------------------- */
 
 .vr-package-grid,
 .vr-check-grid,
 .vr-review-grid {
 	display: grid;
-	gap: 1.25rem;
-	grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-	margin: 1.5rem 0;
+	gap: 1.5rem;
+	grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+	margin: 2rem 0;
 }
 
-.vr-package-card { display: flex; flex-direction: column; }
+.vr-package-card {
+	display: flex;
+	flex-direction: column;
+	transition: transform .22s var(--vr-ease), box-shadow .22s var(--vr-ease);
+}
+
+.vr-package-card:hover { transform: translateY(-4px); box-shadow: var(--vr-shadow-md); }
+
+.vr-package-featured {
+	border-color: var(--wp--preset--color--accent);
+	box-shadow: var(--vr-shadow-md);
+	position: relative;
+}
+
+.vr-package-flag {
+	position: absolute;
+	top: -.85rem;
+	left: clamp(1.4rem, 1rem + 1.2vw, 2.1rem);
+	margin: 0;
+	background: var(--wp--preset--color--accent);
+	color: #fff;
+	font-size: .75rem;
+	font-weight: 700;
+	letter-spacing: .08em;
+	text-transform: uppercase;
+	padding: .35rem .85rem;
+	border-radius: 999px;
+	box-shadow: var(--vr-shadow-sm);
+}
+
+.vr-package-card h3 {
+	margin-top: 0;
+	font-size: var(--wp--preset--font-size--small);
+	letter-spacing: .12em;
+	text-transform: uppercase;
+	color: var(--wp--preset--color--muted);
+}
 
 .vr-package-price {
-	font-size: var(--wp--preset--font-size--x-large);
-	font-weight: 700;
-	margin: 0.25rem 0 1rem;
+	font-size: clamp(2rem, 1.5rem + 1.6vw, 2.75rem);
+	font-weight: 800;
+	letter-spacing: -.02em;
+	line-height: 1.1;
+	margin: .35rem 0 1.25rem;
+	color: var(--wp--preset--color--ink);
 }
 
 .vr-package-list {
 	list-style: none;
-	margin: 0 0 1.25rem;
+	margin: 0 0 1.5rem;
 	padding: 0;
 	flex: 1;
 }
 
 .vr-package-list li {
 	display: flex;
-	gap: 0.6rem;
+	gap: .65rem;
 	align-items: flex-start;
-	padding: 0.3rem 0;
+	padding: .45rem 0;
 	border-bottom: 1px solid var(--wp--preset--color--border);
+	font-size: var(--wp--preset--font-size--small);
 }
 
 .vr-package-list li:last-child { border-bottom: 0; }
 
-.vr-package-list .vr-included span[aria-hidden] { color: var(--wp--preset--color--success); font-weight: 700; }
+.vr-package-list .vr-included span[aria-hidden] { color: var(--wp--preset--color--success); font-weight: 800; }
 
 .vr-package-list .vr-excluded { color: var(--wp--preset--color--muted); }
 
+.vr-package-list .vr-excluded span[aria-hidden] { color: var(--wp--preset--color--border); }
+
 .vr-package-note { color: var(--wp--preset--color--muted); }
 
-/* --- What a report can tell you ------------------------------------------ */
+/* --- Checks --------------------------------------------------------------- */
 
-.vr-check-card h3 { margin-top: 0; font-size: var(--wp--preset--font-size--medium); }
+.vr-check-card {
+	transition: transform .22s var(--vr-ease), box-shadow .22s var(--vr-ease);
+}
+
+.vr-check-card:hover { transform: translateY(-3px); box-shadow: var(--vr-shadow-md); }
+
+.vr-check-icon {
+	width: 2.75rem;
+	height: 2.75rem;
+	display: grid;
+	place-items: center;
+	border-radius: 12px;
+	background: #e9f2fa;
+	color: var(--wp--preset--color--accent);
+	margin-bottom: 1rem;
+}
+
+.vr-check-icon svg { width: 1.45rem; height: 1.45rem; }
+
+.vr-check-card h3 { margin: 0 0 .5rem; font-size: 1.1rem; }
 
 .vr-check-limit { color: var(--wp--preset--color--muted); font-size: var(--wp--preset--font-size--small); }
 
-.vr-package-checks ul { list-style: none; margin: 0.5rem 0; padding: 0; }
+.vr-package-checks ul { list-style: none; margin: .5rem 0; padding: 0; }
 
-.vr-package-checks li { padding: 0.4rem 0; border-bottom: 1px solid var(--wp--preset--color--border); }
+.vr-package-checks li { padding: .55rem 0; border-bottom: 1px solid var(--wp--preset--color--border); }
 
-/* --- Delivery record ----------------------------------------------------- */
+/* --- Delivery record ------------------------------------------------------ */
 
-.vr-stats { margin: 2rem 0; }
+.vr-stats { margin: 2.5rem 0; }
 
 .vr-stat-grid {
 	display: grid;
-	gap: 1rem;
-	grid-template-columns: repeat(auto-fit, minmax(12rem, 1fr));
+	gap: 1.25rem;
+	grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr));
 	margin: 0;
 }
 
 .vr-stat {
 	background: var(--wp--preset--color--surface);
 	border: 1px solid var(--wp--preset--color--border);
-	border-radius: 12px;
-	padding: 1rem 1.25rem;
+	border-radius: var(--vr-radius);
+	padding: 1.35rem 1.5rem;
+	box-shadow: var(--vr-shadow-sm);
 }
 
 .vr-stat dt { color: var(--wp--preset--color--muted); font-size: var(--wp--preset--font-size--small); }
 
-.vr-stat dd { margin: 0.25rem 0 0; font-size: var(--wp--preset--font-size--x-large); font-weight: 700; }
+.vr-stat dd {
+	margin: .35rem 0 0;
+	font-size: clamp(1.8rem, 1.4rem + 1.4vw, 2.5rem);
+	font-weight: 800;
+	letter-spacing: -.02em;
+}
 
-/* --- Reviews ------------------------------------------------------------- */
+/* --- Reviews -------------------------------------------------------------- */
 
 .vr-review blockquote { margin: 0; border: 0; padding: 0; }
 
-.vr-review figcaption { margin-top: 0.75rem; font-size: var(--wp--preset--font-size--small); }
+.vr-review blockquote p { font-size: 1.05rem; }
 
-.vr-review-date { color: var(--wp--preset--color--muted); margin-left: 0.5rem; }
+.vr-review figcaption { margin-top: 1rem; font-size: var(--wp--preset--font-size--small); }
 
-/* --- Order form ---------------------------------------------------------- */
-
-.vr-identifier-choice {
-	border: 0;
-	margin: 0 0 1rem;
-	padding: 0;
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-}
-
-.vr-identifier-choice legend { padding: 0; margin-bottom: 0.5rem; }
-
-.vr-identifier-choice label { display: inline-flex; align-items: center; gap: 0.4rem; }
-
-.vr-order-form .vr-identifier-field span {
-	display: block;
-	margin-top: 0.4rem;
-	color: var(--wp--preset--color--muted);
-}
-
-.vr-order-form select {
-	padding: 0.6rem 0.75rem;
-	border: 2px solid var(--wp--preset--color--border);
-	border-radius: 10px;
-	box-sizing: border-box;
-	width: 100%;
-	max-width: 22rem;
-	background: #fff;
-}
-
-/* --- Contact ------------------------------------------------------------- */
-
-.vr-contact-details { list-style: none; margin: 0 0 1.5rem; padding: 0; }
-
-.vr-contact-details li { padding: 0.35rem 0; }
-
-.vr-contact-form input[type="text"],
-.vr-contact-form input[type="email"],
-.vr-contact-form textarea {
-	width: 100%;
-	box-sizing: border-box;
-	padding: 0.7rem 0.85rem;
-	border: 2px solid var(--wp--preset--color--border);
-	border-radius: 10px;
-	background: #fff;
-}
-
-/* The honeypot is for bots, so it must not be reachable or visible to anyone
-   using the page, including with a screen reader. */
-.vr-honeypot {
-	position: absolute;
-	left: -9999px;
-	width: 1px;
-	height: 1px;
-	overflow: hidden;
-}
-
-/* --- Support channels ---------------------------------------------------- */
-
-.vr-whatsapp {
-	position: fixed;
-	right: 1rem;
-	bottom: 1rem;
-	z-index: 90;
-	display: inline-flex;
-	align-items: center;
-	gap: 0.5rem;
-	background: var(--wp--preset--color--navy);
-	color: #fff;
-	text-decoration: none;
-	padding: 0.7rem 1rem;
-	border-radius: 999px;
-	box-shadow: 0 6px 20px rgba(0, 0, 0, .18);
-	font-size: var(--wp--preset--font-size--small);
-}
-
-.vr-whatsapp:focus-visible { outline: 3px solid var(--wp--preset--color--accent); outline-offset: 2px; }
-
-@media (max-width: 600px) {
-	.vr-whatsapp-label { position: absolute; left: -9999px; }
-	.vr-whatsapp { padding: 0.85rem; }
-}
-
-/* The button inside is fixed, so the landmark itself takes up no space. */
-.vr-support { margin: 0; }
+.vr-review-date { color: var(--wp--preset--color--muted); margin-left: .5rem; }
 
 /* --- Logos ---------------------------------------------------------------- */
 
-.vr-trust { margin: 2rem 0; }
+.vr-trust { margin: 2.5rem 0; }
 
 .vr-trust-heading {
 	font-size: var(--wp--preset--font-size--small);
-	letter-spacing: 0.08em;
+	letter-spacing: .1em;
 	text-transform: uppercase;
 	color: var(--wp--preset--color--muted);
 	margin-bottom: 1rem;
@@ -288,8 +482,73 @@
 	gap: 1.5rem 2.5rem;
 }
 
-.vr-trust-logos img {
-	display: block;
-	max-height: 2.75rem;
-	width: auto;
+.vr-trust-logos img { display: block; max-height: 2.75rem; width: auto; }
+
+/* --- Contact -------------------------------------------------------------- */
+
+.vr-contact-details { list-style: none; margin: 0 0 1.5rem; padding: 0; }
+
+.vr-contact-details li { padding: .5rem 0; border-bottom: 1px solid var(--wp--preset--color--border); }
+
+.vr-contact-details li:last-child { border-bottom: 0; }
+
+.vr-contact-form input[type="text"],
+.vr-contact-form input[type="email"],
+.vr-contact-form textarea {
+	width: 100%;
+	box-sizing: border-box;
+	padding: .8rem .95rem;
+	border: 2px solid var(--wp--preset--color--border);
+	border-radius: 10px;
+	background: #fff;
+	font-size: 1rem;
+	font-family: inherit;
+}
+
+/* The honeypot is for bots, so it must not be reachable or visible to anyone
+   using the page, including with a screen reader. */
+.vr-honeypot {
+	position: absolute;
+	left: -9999px;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+
+/* --- Footer --------------------------------------------------------------- */
+
+.vr-footer-nav { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; list-style: none; padding: 0; }
+
+.vr-footer-nav a { color: inherit; }
+
+/* --- Support channels ----------------------------------------------------- */
+
+.vr-support { margin: 0; }
+
+.vr-whatsapp {
+	position: fixed;
+	right: 1.25rem;
+	bottom: 1.25rem;
+	z-index: 90;
+	display: inline-flex;
+	align-items: center;
+	gap: .55rem;
+	background: var(--wp--preset--color--navy);
+	color: #fff;
+	text-decoration: none;
+	padding: .8rem 1.15rem;
+	border-radius: 999px;
+	box-shadow: var(--vr-shadow-md);
+	font-size: var(--wp--preset--font-size--small);
+	font-weight: 600;
+	transition: transform .18s var(--vr-ease);
+}
+
+.vr-whatsapp:hover { transform: translateY(-2px); }
+
+.vr-whatsapp:focus-visible { outline: 3px solid var(--wp--preset--color--highlight); outline-offset: 3px; }
+
+@media (max-width: 600px) {
+	.vr-whatsapp-label { position: absolute; left: -9999px; }
+	.vr-whatsapp { padding: .95rem; }
 }

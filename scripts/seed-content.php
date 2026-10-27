@@ -216,6 +216,7 @@ if ( class_exists( 'WC_Product_Simple' ) && class_exists( 'VehicleReportOrders\\
 			'name'       => $vr_name,
 			'product_id' => $vr_post_id,
 			'reports'    => (int) ( $vr_row['reports'] ?? 1 ),
+			'featured'   => ! empty( $vr_row['featured'] ),
 			'checks'     => $vr_checks,
 		);
 	}

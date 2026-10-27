@@ -1,22 +1,29 @@
-<!-- wp:group {"style":{"spacing":{"padding":{"top":"3rem","bottom":"3rem"}}},"backgroundColor":"surface","layout":{"type":"constrained","wideSize":"1160px"}} -->
-<div class="wp-block-group has-surface-background-color has-background" style="padding-top:3rem;padding-bottom:3rem">
+<!-- wp:group {"align":"full","className":"vr-hero","style":{"spacing":{"padding":{"top":"clamp(3.5rem,8vw,6.5rem)","bottom":"clamp(3.5rem,8vw,6.5rem)"}}},"layout":{"type":"constrained","wideSize":"1200px"}} -->
+<div class="wp-block-group alignfull vr-hero" style="padding-top:clamp(3.5rem,8vw,6.5rem);padding-bottom:clamp(3.5rem,8vw,6.5rem)">
 <!-- wp:columns {"align":"wide","verticalAlignment":"center"} -->
 <div class="wp-block-columns alignwide are-vertically-aligned-center">
-<!-- wp:column {"width":"55%"} -->
-<div class="wp-block-column" style="flex-basis:55%">
-<!-- wp:heading {"level":1,"fontSize":"xx-large"} -->
-<h1 class="wp-block-heading has-xx-large-font-size">A UK vehicle history report, checked by a person</h1>
+<!-- wp:column {"width":"52%","verticalAlignment":"center"} -->
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:52%">
+<!-- wp:html -->
+<p class="vr-eyebrow">Researched by a person</p>
+<!-- /wp:html -->
+<!-- wp:heading {"level":1,"fontSize":"display"} -->
+<h1 class="wp-block-heading has-display-font-size">A UK vehicle history report, checked by a person</h1>
 <!-- /wp:heading -->
-<!-- wp:paragraph {"fontSize":"large","textColor":"muted"} -->
-<p class="has-muted-color has-text-color has-large-font-size">Enter a registration or a VIN and we prepare a written report from named sources, then email it to you. No instant lookup, no invented results.</p>
+<!-- wp:paragraph {"fontSize":"large"} -->
+<p class="has-large-font-size">Enter a registration or a VIN and we prepare a written report from named sources, then email it to you. No instant lookup, no invented results.</p>
 <!-- /wp:paragraph -->
-<!-- wp:paragraph -->
-<p><strong>From:</strong> [vehicle_report_price] · <strong>Delivered:</strong> [vehicle_report_sla]</p>
-<!-- /wp:paragraph -->
+<!-- wp:html -->
+<ul class="vr-hero-meta">
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l7 3v5c0 4.3-2.9 8.2-7 9.4C7.9 19.2 5 15.3 5 11V6z"/><path d="M9 11.5l2 2 4-4"/></svg><span>Every source answered, in writing</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 1.8"/></svg><span>From [vehicle_report_price], [vehicle_report_sla]</span></li>
+<li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4.5" y="10.5" width="15" height="9.5" rx="2"/><path d="M8 10.5V7.5a4 4 0 0 1 8 0v3"/></svg><span>Private link, yours alone, it expires</span></li>
+</ul>
+<!-- /wp:html -->
 </div>
 <!-- /wp:column -->
-<!-- wp:column {"width":"45%"} -->
-<div class="wp-block-column" style="flex-basis:45%">
+<!-- wp:column {"width":"48%","verticalAlignment":"center"} -->
+<div class="wp-block-column is-vertically-aligned-center" style="flex-basis:48%">
 <!-- wp:shortcode -->
 [vehicle_report_order_form heading="Order a vehicle report"]
 <!-- /wp:shortcode -->

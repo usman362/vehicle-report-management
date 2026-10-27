@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" role="presentation" aria-hidden="true">
+  <defs>
+    <linearGradient id="sweep" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1b6fb3" stop-opacity=".55"/>
+      <stop offset="1" stop-color="#071321" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="amber" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e3b23c" stop-opacity=".40"/>
+      <stop offset="1" stop-color="#e3b23c" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="glow" cx=".5" cy=".5" r=".5">
+      <stop offset="0" stop-color="#2e86d2" stop-opacity=".45"/>
+      <stop offset="1" stop-color="#2e86d2" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="34" height="34" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.4" fill="#ffffff" fill-opacity=".10"/>
+    </pattern>
+  </defs>
+
+  <rect width="1600" height="900" fill="#071321"/>
+  <rect width="1600" height="900" fill="url(#dots)"/>
+  <circle cx="1240" cy="250" r="520" fill="url(#glow)"/>
+
+  <!-- Long sweeps: the suggestion of a road seen from above, nothing literal. -->
+  <path d="M-120 760 C 320 600, 700 640, 1080 430 C 1320 296, 1460 190, 1760 120 L 1760 900 L -120 900 Z" fill="url(#sweep)"/>
+  <path d="M-120 860 C 380 720, 760 760, 1140 560 C 1380 432, 1520 330, 1760 280" fill="none" stroke="#ffffff" stroke-opacity=".10" stroke-width="2"/>
+  <path d="M-120 820 C 360 672, 740 712, 1120 500 C 1360 368, 1500 262, 1760 200" fill="none" stroke="#e3b23c" stroke-opacity=".22" stroke-width="2"/>
+
+  <!-- Concentric arcs, the way a search widens outward from one registration. -->
+  <g fill="none" stroke="#ffffff" stroke-opacity=".08">
+    <circle cx="1320" cy="300" r="180" stroke-width="1.5"/>
+    <circle cx="1320" cy="300" r="290" stroke-width="1.5"/>
+    <circle cx="1320" cy="300" r="410" stroke-width="1.5"/>
+  </g>
+
+  <path d="M980 0 L1340 0 L1080 900 L720 900 Z" fill="url(#amber)" opacity=".5"/>
+</svg>

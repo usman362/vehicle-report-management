@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T22:27:40+00:00\n"
+"POT-Creation-Date: 2026-10-27T22:42:14+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vehicle-report-orders\n"
@@ -334,7 +334,7 @@ msgstr ""
 msgid "Silver"
 msgstr ""
 
-#: src/Domain/PackageRepository.php:51
+#: src/Domain/PackageRepository.php:52
 msgid "Classic"
 msgstr ""
 
@@ -797,7 +797,7 @@ msgid "Website enquiry"
 msgstr ""
 
 #: src/Storefront/Disclosures.php:50
-#: templates/storefront/packages.php:35
+#: templates/storefront/packages.php:38
 msgid "price to be confirmed"
 msgstr ""
 
@@ -1551,7 +1551,7 @@ msgstr ""
 msgid "Questions about this order? Reply to this email or write to %s."
 msgstr ""
 
-#: templates/storefront/checks.php:30
+#: templates/storefront/checks.php:35
 msgid "What it does not tell you:"
 msgstr ""
 
@@ -1659,33 +1659,37 @@ msgstr ""
 msgid "Ordering is switched off until the price, delivery window and report sources are confirmed."
 msgstr ""
 
+#: templates/storefront/packages.php:30
+msgid "Our recommendation"
+msgstr ""
+
 #. translators: %d: number of vehicles covered.
-#: templates/storefront/packages.php:44
+#: templates/storefront/packages.php:47
 #, php-format
 msgid "Covers %d vehicle."
 msgid_plural "Covers %d vehicles."
 msgstr[0] ""
 msgstr[1] ""
 
-#: templates/storefront/packages.php:57
+#: templates/storefront/packages.php:60
 msgid "Included:"
 msgstr ""
 
-#: templates/storefront/packages.php:57
+#: templates/storefront/packages.php:60
 msgid "Not included:"
 msgstr ""
 
 #. translators: %s: package name.
-#: templates/storefront/packages.php:70
+#: templates/storefront/packages.php:73
 #, php-format
 msgid "See the %s package"
 msgstr ""
 
-#: templates/storefront/packages.php:76
+#: templates/storefront/packages.php:79
 msgid "this package has not been set up yet"
 msgstr ""
 
-#: templates/storefront/packages.php:84
+#: templates/storefront/packages.php:87
 msgid "A package says which checks we will run. It does not promise that every check returns a record for your vehicle: where one cannot be completed, your report says so and explains why."
 msgstr ""
 

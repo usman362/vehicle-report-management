@@ -44,6 +44,7 @@ final class PackageRepository {
 				'name'       => __( 'Silver', 'vehicle-report-orders' ),
 				'product_id' => 0,
 				'reports'    => 1,
+				'featured'   => true,
 				'checks'     => array( 'vehicle_details', 'tax_mot_status', 'keepers', 'plate_changes', 'valuation', 'write_off', 'stolen', 'finance' ),
 			),
 			array(
@@ -77,7 +78,8 @@ final class PackageRepository {
 				(string) ( $row['name'] ?? $row['slug'] ),
 				(int) ( $row['product_id'] ?? 0 ),
 				is_array( $row['checks'] ?? null ) ? $row['checks'] : array(),
-				(int) ( $row['reports'] ?? 1 )
+				(int) ( $row['reports'] ?? 1 ),
+				! empty( $row['featured'] )
 			);
 		}
 

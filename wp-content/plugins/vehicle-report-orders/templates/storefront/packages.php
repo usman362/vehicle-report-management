@@ -14,7 +14,7 @@ use VehicleReportOrders\Domain\VehicleCheck;
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<section class="vr-packages">
+<section class="vr-packages alignwide">
 	<?php if ( '' !== $heading ) : ?>
 		<h2><?php echo esc_html( $heading ); ?></h2>
 	<?php endif; ?>
@@ -25,7 +25,10 @@ defined( 'ABSPATH' ) || exit;
 			$vr_price = $vr_package->formatted_price();
 			$vr_url   = $vr_package->url();
 			?>
-			<div class="vr-card vr-package-card">
+			<div class="vr-card vr-package-card<?php echo $vr_package->is_featured() ? ' vr-package-featured' : ''; ?>">
+				<?php if ( $vr_package->is_featured() ) : ?>
+					<p class="vr-package-flag"><?php esc_html_e( 'Our recommendation', 'vehicle-report-orders' ); ?></p>
+				<?php endif; ?>
 				<h3><?php echo esc_html( $vr_package->name() ); ?></h3>
 
 				<p class="vr-package-price">

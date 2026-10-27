@@ -31,13 +31,15 @@ final class Package {
 	 * @param int               $product_id WooCommerce product that carries the price.
 	 * @param array<int,string> $checks     Check slugs promised by this tier.
 	 * @param int               $reports    How many vehicles the tier covers.
+	 * @param bool              $featured   Whether this tier is the one put forward.
 	 */
 	public function __construct(
 		private string $slug,
 		private string $name,
 		private int $product_id,
 		private array $checks,
-		private int $reports = 1
+		private int $reports = 1,
+		private bool $featured = false
 	) {
 		$this->checks = VehicleCheck::filter( $checks );
 	}
@@ -85,6 +87,19 @@ final class Package {
 	 */
 	public function reports(): int {
 		return max( 1, $this->reports );
+	}
+
+	/**
+	 * Whether this is the tier the merchant puts forward.
+	 *
+	 * Only a presentation choice: a featured tier is drawn with more weight,
+	 * never described as more popular than the others, because this site has
+	 * no sales figures to support such a claim.
+	 *
+	 * @return bool
+	 */
+	public function is_featured(): bool {
+		return $this->featured;
 	}
 
 	/**

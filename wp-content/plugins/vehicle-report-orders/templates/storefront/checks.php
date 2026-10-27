@@ -14,7 +14,7 @@ use VehicleReportOrders\Domain\VehicleCheck;
 
 defined( 'ABSPATH' ) || exit;
 ?>
-<section class="vr-checks">
+<section class="vr-checks alignwide">
 	<?php if ( '' !== $heading ) : ?>
 		<h2><?php echo esc_html( $heading ); ?></h2>
 	<?php endif; ?>
@@ -24,6 +24,11 @@ defined( 'ABSPATH' ) || exit;
 			<?php $vr_check = VehicleCheck::get( $vr_key ); ?>
 			<?php if ( null !== $vr_check ) : ?>
 				<div class="vr-card vr-check-card">
+					<span class="vr-check-icon">
+						<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+							<?php echo wp_kses( VehicleCheck::icon( $vr_key ), VehicleCheck::icon_markup_allowed() ); ?>
+						</svg>
+					</span>
 					<h3><?php echo esc_html( $vr_check['label'] ); ?></h3>
 					<p><?php echo esc_html( $vr_check['blurb'] ); ?></p>
 					<p class="vr-check-limit">

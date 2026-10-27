@@ -24,7 +24,7 @@ $vr_window = $vr_median >= 120
 		$vr_median
 	);
 ?>
-<section class="vr-stats">
+<section class="vr-stats alignwide">
 	<dl class="vr-stat-grid">
 		<div class="vr-stat">
 			<dt><?php esc_html_e( 'Reports delivered', 'vehicle-report-orders' ); ?></dt>
