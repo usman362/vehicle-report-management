@@ -1,5 +1,12 @@
 /* Components on top of theme.json, which owns the palette, type scale and spacing. */
 
+/* Padding is part of the width. Without this an `alignwide` section that also
+   has padding of its own ends up wider than the container it is aligned to —
+   which is how three sections on the front page came out 1200, 1296 and 1160. */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
 :root {
 	--vr-shadow-sm: 0 1px 2px rgba(11, 26, 43, .06), 0 2px 8px rgba(11, 26, 43, .05);
 	--vr-shadow-md: 0 2px 6px rgba(11, 26, 43, .07), 0 14px 32px rgba(11, 26, 43, .09);
@@ -1241,3 +1248,22 @@ body.wp-site-blocks,
 	padding: .9rem 2.2rem !important;
 	font-size: 1.05rem;
 }
+
+/* --- Cart and checkout line items ----------------------------------------- */
+
+/* These blocks read the image through the Store API, so the PHP filters that
+   drop it elsewhere never reach them and WooCommerce's grey placeholder comes
+   back. A report has no photograph; the name and price carry the row. */
+.wc-block-cart-item__image,
+.wc-block-components-order-summary-item__image {
+	display: none !important;
+}
+
+/* The row is a table row, so the freed-up column has to be reclaimed by the
+   cells rather than by a grid template — otherwise the product name collapses
+   into an 84px column while the total takes 608. */
+.wc-block-cart-items__row .wc-block-cart-item__product { width: 100%; }
+
+.wc-block-cart-items__row .wc-block-cart-item__total { width: 1%; white-space: nowrap; }
+
+.wc-block-components-order-summary-item { padding-left: 0; }
