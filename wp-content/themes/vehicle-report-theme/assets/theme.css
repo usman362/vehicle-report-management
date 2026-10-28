@@ -219,15 +219,9 @@
 	font-style: normal;
 }
 
-/* A placeholder standing alone is a notice, not a word in a sentence. */
-.vr-page-body .entry-content > p > .vr-pending:only-child {
-	display: block;
-	border: 1px dashed #c9a227;
-	border-radius: 12px;
-	padding: 1rem 1.25rem;
-	color: #7a5c0a;
-	font-weight: 600;
-}
+/* No block treatment for a lone placeholder: `:only-child` counts elements
+   and ignores text, so a placeholder sitting mid-sentence matched it too and
+   broke the sentence in half, leaving its full stop on a line of its own. */
 
 .vr-draft-notice { border-left-color: var(--wp--preset--color--danger); }
 

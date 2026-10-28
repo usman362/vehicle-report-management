@@ -394,13 +394,19 @@ $vr_ready   = array() === $missing;
 	<form method="post">
 		<?php wp_nonce_field( 'vr_seed_content', 'vr_seed_nonce' ); ?>
 		<?php
-		// Named anything but "submit": that name shadows the form's own submit().
+		/*
+		 * `submit_button()` prints every attribute it is given, so passing
+		 * `disabled => false` still prints `disabled=""` and disables the
+		 * button. The attribute has to be left out entirely instead.
+		 *
+		 * Named anything but "submit": that name shadows the form's own submit().
+		 */
 		submit_button(
 			__( 'Rebuild storefront content', 'vehicle-report-orders' ),
 			'secondary',
 			'vr_seed_submit',
 			true,
-			array( 'disabled' => ! $seeder->has_content() )
+			$seeder->has_content() ? array() : array( 'disabled' => 'disabled' )
 		);
 		?>
 	</form>
