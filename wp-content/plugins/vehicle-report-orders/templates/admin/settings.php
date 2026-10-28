@@ -7,7 +7,9 @@
  * @var \VehicleReportOrders\Admin\SettingsPage $this     Settings page controller.
  * @var array<string, mixed>                    $settings Current settings.
  * @var array<string, string>                   $missing  Outstanding items before live mode.
- * @var bool                                    $saved    Whether a save just happened.
+ * @var bool                                    $saved      Whether a save just happened.
+ * @var array<int, string>                      $seed_lines Output of a content rebuild, if one just ran.
+ * @var \VehicleReportOrders\Content\Seeder      $seeder     Used to report where the page copy lives.
  */
 
 declare( strict_types=1 );
@@ -353,5 +355,53 @@ $vr_ready   = array() === $missing;
 		</table>
 
 		<?php submit_button( __( 'Save settings', 'vehicle-report-orders' ) ); ?>
+	</form>
+
+	<hr>
+
+	<h2 class="title"><?php esc_html_e( 'Storefront content', 'vehicle-report-orders' ); ?></h2>
+	<p class="description">
+		<?php esc_html_e( 'Creates or refreshes the pages, the packages and the navigation from the copy shipped with the plugin. It only touches what it owns, and it never sets a price. Use it after installing, or after an update changes the wording.', 'vehicle-report-orders' ); ?>
+	</p>
+
+	<?php if ( ! $seeder->has_content() ) : ?>
+		<div class="notice notice-warning inline">
+			<p>
+				<?php
+				printf(
+					/* translators: %s: directory the page copy was expected in. */
+					esc_html__( 'No page copy found. It should be in %s.', 'vehicle-report-orders' ),
+					'<code>' . esc_html( $seeder->content_dir() . '/pages' ) . '</code>'
+				);
+				?>
+			</p>
+		</div>
+	<?php endif; ?>
+
+	<?php if ( array() !== $seed_lines ) : ?>
+		<div class="notice notice-success inline">
+			<p><strong><?php esc_html_e( 'Storefront rebuilt.', 'vehicle-report-orders' ); ?></strong></p>
+		</div>
+		<pre class="vr-seed-log" style="background:#f6f7f7;border:1px solid #dcdcde;padding:1rem;max-height:20rem;overflow:auto;">
+		<?php
+		foreach ( $seed_lines as $vr_line ) {
+			echo esc_html( $vr_line ) . "\n";
+		}
+		?>
+		</pre>
+	<?php endif; ?>
+
+	<form method="post">
+		<?php wp_nonce_field( 'vr_seed_content', 'vr_seed_nonce' ); ?>
+		<?php
+		// Named anything but "submit": that name shadows the form's own submit().
+		submit_button(
+			__( 'Rebuild storefront content', 'vehicle-report-orders' ),
+			'secondary',
+			'vr_seed_submit',
+			true,
+			array( 'disabled' => ! $seeder->has_content() )
+		);
+		?>
 	</form>
 </div>

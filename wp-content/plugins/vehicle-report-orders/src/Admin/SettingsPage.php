@@ -10,6 +10,7 @@ declare( strict_types=1 );
 namespace VehicleReportOrders\Admin;
 
 use VehicleReportOrders\Audit\AuditLogger;
+use VehicleReportOrders\Content\Seeder;
 use VehicleReportOrders\Domain\Settings;
 use VehicleReportOrders\Domain\VehicleType;
 use VehicleReportOrders\Reports\PrivateStorage;
@@ -25,7 +26,8 @@ defined( 'ABSPATH' ) || exit;
  */
 final class SettingsPage {
 
-	private const NONCE = 'vr_save_settings';
+	private const NONCE      = 'vr_save_settings';
+	private const SEED_NONCE = 'vr_seed_content';
 
 	/**
 	 * Handle a submission, then render.
@@ -37,7 +39,8 @@ final class SettingsPage {
 			wp_die( esc_html__( 'You do not have permission to manage report settings.', 'vehicle-report-orders' ), 403 );
 		}
 
-		$saved = false;
+		$saved      = false;
+		$seed_lines = array();
 
 		if ( isset( $_POST['vr_settings_nonce'] ) ) {
 			check_admin_referer( self::NONCE, 'vr_settings_nonce' );
@@ -45,10 +48,44 @@ final class SettingsPage {
 			$saved = true;
 		}
 
+		if ( isset( $_POST['vr_seed_nonce'] ) ) {
+			check_admin_referer( self::SEED_NONCE, 'vr_seed_nonce' );
+			$seed_lines = $this->seed();
+		}
+
 		$settings = Settings::all();
 		$missing  = Settings::missing_for_live();
+		$seeder   = new Seeder();
 
 		include __DIR__ . '/../../templates/admin/settings.php';
+	}
+
+	/**
+	 * Rebuild the storefront from the copy shipped with the plugin.
+	 *
+	 * The same work the WP-CLI script does, for the many hosts that have no
+	 * shell. It writes only the pages, packages and settings it owns.
+	 *
+	 * @return array<int, string> What was done, line by line.
+	 */
+	private function seed(): array {
+		$seeder = new Seeder();
+
+		if ( ! $seeder->has_content() ) {
+			return array(
+				'! ' . sprintf(
+									/* translators: %s: directory the page copy was expected in. */
+					__( 'No page copy found. Expected it in %s.', 'vehicle-report-orders' ),
+					$seeder->content_dir() . '/pages'
+				),
+			);
+		}
+
+		$lines = $seeder->run();
+
+		AuditLogger::log( 0, 'settings.content_seeded', array( 'lines' => count( $lines ) ) );
+
+		return $lines;
 	}
 
 	/**

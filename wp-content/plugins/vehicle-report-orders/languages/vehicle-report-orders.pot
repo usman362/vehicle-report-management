@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2026-10-27T23:21:22+00:00\n"
+"POT-Creation-Date: 2026-10-28T14:09:05+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.12.0\n"
 "X-Domain: vehicle-report-orders\n"
@@ -139,7 +139,7 @@ msgid "Fulfilment queue"
 msgstr ""
 
 #: src/Admin/Menu.php:106
-#: templates/admin/settings.php:21
+#: templates/admin/settings.php:23
 msgid "Report settings"
 msgstr ""
 
@@ -163,19 +163,25 @@ msgstr ""
 msgid "You do not have permission to see report fulfilment."
 msgstr ""
 
-#: src/Admin/SettingsPage.php:37
+#: src/Admin/SettingsPage.php:39
 msgid "You do not have permission to manage report settings."
+msgstr ""
+
+#. translators: %s: directory the page copy was expected in.
+#: src/Admin/SettingsPage.php:78
+#, php-format
+msgid "No page copy found. Expected it in %s."
 msgstr ""
 
 #. translators: 1: product name, 2: formatted price or a note that none is set.
 #. translators: 1: package name, 2: price.
-#: src/Admin/SettingsPage.php:230
+#: src/Admin/SettingsPage.php:267
 #: templates/storefront/order-form.php:132
 #, php-format
 msgid "%1$s — %2$s"
 msgstr ""
 
-#: src/Admin/SettingsPage.php:232
+#: src/Admin/SettingsPage.php:269
 msgid "no price set"
 msgstr ""
 
@@ -1222,303 +1228,325 @@ msgstr ""
 msgid "Unassigned"
 msgstr ""
 
-#: templates/admin/settings.php:24
+#: templates/admin/settings.php:26
 msgid "Settings saved."
 msgstr ""
 
-#: templates/admin/settings.php:30
+#: templates/admin/settings.php:32
 msgid "Everything a paid order needs is configured."
 msgstr ""
 
-#: templates/admin/settings.php:31
+#: templates/admin/settings.php:33
 msgid "Payments still run in whatever mode the gateway itself is set to; check that separately before launch."
 msgstr ""
 
-#: templates/admin/settings.php:36
+#: templates/admin/settings.php:38
 msgid "This site is not ready to take a real payment."
 msgstr ""
 
-#: templates/admin/settings.php:37
+#: templates/admin/settings.php:39
 msgid "The merchant must supply the following before the storefront may promise anything:"
 msgstr ""
 
-#: templates/admin/settings.php:49
+#: templates/admin/settings.php:51
 msgid "Delivery promise"
 msgstr ""
 
-#: templates/admin/settings.php:51
+#: templates/admin/settings.php:53
 msgid "Shown to the customer before payment and used to flag overdue orders. Promise only what the team can actually meet."
 msgstr ""
 
-#: templates/admin/settings.php:55
+#: templates/admin/settings.php:57
 msgid "Delivery window (business hours)"
 msgstr ""
 
-#: templates/admin/settings.php:58
+#: templates/admin/settings.php:60
 msgid "Zero means no window has been agreed yet; the storefront will not state a delivery time."
 msgstr ""
 
-#: templates/admin/settings.php:62
-#: templates/admin/settings.php:65
+#: templates/admin/settings.php:64
+#: templates/admin/settings.php:67
 msgid "Working days"
 msgstr ""
 
-#: templates/admin/settings.php:73
+#: templates/admin/settings.php:75
 msgid "The delivery window is counted only during these days and hours, so a Friday evening order is not promised for Saturday."
 msgstr ""
 
-#: templates/admin/settings.php:77
+#: templates/admin/settings.php:79
 msgid "Opening hours"
 msgstr ""
 
-#: templates/admin/settings.php:87
+#: templates/admin/settings.php:89
 msgid "No working days selected yet."
 msgstr ""
 
 #. translators: %s: human description of the opening hours.
-#: templates/admin/settings.php:90
+#: templates/admin/settings.php:92
 #, php-format
 msgid "Customers will be told: %s"
 msgstr ""
 
-#: templates/admin/settings.php:100
+#: templates/admin/settings.php:102
 msgid "Trader and support"
 msgstr ""
 
-#: templates/admin/settings.php:103
+#: templates/admin/settings.php:105
 msgid "Registered trading name"
 msgstr ""
 
-#: templates/admin/settings.php:107
+#: templates/admin/settings.php:109
 msgid "Support email address"
 msgstr ""
 
-#: templates/admin/settings.php:111
+#: templates/admin/settings.php:113
 msgid "Terms version"
 msgstr ""
 
-#: templates/admin/settings.php:113
+#: templates/admin/settings.php:115
 msgid "2026-10-27"
 msgstr ""
 
-#: templates/admin/settings.php:114
+#: templates/admin/settings.php:116
 msgid "Recorded against every order, so a later change to the terms never rewrites what a past customer agreed to."
 msgstr ""
 
-#: templates/admin/settings.php:119
+#: templates/admin/settings.php:121
 msgid "Report product and sources"
 msgstr ""
 
-#: templates/admin/settings.php:122
+#: templates/admin/settings.php:124
 msgid "Report product"
 msgstr ""
 
-#: templates/admin/settings.php:125
+#: templates/admin/settings.php:127
 msgid "— not selected —"
 msgstr ""
 
-#: templates/admin/settings.php:132
+#: templates/admin/settings.php:134
 msgid "The price lives on the WooCommerce product, so tax settings and receipts stay consistent."
 msgstr ""
 
-#: templates/admin/settings.php:136
+#: templates/admin/settings.php:138
 msgid "Approved data sources"
 msgstr ""
 
-#: templates/admin/settings.php:139
+#: templates/admin/settings.php:141
 msgid "One source per line, exactly as staff are licensed to use and cite. These are published on the data-sources page and attached to each report."
 msgstr ""
 
-#: templates/admin/settings.php:143
+#: templates/admin/settings.php:145
 msgid "Example report"
 msgstr ""
 
-#: templates/admin/settings.php:146
+#: templates/admin/settings.php:148
 msgid "Link to a real report you have permission to publish, with the vehicle and customer details removed. Until one is supplied the sample page says so instead of showing an invented report."
 msgstr ""
 
-#: templates/admin/settings.php:151
+#: templates/admin/settings.php:153
 msgid "Legal pages"
 msgstr ""
 
-#: templates/admin/settings.php:154
+#: templates/admin/settings.php:156
 msgid "Copy reviewed"
 msgstr ""
 
-#: templates/admin/settings.php:158
+#: templates/admin/settings.php:160
 msgid "The terms, privacy, cookie and refund pages have been reviewed and are the operator's own wording."
 msgstr ""
 
-#: templates/admin/settings.php:160
+#: templates/admin/settings.php:162
 msgid "The pages shipped with this site are drafting aids. While this box is clear every legal page carries a visible draft notice and the store cannot go live."
 msgstr ""
 
-#: templates/admin/settings.php:165
+#: templates/admin/settings.php:167
 msgid "Delivery mechanics"
 msgstr ""
 
-#: templates/admin/settings.php:168
+#: templates/admin/settings.php:170
 msgid "Download link lifetime (hours)"
 msgstr ""
 
-#: templates/admin/settings.php:172
+#: templates/admin/settings.php:174
 msgid "Maximum delivery attempts"
 msgstr ""
 
-#: templates/admin/settings.php:176
+#: templates/admin/settings.php:178
 msgid "Report file storage"
 msgstr ""
 
-#: templates/admin/settings.php:181
+#: templates/admin/settings.php:183
 msgid "Outside the web root: the server cannot serve these files directly."
 msgstr ""
 
-#: templates/admin/settings.php:183
+#: templates/admin/settings.php:185
 msgid "Inside the web root. Protection depends on the web server honouring .htaccess, which nginx does not. Set VR_PRIVATE_STORAGE_DIR to a path outside the document root."
 msgstr ""
 
-#: templates/admin/settings.php:190
+#: templates/admin/settings.php:192
 msgid "How customers reach you"
 msgstr ""
 
-#: templates/admin/settings.php:192
+#: templates/admin/settings.php:194
 msgid "A UK trader selling online has to publish a geographic address and a way to be contacted quickly. Anything left blank is shown on the storefront as outstanding, never filled in with a plausible-looking value."
 msgstr ""
 
-#: templates/admin/settings.php:196
+#: templates/admin/settings.php:198
 msgid "Phone number"
 msgstr ""
 
-#: templates/admin/settings.php:200
+#: templates/admin/settings.php:202
 msgid "Postal address"
 msgstr ""
 
-#: templates/admin/settings.php:203
+#: templates/admin/settings.php:205
 msgid "One line per line. Shown on the contact page and in the business details search engines read."
 msgstr ""
 
-#: templates/admin/settings.php:207
+#: templates/admin/settings.php:209
 #: templates/storefront/contact-details.php:47
 msgid "Company number"
 msgstr ""
 
-#: templates/admin/settings.php:211
+#: templates/admin/settings.php:213
 #: templates/storefront/contact-details.php:51
 msgid "VAT number"
 msgstr ""
 
-#: templates/admin/settings.php:215
+#: templates/admin/settings.php:217
 msgid "WhatsApp number"
 msgstr ""
 
-#: templates/admin/settings.php:218
+#: templates/admin/settings.php:220
 msgid "International format, digits only. The floating WhatsApp button appears only once this is set, so leave it empty unless someone answers it."
 msgstr ""
 
-#: templates/admin/settings.php:222
+#: templates/admin/settings.php:224
 msgid "Live chat embed"
 msgstr ""
 
-#: templates/admin/settings.php:225
+#: templates/admin/settings.php:227
 msgid "The HTTPS script address from your own chat provider. It is a third party loading its own script and setting its own cookies on your visitors, so name it on the cookie page before switching it on."
 msgstr ""
 
-#: templates/admin/settings.php:230
+#: templates/admin/settings.php:232
 msgid "What the order form asks for"
 msgstr ""
 
-#: templates/admin/settings.php:233
+#: templates/admin/settings.php:235
 msgid "Vehicle types accepted"
 msgstr ""
 
-#: templates/admin/settings.php:248
+#: templates/admin/settings.php:250
 msgid "Tick only what you can actually research. Untick everything to stop asking the question at all."
 msgstr ""
 
-#: templates/admin/settings.php:253
+#: templates/admin/settings.php:255
 msgid "Accept a VIN"
 msgstr ""
 
-#: templates/admin/settings.php:257
+#: templates/admin/settings.php:259
 msgid "Let a customer give a VIN where the vehicle has no current UK registration."
 msgstr ""
 
-#: templates/admin/settings.php:263
+#: templates/admin/settings.php:265
 msgid "Search and sharing"
 msgstr ""
 
-#: templates/admin/settings.php:266
+#: templates/admin/settings.php:268
 msgid "Fallback description"
 msgstr ""
 
-#: templates/admin/settings.php:269
+#: templates/admin/settings.php:271
 msgid "Used only where a page has nothing of its own to describe it. Each page otherwise describes itself in its own words."
 msgstr ""
 
-#: templates/admin/settings.php:273
+#: templates/admin/settings.php:275
 msgid "Sharing image"
 msgstr ""
 
-#: templates/admin/settings.php:276
+#: templates/admin/settings.php:278
 msgid "Media library id of the image shown when a link to this site is shared. Leave at 0 to use the site icon."
 msgstr ""
 
-#: templates/admin/settings.php:281
+#: templates/admin/settings.php:283
 msgid "Logos"
 msgstr ""
 
-#: templates/admin/settings.php:283
+#: templates/admin/settings.php:285
 msgid "Only logos you are actually entitled to display: a licence you hold, a trade body you belong to, a payment provider you use. A publication's logo is not a licence to imply they endorsed you, and nothing here is supplied for you."
 msgstr ""
 
-#: templates/admin/settings.php:287
+#: templates/admin/settings.php:289
 msgid "Media library ids"
 msgstr ""
 
-#: templates/admin/settings.php:297
+#: templates/admin/settings.php:299
 msgid "Comma-separated. Upload each logo to the media library, set its alt text there, and paste the ids here. An id that is not an image, or one deleted later, is simply left out."
 msgstr ""
 
-#: templates/admin/settings.php:302
+#: templates/admin/settings.php:304
 msgid "Customer reviews"
 msgstr ""
 
-#: templates/admin/settings.php:304
+#: templates/admin/settings.php:306
 msgid "Only reviews real customers actually gave you, in their words, with the name they agreed to be published under. Leave every quote empty and no reviews section appears anywhere, which is the honest state before anyone has bought a report."
 msgstr ""
 
 #. translators: %d: review number.
-#: templates/admin/settings.php:322
+#: templates/admin/settings.php:324
 #, php-format
 msgid "Review %d"
 msgstr ""
 
-#: templates/admin/settings.php:331
+#: templates/admin/settings.php:333
 msgid "Name"
 msgstr ""
 
-#: templates/admin/settings.php:332
+#: templates/admin/settings.php:334
 msgid "Date of experience"
 msgstr ""
 
-#: templates/admin/settings.php:339
+#: templates/admin/settings.php:341
 msgid "Go-live confirmation"
 msgstr ""
 
-#: templates/admin/settings.php:342
+#: templates/admin/settings.php:344
 msgid "Ready for real customers"
 msgstr ""
 
-#: templates/admin/settings.php:346
+#: templates/admin/settings.php:348
 msgid "Price, delivery window, data sources and policies are approved and deliverable."
 msgstr ""
 
-#: templates/admin/settings.php:349
+#: templates/admin/settings.php:351
 msgid "Cannot be confirmed while anything above is outstanding."
 msgstr ""
 
-#: templates/admin/settings.php:355
+#: templates/admin/settings.php:357
 msgid "Save settings"
+msgstr ""
+
+#: templates/admin/settings.php:362
+msgid "Storefront content"
+msgstr ""
+
+#: templates/admin/settings.php:364
+msgid "Creates or refreshes the pages, the packages and the navigation from the copy shipped with the plugin. It only touches what it owns, and it never sets a price. Use it after installing, or after an update changes the wording."
+msgstr ""
+
+#. translators: %s: directory the page copy was expected in.
+#: templates/admin/settings.php:373
+#, php-format
+msgid "No page copy found. It should be in %s."
+msgstr ""
+
+#: templates/admin/settings.php:383
+msgid "Storefront rebuilt."
+msgstr ""
+
+#: templates/admin/settings.php:399
+msgid "Rebuild storefront content"
 msgstr ""
 
 #: templates/emails/delivery-failed.php:17

@@ -1,0 +1,420 @@
+<?php
+/**
+ * Builds the storefront from the copy held in version control.
+ *
+ * @package VehicleReportOrders
+ */
+
+declare( strict_types=1 );
+
+namespace VehicleReportOrders\Content;
+
+use WP_Post;
+use WC_Product_Simple;
+
+defined( 'ABSPATH' ) || exit;
+
+/**
+ * Creates or refreshes the pages, packages and settings a fresh install needs.
+ *
+ * The page copy lives in files rather than only in the database, so a fresh
+ * install comes up as the same site and a change to the wording is reviewable
+ * in a diff. Running it again overwrites what it owns and nothing else.
+ *
+ * It is driven from two places — WP-CLI for a host with shell access, and a
+ * button on the settings screen for the many that have none — so both do
+ * exactly the same thing.
+ */
+final class Seeder {
+
+	/**
+	 * Lines describing what was done, for whichever caller asked.
+	 *
+	 * @var array<int, string>
+	 */
+	private array $lines = array();
+
+	/**
+	 * Where the page copy and brand assets live.
+	 *
+	 * Shipped inside the plugin when it is deployed, so the plugin is
+	 * self-contained; in the development checkout it sits beside it.
+	 *
+	 * @return string
+	 */
+	public function content_dir(): string {
+		$candidates = array(
+			defined( 'VR_CONTENT_DIR' ) ? (string) VR_CONTENT_DIR : '',
+			dirname( __DIR__, 2 ) . '/content',
+			dirname( ABSPATH ) . '/content',
+			ABSPATH . 'content',
+		);
+
+		foreach ( $candidates as $dir ) {
+			if ( '' !== $dir && is_dir( $dir . '/pages' ) ) {
+				return untrailingslashit( $dir );
+			}
+		}
+
+		return dirname( __DIR__, 2 ) . '/content';
+	}
+
+	/**
+	 * Whether the copy this seeder needs is actually present.
+	 *
+	 * @return bool
+	 */
+	public function has_content(): bool {
+		return is_dir( $this->content_dir() . '/pages' );
+	}
+
+	/**
+	 * Record a line of progress.
+	 *
+	 * @param string $line What happened.
+	 *
+	 * @return void
+	 */
+	private function log( string $line ): void {
+		$this->lines[] = $line;
+	}
+
+	/**
+	 * Record something that did not go to plan but does not stop the run.
+	 *
+	 * @param string $line What went wrong.
+	 *
+	 * @return void
+	 */
+	private function warn( string $line ): void {
+		$this->lines[] = '! ' . $line;
+	}
+
+	/**
+	 * Build the storefront.
+	 *
+	 * @return array<int, string> What was done, line by line.
+	 */
+	public function run(): array {
+		$this->lines = array();
+
+		/**
+		 * The pages this seeder owns, in menu order.
+		 *
+		 * Front becomes the static front page, header appears in the theme's
+		 * main navigation, and footer appears in the footer navigation.
+		 */
+		$vr_pages = array(
+			'home'                => array( 'Home', array( 'front' => true ) ),
+			'order-report'        => array( 'Order a report', array( 'header' => true ) ),
+			'pricing'             => array( 'Pricing', array( 'header' => true ) ),
+			'how-it-works'        => array( 'How it works', array( 'header' => true ) ),
+			'sample-report'       => array( 'What a report looks like', array( 'header' => true ) ),
+			'report-data-sources' => array( 'Report data sources', array( 'header' => true ) ),
+			'faq'                 => array( 'Frequently asked questions', array( 'footer' => true ) ),
+			'about'               => array( 'About us', array( 'footer' => true ) ),
+			'contact'             => array(
+				'Contact',
+				array(
+					'header' => true,
+					'footer' => true,
+				),
+			),
+			'terms'               => array(
+				'Terms and conditions',
+				array(
+					'footer'   => true,
+					'wc_terms' => true,
+				),
+			),
+			'privacy-policy'      => array(
+				'Privacy policy',
+				array(
+					'footer'  => true,
+					'privacy' => true,
+				),
+			),
+			'cookies'             => array( 'Cookies', array( 'footer' => true ) ),
+			'refunds'             => array( 'Refunds', array( 'footer' => true ) ),
+		);
+
+		$vr_dir   = $this->content_dir() . '/pages';
+		$vr_order = 0;
+		$vr_ids   = array();
+
+		foreach ( $vr_pages as $vr_slug => $vr_page ) {
+			list( $vr_title, $vr_flags ) = $vr_page;
+
+			$vr_file = "{$vr_dir}/{$vr_slug}.html";
+
+			if ( ! is_readable( $vr_file ) ) {
+				$this->warn( "missing content file: content/pages/{$vr_slug}.html" );
+				continue;
+			}
+
+			// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents -- A file shipped with the plugin, never a remote URL.
+			$vr_content  = trim( (string) file_get_contents( $vr_file ) );
+			$vr_existing = get_page_by_path( $vr_slug, OBJECT, 'page' );
+			++$vr_order;
+
+			$vr_data = array(
+				'post_title'     => $vr_title,
+				'post_name'      => $vr_slug,
+				'post_content'   => $vr_content,
+				'post_status'    => 'publish',
+				'post_type'      => 'page',
+				'menu_order'     => $vr_order,
+				'comment_status' => 'closed',
+				'ping_status'    => 'closed',
+			);
+
+			if ( $vr_existing instanceof WP_Post ) {
+				$vr_data['ID'] = $vr_existing->ID;
+				$vr_unchanged  = $vr_existing->post_content === $vr_content
+				&& $vr_existing->post_title === $vr_title
+				&& 'publish' === $vr_existing->post_status
+				&& (int) $vr_existing->menu_order === $vr_order;
+
+				$vr_id   = wp_update_post( $vr_data, true );
+				$vr_verb = $vr_unchanged ? 'unchanged' : 'updated';
+			} else {
+				$vr_id   = wp_insert_post( $vr_data, true );
+				$vr_verb = 'created';
+			}
+
+			if ( is_wp_error( $vr_id ) ) {
+				$this->warn( "{$vr_slug}: " . $vr_id->get_error_message() );
+				continue;
+			}
+
+			$vr_ids[ $vr_slug ] = (int) $vr_id;
+			$this->log( sprintf( '  %-20s %-9s #%d', $vr_slug, $vr_verb, $vr_id ) );
+
+			if ( ! empty( $vr_flags['front'] ) ) {
+				update_option( 'show_on_front', 'page' );
+				update_option( 'page_on_front', (int) $vr_id );
+			}
+
+			if ( ! empty( $vr_flags['privacy'] ) ) {
+				update_option( 'wp_page_for_privacy_policy', (int) $vr_id );
+			}
+
+			if ( ! empty( $vr_flags['wc_terms'] ) ) {
+				update_option( 'woocommerce_terms_page_id', (int) $vr_id );
+			}
+		}
+
+		// WooCommerce ships placeholder pages we replace; leave them out of the way
+		// rather than deleting anything a merchant may have edited.
+		foreach ( array( 'refund_returns', 'sample-page' ) as $vr_stale ) {
+			$vr_post = get_page_by_path( $vr_stale, OBJECT, 'page' );
+
+			if ( $vr_post instanceof WP_Post && 'trash' !== $vr_post->post_status && ! in_array( $vr_post->ID, $vr_ids, true ) ) {
+				wp_update_post(
+					array(
+						'ID'          => $vr_post->ID,
+						'post_status' => 'draft',
+					)
+				);
+				$this->log( sprintf( '  %-20s %-9s #%d', $vr_stale, 'drafted', $vr_post->ID ) );
+			}
+		}
+
+		// The packages the report is sold as, deliberately without prices. The
+		// merchant sets those, and until they do the storefront refuses to start an
+		// order — inventing a plausible-looking figure here would defeat the point.
+		if ( class_exists( 'WC_Product_Simple' ) && class_exists( 'VehicleReportOrders\\Domain\\Settings' ) ) {
+
+			// Package pages live under /packages/, which is where a visitor expects
+			// to find them and what the navigation links to.
+			$vr_permalinks = get_option( 'woocommerce_permalinks', array() );
+
+			if ( ! is_array( $vr_permalinks ) ) {
+				$vr_permalinks = array();
+			}
+
+			if ( 'packages' !== ( $vr_permalinks['product_base'] ?? '' ) ) {
+				$vr_permalinks['product_base'] = 'packages';
+				update_option( 'woocommerce_permalinks', $vr_permalinks );
+				$this->log( sprintf( '  %-20s %-9s %s', 'product base', 'set', '/packages/' ) );
+			}
+
+			// A named category keeps "Uncategorized" out of the breadcrumb on a
+			// package page.
+			$vr_term = term_exists( 'vehicle-reports', 'product_cat' );
+
+			if ( ! $vr_term ) {
+				$vr_term = wp_insert_term( 'Vehicle reports', 'product_cat', array( 'slug' => 'vehicle-reports' ) );
+			}
+
+			$vr_cat_id = is_array( $vr_term ) ? (int) $vr_term['term_id'] : 0;
+
+			$vr_stored   = \VehicleReportOrders\Domain\Settings::get( 'packages' );
+			$vr_existing = is_array( $vr_stored ) && array() !== $vr_stored
+			? $vr_stored
+			: \VehicleReportOrders\Domain\PackageRepository::defaults();
+
+			$vr_packages = array();
+
+			foreach ( $vr_existing as $vr_index => $vr_row ) {
+				$vr_slug    = (string) ( $vr_row['slug'] ?? '' );
+				$vr_name    = (string) ( $vr_row['name'] ?? $vr_slug );
+				$vr_checks  = is_array( $vr_row['checks'] ?? null ) ? $vr_row['checks'] : array();
+				$vr_post_id = (int) ( $vr_row['product_id'] ?? 0 );
+
+				if ( '' === $vr_slug ) {
+					continue;
+				}
+
+				$vr_product = $vr_post_id > 0 ? wc_get_product( $vr_post_id ) : null;
+
+				if ( ! $vr_product ) {
+					$vr_found   = get_page_by_path( $vr_slug, OBJECT, 'product' );
+					$vr_product = $vr_found instanceof WP_Post ? wc_get_product( $vr_found->ID ) : null;
+				}
+
+				$vr_summary = array();
+
+				foreach ( $vr_checks as $vr_check ) {
+					$vr_summary[] = \VehicleReportOrders\Domain\VehicleCheck::label( (string) $vr_check );
+				}
+
+				if ( ! $vr_product ) {
+					$vr_new = new WC_Product_Simple();
+					$vr_new->set_name( $vr_name );
+					$vr_new->set_slug( $vr_slug );
+					$vr_new->set_status( 'publish' );
+					$vr_new->set_catalog_visibility( 'visible' );
+					$vr_new->set_virtual( true );
+					$vr_new->set_sold_individually( true );
+					$vr_new->set_menu_order( (int) $vr_index );
+					$vr_new->set_short_description(
+						'One written vehicle report, researched by a person and emailed as a PDF. Checks included: '
+						. implode( ', ', $vr_summary ) . '.'
+					);
+					if ( $vr_cat_id > 0 ) {
+						$vr_new->set_category_ids( array( $vr_cat_id ) );
+					}
+
+					$vr_post_id = (int) $vr_new->save();
+
+					$this->log( sprintf( '  %-20s %-9s #%d', "package {$vr_slug}", 'created', $vr_post_id ) );
+				} else {
+					$vr_post_id = $vr_product->get_id();
+					$vr_product->set_short_description(
+						'One written vehicle report, researched by a person and emailed as a PDF. Checks included: '
+						. implode( ', ', $vr_summary ) . '.'
+					);
+					$vr_product->set_catalog_visibility( 'visible' );
+					$vr_product->set_menu_order( (int) $vr_index );
+
+					if ( $vr_cat_id > 0 ) {
+						$vr_product->set_category_ids( array( $vr_cat_id ) );
+					}
+
+					$vr_product->save();
+
+					$this->log( sprintf( '  %-20s %-9s #%d', "package {$vr_slug}", 'exists', $vr_post_id ) );
+				}
+
+				$vr_packages[] = array(
+					'slug'       => $vr_slug,
+					'name'       => $vr_name,
+					'product_id' => $vr_post_id,
+					'reports'    => (int) ( $vr_row['reports'] ?? 1 ),
+					'featured'   => ! empty( $vr_row['featured'] ),
+					'checks'     => $vr_checks,
+				);
+			}
+
+			\VehicleReportOrders\Domain\Settings::update( array( 'packages' => $vr_packages ) );
+
+			// The entry-level package stays the product the rest of the plugin falls
+			// back to when a visitor has not chosen a tier.
+			if ( array() !== $vr_packages ) {
+				\VehicleReportOrders\Domain\Settings::update( array( 'report_product_id' => (int) $vr_packages[0]['product_id'] ) );
+			}
+
+			// Anything in the catalogue that is not a current tier predates them —
+			// the original single-report product, for one. Orders still refer to it, so
+			// it is drafted rather than deleted, which also takes it out of the shop
+			// and the cart's suggestions.
+			$vr_live = wp_list_pluck( $vr_packages, 'product_id' );
+
+			foreach ( wc_get_products(
+				array(
+					'limit'  => -1,
+					'status' => 'publish',
+					'return' => 'ids',
+				)
+			) as $vr_other ) {
+				if ( in_array( (int) $vr_other, array_map( 'intval', $vr_live ), true ) ) {
+					continue;
+				}
+
+				wp_update_post(
+					array(
+						'ID'          => (int) $vr_other,
+						'post_status' => 'draft',
+					)
+				);
+				$this->log( sprintf( '  %-20s %-9s #%d', 'retired product', 'drafted', (int) $vr_other ) );
+			}
+
+			flush_rewrite_rules( false );
+		}
+
+		// WooCommerce's own pages are not in content/pages, so they would otherwise
+		// miss the page header every other page carries.
+		foreach ( array(
+			'woocommerce_cart_page_id'      => 'page-cart',
+			'woocommerce_myaccount_page_id' => 'page-my-account',
+			'woocommerce_checkout_page_id'  => 'page-checkout',
+		) as $vr_option => $vr_template ) {
+			$vr_page_id = (int) get_option( $vr_option );
+
+			if ( $vr_page_id > 0 && get_post_meta( $vr_page_id, '_wp_page_template', true ) !== $vr_template ) {
+				update_post_meta( $vr_page_id, '_wp_page_template', $vr_template );
+				$this->log( sprintf( '  %-20s %-9s #%d', $vr_template, 'assigned', $vr_page_id ) );
+			}
+		}
+
+		// A site icon, so a tab, a bookmark and a shared link are not blank. The one
+		// in content/brand is a plain plate shape with no wordmark: a placeholder the
+		// merchant replaces with their own logo, never a brand invented here.
+		if ( 0 === (int) get_option( 'site_icon' ) ) {
+			$vr_icon = $this->content_dir() . '/brand/site-icon.png';
+
+			if ( is_readable( $vr_icon ) ) {
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+				require_once ABSPATH . 'wp-admin/includes/media.php';
+				require_once ABSPATH . 'wp-admin/includes/image.php';
+
+				$vr_tmp = wp_tempnam( 'vr-site-icon' );
+				copy( $vr_icon, $vr_tmp );
+
+				$vr_attachment = media_handle_sideload(
+					array(
+						'name'     => 'site-icon.png',
+						'tmp_name' => $vr_tmp,
+					),
+					0,
+					'Placeholder site icon'
+				);
+
+				if ( is_wp_error( $vr_attachment ) ) {
+					$this->warn( 'site icon: ' . $vr_attachment->get_error_message() );
+				} else {
+					update_option( 'site_icon', (int) $vr_attachment );
+					$this->log( sprintf( '  %-20s %-9s #%d', 'site icon', 'set', (int) $vr_attachment ) );
+				}
+			}
+		} else {
+			$this->log( sprintf( '  %-20s %-9s #%d', 'site icon', 'exists', (int) get_option( 'site_icon' ) ) );
+		}
+
+		$this->log( sprintf( '%d pages seeded from content/pages/.', count( $vr_ids ) ) );
+
+			return $this->lines;
+	}
+}
